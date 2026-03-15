@@ -187,26 +187,22 @@
   <div id="toast" class="fixed bottom-4 right-4 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hidden transition-all"></div>
 
 <script>
-    // DARK MODE TOGGLE
     function toggleDark() {
       document.documentElement.classList.toggle('dark');
       const btn = document.getElementById('darkBtn');
       btn.textContent = document.documentElement.classList.contains('dark') ? 'Mode Terang' : 'Mode Gelap';
     }
 
-    // SECTION NAVIGATION
     function showSection(name) {
       document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
       document.getElementById('section-' + name).classList.remove('hidden');
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       const btn = document.getElementById('btn-' + name);
       if (btn) btn.classList.add('active');
-
       if (name === 'surah') loadSurahList();
       if (name === 'analytics') loadAnalytics();
     }
 
-    // TOAST
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -214,7 +210,6 @@
       setTimeout(() => t.classList.add('hidden'), 3000);
     }
 
-    // DAILY QUOTE
     const API_BASE = '/api/v1';
 
     async function loadDailyQuote() {
@@ -230,7 +225,6 @@
       }
     }
 
-    // SEARCH
     function quickSearch(term) {
       document.getElementById('searchInput').value = term;
       doSearch();
@@ -241,7 +235,6 @@
       if (!q) return;
       showToast('Mencari: ' + q + '...');
 
-      // Tampilkan loading
       const container = document.getElementById('searchResults');
       const resultsList = document.getElementById('resultsList');
       container.classList.remove('hidden');
@@ -269,16 +262,10 @@
 
       container.classList.remove('hidden');
       document.getElementById('searchTitle').textContent = 'Hasil untuk: ' + query;
-
-      // Tampilkan quote
       quoteResult.classList.remove('hidden');
       document.getElementById('quoteText').textContent = '"Sesungguhnya bersama kesulitan ada kemudahan."';
       document.getElementById('quoteSource').textContent = '-- QS. Al-Insyirah: 6';
-
-      resultsList.innerHTML = '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">' +
-        '<p class="text-sm text-white mb-2">Menampilkan hasil offline</p>' +
-        '<p class="text-xs text-gray-500">Hubungkan ke API server untuk hasil pencarian lengkap.</p>' +
-        '</div>';
+      resultsList.innerHTML = '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4"><p class="text-sm text-white mb-2">Menampilkan hasil offline</p><p class="text-xs text-gray-500">Hubungkan ke API server untuk hasil pencarian lengkap.</p></div>';
     }
 
     function displayResults(data) {
@@ -298,7 +285,7 @@
         resultsList.innerHTML = data.results.map(r => {
           let html = '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 mb-3 fade-in">';
           html += '<p class="text-xs text-emerald-500 font-medium mb-1">QS. ' + (r.surah_name || r.surah) + ': ' + r.ayah + '</p>';
-          if (r.text_arab) html += '<p class="text-white text-right text-lg mb-2 font-arabic">' + r.text_arab + '</p>';
+          if (r.text_arab) html += '<p class="text-white text-right text-lg mb-2">' + r.text_arab + '</p>';
           if (r.terjemahan) html += '<p class="text-slate-300 text-sm mb-3">' + r.terjemahan + '</p>';
 
           if (r.tafsir_list) {
@@ -330,7 +317,6 @@
       document.getElementById('searchInput').value = '';
     }
 
-    // SURAH LIST
     async function loadSurahList() {
       const container = document.getElementById('surahList');
       if (container.children.length > 0) return;
@@ -344,13 +330,12 @@
         }
       } catch(e) {}
 
-      // Fallback offline
       const offlineSurahs = [
         {number:1, name_latin:"Al-Fatihah", total_ayah:7, tempat_turun:"Makkiyah"},
         {number:2, name_latin:"Al-Baqarah", total_ayah:286, tempat_turun:"Madaniyah"},
         {number:3, name_latin:"Ali Imran", total_ayah:200, tempat_turun:"Madaniyah"},
-        {number:4, name_latin:"An-Nisa'", total_ayah:176, tempat_turun:"Madaniyah"},
-        {number:5, name_latin:"Al-Ma'idah", total_ayah:120, tempat_turun:"Madaniyah"},
+        {number:4, name_latin:"An-Nisa", total_ayah:176, tempat_turun:"Madaniyah"},
+        {number:5, name_latin:"Al-Maidah", total_ayah:120, tempat_turun:"Madaniyah"},
         {number:36, name_latin:"Ya-Sin", total_ayah:83, tempat_turun:"Makkiyah"},
         {number:55, name_latin:"Ar-Rahman", total_ayah:78, tempat_turun:"Madaniyah"},
         {number:67, name_latin:"Al-Mulk", total_ayah:30, tempat_turun:"Makkiyah"},
@@ -362,18 +347,17 @@
 
     function renderSurahList(surahs) {
       const container = document.getElementById('surahList');
-      container.innerHTML = surahs.map(s =>
-        '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3 flex items-center gap-3 hover:border-emerald-800 transition cursor-pointer" onclick="showToast('Membuka Surah ' + s.name_latin + '...')">' +
+      container.innerHTML = surahs.map(function(s) {
+        return '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3 flex items-center gap-3 hover:border-emerald-800 transition cursor-pointer" onclick="showToast(&quot;Membuka Surah ' + s.name_latin + '...&quot;)">' +
           '<div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-400 font-bold text-sm">' + s.number + '</div>' +
           '<div class="flex-1">' +
             '<p class="text-white text-sm font-medium">' + s.name_latin + '</p>' +
             '<p class="text-gray-500 text-xs">' + s.total_ayah + ' ayat | ' + s.tempat_turun + '</p>' +
           '</div>' +
-        '</div>'
-      ).join('');
+        '</div>';
+      }).join('');
     }
 
-    // ANALYTICS
     async function loadAnalytics() {
       const container = document.getElementById('analyticsChart');
       if (container.children.length > 0) return;
@@ -408,7 +392,6 @@
       ).join('');
     }
 
-    // INIT
     document.addEventListener('DOMContentLoaded', function() {
       loadDailyQuote();
     });
