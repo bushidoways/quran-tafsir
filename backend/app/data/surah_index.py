@@ -1,0 +1,141 @@
+"""
+Surah Index — Complete list of 114 Surahs
+بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+"""
+
+from app.models.schemas import SurahInfo
+
+SURAH_LIST: list[SurahInfo] = [
+    SurahInfo(number=1, name_arabic="الفاتحة", name_latin="Al-Fatihah", name_translation="Pembukaan", revelation_type="Makkiyah", total_ayat=7),
+    SurahInfo(number=2, name_arabic="البقرة", name_latin="Al-Baqarah", name_translation="Sapi Betina", revelation_type="Madaniyah", total_ayat=286),
+    SurahInfo(number=3, name_arabic="آل عمران", name_latin="Ali 'Imran", name_translation="Keluarga Imran", revelation_type="Madaniyah", total_ayat=200),
+    SurahInfo(number=4, name_arabic="النساء", name_latin="An-Nisa", name_translation="Wanita", revelation_type="Madaniyah", total_ayat=176),
+    SurahInfo(number=5, name_arabic="المائدة", name_latin="Al-Ma'idah", name_translation="Hidangan", revelation_type="Madaniyah", total_ayat=120),
+    SurahInfo(number=6, name_arabic="الأنعام", name_latin="Al-An'am", name_translation="Hewan Ternak", revelation_type="Makkiyah", total_ayat=165),
+    SurahInfo(number=7, name_arabic="الأعراف", name_latin="Al-A'raf", name_translation="Tempat Tertinggi", revelation_type="Makkiyah", total_ayat=206),
+    SurahInfo(number=8, name_arabic="الأنفال", name_latin="Al-Anfal", name_translation="Harta Rampasan Perang", revelation_type="Madaniyah", total_ayat=75),
+    SurahInfo(number=9, name_arabic="التوبة", name_latin="At-Tawbah", name_translation="Pengampunan", revelation_type="Madaniyah", total_ayat=129),
+    SurahInfo(number=10, name_arabic="يونس", name_latin="Yunus", name_translation="Yunus", revelation_type="Makkiyah", total_ayat=109),
+    SurahInfo(number=11, name_arabic="هود", name_latin="Hud", name_translation="Hud", revelation_type="Makkiyah", total_ayat=123),
+    SurahInfo(number=12, name_arabic="يوسف", name_latin="Yusuf", name_translation="Yusuf", revelation_type="Makkiyah", total_ayat=111),
+    SurahInfo(number=13, name_arabic="الرعد", name_latin="Ar-Ra'd", name_translation="Guruh", revelation_type="Madaniyah", total_ayat=43),
+    SurahInfo(number=14, name_arabic="ابراهيم", name_latin="Ibrahim", name_translation="Ibrahim", revelation_type="Makkiyah", total_ayat=52),
+    SurahInfo(number=15, name_arabic="الحجر", name_latin="Al-Hijr", name_translation="Batu Gunung", revelation_type="Makkiyah", total_ayat=99),
+    SurahInfo(number=16, name_arabic="النحل", name_latin="An-Nahl", name_translation="Lebah", revelation_type="Makkiyah", total_ayat=128),
+    SurahInfo(number=17, name_arabic="الإسراء", name_latin="Al-Isra", name_translation="Perjalanan Malam", revelation_type="Makkiyah", total_ayat=111),
+    SurahInfo(number=18, name_arabic="الكهف", name_latin="Al-Kahf", name_translation="Gua", revelation_type="Makkiyah", total_ayat=110),
+    SurahInfo(number=19, name_arabic="مريم", name_latin="Maryam", name_translation="Maryam", revelation_type="Makkiyah", total_ayat=98),
+    SurahInfo(number=20, name_arabic="طه", name_latin="Taha", name_translation="Taha", revelation_type="Makkiyah", total_ayat=135),
+    SurahInfo(number=21, name_arabic="الأنبياء", name_latin="Al-Anbiya", name_translation="Para Nabi", revelation_type="Makkiyah", total_ayat=112),
+    SurahInfo(number=22, name_arabic="الحج", name_latin="Al-Hajj", name_translation="Haji", revelation_type="Madaniyah", total_ayat=78),
+    SurahInfo(number=23, name_arabic="المؤمنون", name_latin="Al-Mu'minun", name_translation="Orang-orang Beriman", revelation_type="Makkiyah", total_ayat=118),
+    SurahInfo(number=24, name_arabic="النور", name_latin="An-Nur", name_translation="Cahaya", revelation_type="Madaniyah", total_ayat=64),
+    SurahInfo(number=25, name_arabic="الفرقان", name_latin="Al-Furqan", name_translation="Pembeda", revelation_type="Makkiyah", total_ayat=77),
+    SurahInfo(number=26, name_arabic="الشعراء", name_latin="Asy-Syu'ara", name_translation="Para Penyair", revelation_type="Makkiyah", total_ayat=227),
+    SurahInfo(number=27, name_arabic="النمل", name_latin="An-Naml", name_translation="Semut", revelation_type="Makkiyah", total_ayat=93),
+    SurahInfo(number=28, name_arabic="القصص", name_latin="Al-Qasas", name_translation="Kisah-kisah", revelation_type="Makkiyah", total_ayat=88),
+    SurahInfo(number=29, name_arabic="العنكبوت", name_latin="Al-Ankabut", name_translation="Laba-laba", revelation_type="Makkiyah", total_ayat=69),
+    SurahInfo(number=30, name_arabic="الروم", name_latin="Ar-Rum", name_translation="Bangsa Romawi", revelation_type="Makkiyah", total_ayat=60),
+    SurahInfo(number=31, name_arabic="لقمان", name_latin="Luqman", name_translation="Luqman", revelation_type="Makkiyah", total_ayat=34),
+    SurahInfo(number=32, name_arabic="السجدة", name_latin="As-Sajdah", name_translation="Sujud", revelation_type="Makkiyah", total_ayat=30),
+    SurahInfo(number=33, name_arabic="الأحزاب", name_latin="Al-Ahzab", name_translation="Golongan yang Bersekutu", revelation_type="Madaniyah", total_ayat=73),
+    SurahInfo(number=34, name_arabic="سبإ", name_latin="Saba'", name_translation="Saba'", revelation_type="Makkiyah", total_ayat=54),
+    SurahInfo(number=35, name_arabic="فاطر", name_latin="Fatir", name_translation="Pencipta", revelation_type="Makkiyah", total_ayat=45),
+    SurahInfo(number=36, name_arabic="يس", name_latin="Ya-Sin", name_translation="Ya Sin", revelation_type="Makkiyah", total_ayat=83),
+    SurahInfo(number=37, name_arabic="الصافات", name_latin="As-Saffat", name_translation="Yang Bershaf-shaf", revelation_type="Makkiyah", total_ayat=182),
+    SurahInfo(number=38, name_arabic="ص", name_latin="Sad", name_translation="Sad", revelation_type="Makkiyah", total_ayat=88),
+    SurahInfo(number=39, name_arabic="الزمر", name_latin="Az-Zumar", name_translation="Rombongan", revelation_type="Makkiyah", total_ayat=75),
+    SurahInfo(number=40, name_arabic="غافر", name_latin="Ghafir", name_translation="Yang Mengampuni", revelation_type="Makkiyah", total_ayat=85),
+    SurahInfo(number=41, name_arabic="فصلت", name_latin="Fussilat", name_translation="Yang Dijelaskan", revelation_type="Makkiyah", total_ayat=54),
+    SurahInfo(number=42, name_arabic="الشورى", name_latin="Asy-Syura", name_translation="Musyawarah", revelation_type="Makkiyah", total_ayat=53),
+    SurahInfo(number=43, name_arabic="الزخرف", name_latin="Az-Zukhruf", name_translation="Perhiasan Emas", revelation_type="Makkiyah", total_ayat=89),
+    SurahInfo(number=44, name_arabic="الدخان", name_latin="Ad-Dukhan", name_translation="Kabut", revelation_type="Makkiyah", total_ayat=59),
+    SurahInfo(number=45, name_arabic="الجاثية", name_latin="Al-Jasiyah", name_translation="Yang Berlutut", revelation_type="Makkiyah", total_ayat=37),
+    SurahInfo(number=46, name_arabic="الأحقاف", name_latin="Al-Ahqaf", name_translation="Bukit Pasir", revelation_type="Makkiyah", total_ayat=35),
+    SurahInfo(number=47, name_arabic="محمد", name_latin="Muhammad", name_translation="Muhammad", revelation_type="Madaniyah", total_ayat=38),
+    SurahInfo(number=48, name_arabic="الفتح", name_latin="Al-Fath", name_translation="Kemenangan", revelation_type="Madaniyah", total_ayat=29),
+    SurahInfo(number=49, name_arabic="الحجرات", name_latin="Al-Hujurat", name_translation="Kamar-kamar", revelation_type="Madaniyah", total_ayat=18),
+    SurahInfo(number=50, name_arabic="ق", name_latin="Qaf", name_translation="Qaf", revelation_type="Makkiyah", total_ayat=45),
+    SurahInfo(number=51, name_arabic="الذاريات", name_latin="Adz-Dzariyat", name_translation="Angin yang Menerbangkan", revelation_type="Makkiyah", total_ayat=60),
+    SurahInfo(number=52, name_arabic="الطور", name_latin="At-Tur", name_translation="Bukit Tursina", revelation_type="Makkiyah", total_ayat=49),
+    SurahInfo(number=53, name_arabic="النجم", name_latin="An-Najm", name_translation="Bintang", revelation_type="Makkiyah", total_ayat=62),
+    SurahInfo(number=54, name_arabic="القمر", name_latin="Al-Qamar", name_translation="Bulan", revelation_type="Makkiyah", total_ayat=55),
+    SurahInfo(number=55, name_arabic="الرحمن", name_latin="Ar-Rahman", name_translation="Yang Maha Pengasih", revelation_type="Madaniyah", total_ayat=78),
+    SurahInfo(number=56, name_arabic="الواقعة", name_latin="Al-Waqi'ah", name_translation="Hari Kiamat", revelation_type="Makkiyah", total_ayat=96),
+    SurahInfo(number=57, name_arabic="الحديد", name_latin="Al-Hadid", name_translation="Besi", revelation_type="Madaniyah", total_ayat=29),
+    SurahInfo(number=58, name_arabic="المجادلة", name_latin="Al-Mujadila", name_translation="Wanita yang Mengajukan Gugatan", revelation_type="Madaniyah", total_ayat=22),
+    SurahInfo(number=59, name_arabic="الحشر", name_latin="Al-Hasyr", name_translation="Pengusiran", revelation_type="Madaniyah", total_ayat=24),
+    SurahInfo(number=60, name_arabic="الممتحنة", name_latin="Al-Mumtahanah", name_translation="Wanita yang Diuji", revelation_type="Madaniyah", total_ayat=13),
+    SurahInfo(number=61, name_arabic="الصف", name_latin="As-Saff", name_translation="Barisan", revelation_type="Madaniyah", total_ayat=14),
+    SurahInfo(number=62, name_arabic="الجمعة", name_latin="Al-Jumu'ah", name_translation="Hari Jum'at", revelation_type="Madaniyah", total_ayat=11),
+    SurahInfo(number=63, name_arabic="المنافقون", name_latin="Al-Munafiqun", name_translation="Orang-orang Munafik", revelation_type="Madaniyah", total_ayat=11),
+    SurahInfo(number=64, name_arabic="التغابن", name_latin="At-Taghabun", name_translation="Hari Pengungkapan Kesalahan", revelation_type="Madaniyah", total_ayat=18),
+    SurahInfo(number=65, name_arabic="الطلاق", name_latin="At-Talaq", name_translation="Talak", revelation_type="Madaniyah", total_ayat=12),
+    SurahInfo(number=66, name_arabic="التحريم", name_latin="At-Tahrim", name_translation="Mengharamkan", revelation_type="Madaniyah", total_ayat=12),
+    SurahInfo(number=67, name_arabic="الملك", name_latin="Al-Mulk", name_translation="Kerajaan", revelation_type="Makkiyah", total_ayat=30),
+    SurahInfo(number=68, name_arabic="القلم", name_latin="Al-Qalam", name_translation="Pena", revelation_type="Makkiyah", total_ayat=52),
+    SurahInfo(number=69, name_arabic="الحاقة", name_latin="Al-Haqqah", name_translation="Hari Kiamat", revelation_type="Makkiyah", total_ayat=52),
+    SurahInfo(number=70, name_arabic="المعارج", name_latin="Al-Ma'arij", name_translation="Tempat Naik", revelation_type="Makkiyah", total_ayat=44),
+    SurahInfo(number=71, name_arabic="نوح", name_latin="Nuh", name_translation="Nuh", revelation_type="Makkiyah", total_ayat=28),
+    SurahInfo(number=72, name_arabic="الجن", name_latin="Al-Jinn", name_translation="Jin", revelation_type="Makkiyah", total_ayat=28),
+    SurahInfo(number=73, name_arabic="المزمل", name_latin="Al-Muzzammil", name_translation="Orang yang Berselimut", revelation_type="Makkiyah", total_ayat=20),
+    SurahInfo(number=74, name_arabic="المدثر", name_latin="Al-Muddassir", name_translation="Orang yang Berkemul", revelation_type="Makkiyah", total_ayat=56),
+    SurahInfo(number=75, name_arabic="القيامة", name_latin="Al-Qiyamah", name_translation="Hari Kiamat", revelation_type="Makkiyah", total_ayat=40),
+    SurahInfo(number=76, name_arabic="الانسان", name_latin="Al-Insan", name_translation="Manusia", revelation_type="Madaniyah", total_ayat=31),
+    SurahInfo(number=77, name_arabic="المرسلات", name_latin="Al-Mursalat", name_translation="Malaikat yang Diutus", revelation_type="Makkiyah", total_ayat=50),
+    SurahInfo(number=78, name_arabic="النبإ", name_latin="An-Naba", name_translation="Berita Besar", revelation_type="Makkiyah", total_ayat=40),
+    SurahInfo(number=79, name_arabic="النازعات", name_latin="An-Nazi'at", name_translation="Malaikat yang Mencabut", revelation_type="Makkiyah", total_ayat=46),
+    SurahInfo(number=80, name_arabic="عبس", name_latin="'Abasa", name_translation="Bermuka Masam", revelation_type="Makkiyah", total_ayat=42),
+    SurahInfo(number=81, name_arabic="التكوير", name_latin="At-Takwir", name_translation="Menggulung", revelation_type="Makkiyah", total_ayat=29),
+    SurahInfo(number=82, name_arabic="الإنفطار", name_latin="Al-Infitar", name_translation="Terbelah", revelation_type="Makkiyah", total_ayat=19),
+    SurahInfo(number=83, name_arabic="المطففين", name_latin="Al-Mutaffifin", name_translation="Orang yang Curang", revelation_type="Makkiyah", total_ayat=36),
+    SurahInfo(number=84, name_arabic="الإنشقاق", name_latin="Al-Insyiqaq", name_translation="Terbelah", revelation_type="Makkiyah", total_ayat=25),
+    SurahInfo(number=85, name_arabic="البروج", name_latin="Al-Buruj", name_translation="Gugusan Bintang", revelation_type="Makkiyah", total_ayat=22),
+    SurahInfo(number=86, name_arabic="الطارق", name_latin="At-Tariq", name_translation="Yang Datang di Malam Hari", revelation_type="Makkiyah", total_ayat=17),
+    SurahInfo(number=87, name_arabic="الأعلى", name_latin="Al-A'la", name_translation="Yang Paling Tinggi", revelation_type="Makkiyah", total_ayat=19),
+    SurahInfo(number=88, name_arabic="الغاشية", name_latin="Al-Gasyiyah", name_translation="Hari Pembalasan", revelation_type="Makkiyah", total_ayat=26),
+    SurahInfo(number=89, name_arabic="الفجر", name_latin="Al-Fajr", name_translation="Fajar", revelation_type="Makkiyah", total_ayat=30),
+    SurahInfo(number=90, name_arabic="البلد", name_latin="Al-Balad", name_translation="Negeri", revelation_type="Makkiyah", total_ayat=20),
+    SurahInfo(number=91, name_arabic="الشمس", name_latin="Asy-Syams", name_translation="Matahari", revelation_type="Makkiyah", total_ayat=15),
+    SurahInfo(number=92, name_arabic="الليل", name_latin="Al-Lail", name_translation="Malam", revelation_type="Makkiyah", total_ayat=21),
+    SurahInfo(number=93, name_arabic="الضحى", name_latin="Ad-Duha", name_translation="Waktu Dhuha", revelation_type="Makkiyah", total_ayat=11),
+    SurahInfo(number=94, name_arabic="الشرح", name_latin="Asy-Syarh", name_translation="Melapangkan", revelation_type="Makkiyah", total_ayat=8),
+    SurahInfo(number=95, name_arabic="التين", name_latin="At-Tin", name_translation="Buah Tin", revelation_type="Makkiyah", total_ayat=8),
+    SurahInfo(number=96, name_arabic="العلق", name_latin="Al-'Alaq", name_translation="Segumpal Darah", revelation_type="Makkiyah", total_ayat=19),
+    SurahInfo(number=97, name_arabic="القدر", name_latin="Al-Qadr", name_translation="Kemuliaan", revelation_type="Makkiyah", total_ayat=5),
+    SurahInfo(number=98, name_arabic="البينة", name_latin="Al-Bayyinah", name_translation="Bukti yang Nyata", revelation_type="Madaniyah", total_ayat=8),
+    SurahInfo(number=99, name_arabic="الزلزلة", name_latin="Az-Zalzalah", name_translation="Kegoncangan", revelation_type="Madaniyah", total_ayat=8),
+    SurahInfo(number=100, name_arabic="العاديات", name_latin="Al-'Adiyat", name_translation="Kuda Perang yang Berlari Kencang", revelation_type="Makkiyah", total_ayat=11),
+    SurahInfo(number=101, name_arabic="القارعة", name_latin="Al-Qari'ah", name_translation="Hari Kiamat", revelation_type="Makkiyah", total_ayat=11),
+    SurahInfo(number=102, name_arabic="التكاثر", name_latin="At-Takasur", name_translation="Bermegah-megahan", revelation_type="Makkiyah", total_ayat=8),
+    SurahInfo(number=103, name_arabic="العصر", name_latin="Al-'Asr", name_translation="Masa", revelation_type="Makkiyah", total_ayat=3),
+    SurahInfo(number=104, name_arabic="الهمزة", name_latin="Al-Humazah", name_translation="Pengumpat", revelation_type="Makkiyah", total_ayat=9),
+    SurahInfo(number=105, name_arabic="الفيل", name_latin="Al-Fil", name_translation="Gajah", revelation_type="Makkiyah", total_ayat=5),
+    SurahInfo(number=106, name_arabic="قريش", name_latin="Quraisy", name_translation="Suku Quraisy", revelation_type="Makkiyah", total_ayat=4),
+    SurahInfo(number=107, name_arabic="الماعون", name_latin="Al-Ma'un", name_translation="Barang-barang yang Berguna", revelation_type="Makkiyah", total_ayat=7),
+    SurahInfo(number=108, name_arabic="الكوثر", name_latin="Al-Kausar", name_translation="Nikmat yang Berlimpah", revelation_type="Makkiyah", total_ayat=3),
+    SurahInfo(number=109, name_arabic="الكافرون", name_latin="Al-Kafirun", name_translation="Orang-orang Kafir", revelation_type="Makkiyah", total_ayat=6),
+    SurahInfo(number=110, name_arabic="النصر", name_latin="An-Nasr", name_translation="Pertolongan", revelation_type="Madaniyah", total_ayat=3),
+    SurahInfo(number=111, name_arabic="المسد", name_latin="Al-Masad", name_translation="Gejolak Api", revelation_type="Makkiyah", total_ayat=5),
+    SurahInfo(number=112, name_arabic="الإخلاص", name_latin="Al-Ikhlas", name_translation="Memurnikan Keesaan Allah", revelation_type="Makkiyah", total_ayat=4),
+    SurahInfo(number=113, name_arabic="الفلق", name_latin="Al-Falaq", name_translation="Waktu Subuh", revelation_type="Makkiyah", total_ayat=5),
+    SurahInfo(number=114, name_arabic="الناس", name_latin="An-Nas", name_translation="Manusia", revelation_type="Makkiyah", total_ayat=6),
+]
+
+
+def get_surah(number: int) -> SurahInfo | None:
+    """Get surah info by number."""
+    if 1 <= number <= 114:
+        return SURAH_LIST[number - 1]
+    return None
+
+
+def search_surah(query: str) -> list[SurahInfo]:
+    """Search surahs by name."""
+    q = query.lower()
+    return [
+        s for s in SURAH_LIST
+        if q in s.name_latin.lower()
+        or q in s.name_translation.lower()
+        or q in s.name_arabic
+    ]
