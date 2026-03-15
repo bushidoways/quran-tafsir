@@ -215,7 +215,7 @@
     }
 
     // DAILY QUOTE
-    const API_BASE = 'http://localhost:8000/api/v1';
+    const API_BASE = '/api/v1';
 
     async function loadDailyQuote() {
       try {
@@ -240,6 +240,14 @@
       const q = document.getElementById('searchInput').value.trim();
       if (!q) return;
       showToast('Mencari: ' + q + '...');
+
+      // Tampilkan loading
+      const container = document.getElementById('searchResults');
+      const resultsList = document.getElementById('resultsList');
+      container.classList.remove('hidden');
+      document.getElementById('searchTitle').textContent = 'Mencari: ' + q + '...';
+      resultsList.innerHTML = '<div class="text-center py-8"><div class="inline-block w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div><p class="text-gray-500 text-sm mt-3">Sedang mencari ayat...</p></div>';
+      document.getElementById('quoteResult').classList.add('hidden');
 
       try {
         const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
@@ -279,7 +287,7 @@
       const resultsList = document.getElementById('resultsList');
 
       container.classList.remove('hidden');
-      document.getElementById('searchTitle').textContent = 'Hasil untuk: ' + data.query;
+      document.getElementById('searchTitle').textContent = 'Hasil untuk: ' + data.query + ' (' + (data.total_results || data.results.length) + ' ayat)';
 
       if (data.quote) {
         quoteResult.classList.remove('hidden');
