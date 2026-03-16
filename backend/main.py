@@ -2,6 +2,7 @@
 Quran Tafsir - Backend API
 
 Server utama dengan data nyata dari equran.id API.
+Manhaj: Ibnu Katsir, Jalalayn, Kemenag RI saja.
 """
 import random
 import time
@@ -15,8 +16,8 @@ import httpx
 # ----------------------------------------------------------------
 app = FastAPI(
     title="Quran Tafsir API",
-    description="API untuk pencarian tafsir Al-Qur'an yang terverifikasi dan tervalidasi",
-    version="2.0.0",
+    description="API untuk pencarian tafsir Al-Qur'an — Manhaj Salaf",
+    version="3.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -33,11 +34,10 @@ app.add_middleware(
 # Cache sederhana (in-memory dict)
 # ----------------------------------------------------------------
 _cache: dict = {}
-CACHE_TTL = 3600  # 1 jam dalam detik
+CACHE_TTL = 3600  # 1 jam
 
 
 def cache_get(key: str):
-    """Ambil data dari cache jika belum kedaluwarsa."""
     entry = _cache.get(key)
     if entry and (time.time() - entry["ts"]) < CACHE_TTL:
         return entry["data"]
@@ -45,7 +45,6 @@ def cache_get(key: str):
 
 
 def cache_set(key: str, data):
-    """Simpan data ke cache."""
     _cache[key] = {"data": data, "ts": time.time()}
 
 
@@ -56,7 +55,6 @@ EQURAN_BASE = "https://equran.id/api/v2"
 
 
 async def fetch_equran(path: str):
-    """Ambil data dari equran.id API dengan caching."""
     cached = cache_get(f"equran:{path}")
     if cached is not None:
         return cached
@@ -73,14 +71,95 @@ async def fetch_equran(path: str):
 
 
 def strip_html(text: str) -> str:
-    """Hapus tag HTML dari teks."""
     if not text:
         return ""
     return re.sub(r"<[^>]+>", "", text)
 
 
 # ----------------------------------------------------------------
-# Quotes pilihan (dipakai saat API tidak merespons)
+# SYNONYM DICTIONARY — seluas-luasnya
+# ----------------------------------------------------------------
+SYNONYMS = {
+    # Variasi ejaan umum
+    "shalat": ["salat", "sholat", "solat", "mendirikan salat", "tegakkan salat"],
+    "tawakkal": ["tawakal", "bertawakal", "tawakul", "berserah diri", "berserah kepada allah"],
+    "quran": ["qur'an", "alquran", "al-quran", "kitab", "kitabullah"],
+    "zikir": ["dzikir", "zikr", "mengingat allah", "mengingat-ku"],
+    "rezeki": ["rizki", "rizq", "riski", "karunia", "anugerah"],
+    "zakat": ["zakat", "infak", "sedekah", "derma"],
+    "jihad": ["jihad", "berjuang", "berjihad", "fisabilillah"],
+    "syukur": ["bersyukur", "syukuri", "terima kasih kepada allah"],
+    "istighfar": ["ampunan", "mohon ampun", "ampunilah", "pengampunan"],
+
+    # Tema akidah
+    "tauhid": ["esa", "menyekutukan", "keesaan allah", "tiada tuhan selain allah",
+               "la ilaha illallah", "tidak ada sekutu"],
+    "taubat": ["ampun", "istighfar", "kembali kepada allah", "bertaubat", "tobat"],
+    "sabar": ["tabah", "teguh", "tidak berputus asa", "bersabarlah", "kesabaran"],
+    "akhirat": ["hari kiamat", "hari pembalasan", "surga", "neraka", "hari akhir",
+                "yaumul qiyamah", "kebangkitan"],
+    "doa": ["memohon", "berdoa", "seruan", "munajat", "permohonan"],
+    "akhlak": ["budi pekerti", "perilaku", "adab", "sopan santun", "mulia"],
+    "keluarga": ["orang tua", "ibu bapak", "istri", "suami", "anak", "birrul walidain"],
+
+    # Kisah para nabi
+    "nabi ibrahim": ["ibrahim", "khalilullah", "bapak para nabi", "hanif"],
+    "nabi musa": ["musa", "kalimullah", "bani israil", "firaun dan musa", "tongkat musa"],
+    "nabi yusuf": ["yusuf", "putra yakub", "ibnu yaqub"],
+    "nabi isa": ["isa", "almasih", "putra maryam", "ibnu maryam"],
+    "nabi sulaiman": ["sulaiman", "nabi sulaiman", "ratu saba", "tentara sulaiman"],
+    "nabi dawud": ["dawud", "zabur", "jalut dan dawud"],
+    "nabi nuh": ["nuh", "banjir besar", "bahtera nuh", "kaum nuh"],
+    "nabi adam": ["adam", "hawa", "surga adam", "iblis menggoda adam"],
+    "nabi luth": ["luth", "kaum sodom", "kaum luth"],
+    "nabi ayub": ["ayub", "kesabaran ayub", "penyakit ayub"],
+    "nabi yunus": ["yunus", "dzun nun", "dzunnun", "perut ikan", "nun"],
+    "nabi idris": ["idris", "diangkat derajatnya"],
+    "nabi ismail": ["ismail", "putra ibrahim", "penyembelihan ismail"],
+    "nabi ishaq": ["ishaq", "putra ibrahim"],
+    "nabi yakub": ["yakub", "israil", "bapak yusuf"],
+    "nabi zakariya": ["zakariya", "ayah yahya"],
+    "nabi yahya": ["yahya", "putra zakariya"],
+
+    # Kisah dalam Al-Qur'an
+    "ashabul kahfi": ["penghuni gua", "pemuda gua", "tujuh pemuda"],
+    "firaun": ["fir'aun", "firaun", "raja mesir", "penindas bani israil"],
+    "qarun": ["qarun", "harta qarun", "kekayaan qarun", "sombong karena harta"],
+    "maryam": ["maryam", "ibu isa", "wanita pilihan"],
+    "ashabul fil": ["pasukan gajah", "abrahah", "burung ababil"],
+    "luqman": ["luqman", "nasihat luqman", "luqman kepada anaknya"],
+    "ashabul ukhdud": ["ukhdud", "parit berapi", "penguasa zalim"],
+}
+
+
+def expand_keywords(keyword: str) -> list[str]:
+    """Perluas keyword menjadi daftar sinonim."""
+    kw = keyword.lower().strip()
+    keywords = [kw]
+
+    # Cek exact match dulu
+    if kw in SYNONYMS:
+        keywords.extend(SYNONYMS[kw])
+    else:
+        # Cek partial match — kalau keyword ada di salah satu value
+        for main_key, syns in SYNONYMS.items():
+            if kw == main_key or kw in syns:
+                keywords.append(main_key)
+                keywords.extend(syns)
+                break
+
+    # Deduplicate sambil pertahankan urutan
+    seen = set()
+    unique = []
+    for k in keywords:
+        if k not in seen:
+            seen.add(k)
+            unique.append(k)
+    return unique
+
+
+# ----------------------------------------------------------------
+# Quotes pilihan (fallback)
 # ----------------------------------------------------------------
 FALLBACK_QUOTES = [
     {"text": "Sesungguhnya bersama kesulitan ada kemudahan.", "surah": "Al-Insyirah", "ayah": 6},
@@ -95,80 +174,19 @@ FALLBACK_QUOTES = [
     {"text": "Sesungguhnya Allah tidak akan mengubah keadaan suatu kaum hingga mereka mengubah keadaan yang ada pada diri mereka sendiri.", "surah": "Ar-Ra'd", "ayah": 11},
 ]
 
-# Surah-surah pendek yang bagus untuk random quote
 QUOTE_SURAHS = [1, 2, 3, 13, 14, 17, 20, 31, 36, 39, 40, 55, 65, 67, 93, 94, 103, 112, 113, 114]
 
 
 # ----------------------------------------------------------------
-# ENDPOINT: Daftar Surah
-# ----------------------------------------------------------------
-@app.get("/api/v1/surah", tags=["Surah"])
-async def list_surahs():
-    """Ambil daftar 114 surah dari equran.id."""
-    data = await fetch_equran("/surat")
-    if not data:
-        return {"total": 0, "surahs": [], "error": "Gagal mengambil data dari API"}
-
-    surahs = []
-    for s in data:
-        surahs.append({
-            "number": s.get("nomor"),
-            "name_arab": s.get("nama"),
-            "name_latin": s.get("namaLatin"),
-            "total_ayah": s.get("jumlahAyat"),
-            "tempat_turun": s.get("tempatTurun"),
-            "arti": s.get("arti"),
-        })
-
-    return {"total": len(surahs), "surahs": surahs}
-
-
-# ----------------------------------------------------------------
-# ENDPOINT: Detail Surah (ayat-ayat lengkap)
-# ----------------------------------------------------------------
-@app.get("/api/v1/surah/{surah_number}", tags=["Surah"])
-async def get_surah_detail(surah_number: int):
-    """Ambil detail surah beserta semua ayat."""
-    if surah_number < 1 or surah_number > 114:
-        return {"error": "Nomor surah harus antara 1 dan 114"}
-
-    data = await fetch_equran(f"/surat/{surah_number}")
-    if not data:
-        return {"error": "Gagal mengambil data surah"}
-
-    ayat_list = []
-    for a in data.get("ayat", []):
-        ayat_list.append({
-            "number": a.get("nomorAyat"),
-            "text_arab": a.get("teksArab"),
-            "text_latin": a.get("teksLatin"),
-            "terjemahan": a.get("teksIndonesia"),
-            "audio": a.get("audio", {}).get("05", ""),
-        })
-
-    return {
-        "number": data.get("nomor"),
-        "name_arab": data.get("nama"),
-        "name_latin": data.get("namaLatin"),
-        "total_ayah": data.get("jumlahAyat"),
-        "tempat_turun": data.get("tempatTurun"),
-        "arti": data.get("arti"),
-        "deskripsi": strip_html(data.get("deskripsi", "")),
-        "audio_full": data.get("audioFull", {}).get("05", ""),
-        "ayat": ayat_list,
-    }
-
-
-# ----------------------------------------------------------------
-# ENDPOINT: Pencarian
+# ENDPOINT: Pencarian (dengan Synonym Expansion)
 # ----------------------------------------------------------------
 @app.get("/api/v1/search", tags=["Pencarian"])
 async def search_tafsir(
     q: str = Query(..., min_length=1, max_length=200, description="Kata kunci pencarian"),
 ):
     """
-    Cari ayat yang mengandung keyword di terjemahan Indonesia.
-    Juga mengambil tafsir untuk setiap ayat yang ditemukan.
+    Cari ayat yang mengandung keyword (+ sinonim) di terjemahan Indonesia.
+    Mengambil tafsir Kemenag RI untuk setiap ayat yang ditemukan.
     """
     keyword = q.strip().lower()
 
@@ -178,6 +196,9 @@ async def search_tafsir(
     if cached is not None:
         return cached
 
+    # Expand keywords dengan synonym
+    all_keywords = expand_keywords(keyword)
+
     # Ambil daftar surah untuk mapping nama
     surah_list = await fetch_equran("/surat")
     surah_map = {}
@@ -186,10 +207,8 @@ async def search_tafsir(
             surah_map[s["nomor"]] = s
 
     results = []
-    searched_surahs = 0
 
-    # Strategi: cari di surah-surah pendek dan populer dulu,
-    # lalu beberapa surah panjang. Batasi agar tidak terlalu lambat.
+    # Strategi: cari di surah-surah prioritas
     priority_surahs = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
                        21, 23, 24, 25, 29, 30, 31, 33, 35, 36, 39, 40, 41, 42, 46,
                        49, 51, 55, 56, 57, 59, 65, 67, 71, 73, 76, 78, 87, 89, 90,
@@ -203,39 +222,42 @@ async def search_tafsir(
         if not surah_data:
             continue
 
-        searched_surahs += 1
         surah_info = surah_map.get(surah_num, {})
 
         for ayat in surah_data.get("ayat", []):
             terjemahan = ayat.get("teksIndonesia", "")
-            if keyword in terjemahan.lower():
-                # Ambil tafsir untuk ayat ini
-                tafsir_text = ""
-                tafsir_data = await fetch_equran(f"/tafsir/{surah_num}")
-                if tafsir_data:
-                    for t in tafsir_data.get("tafsir", []):
-                        if t.get("ayat") == ayat.get("nomorAyat"):
-                            raw = t.get("teks", "")
-                            # Ambil 500 karakter pertama sebagai ringkasan
-                            tafsir_text = raw[:500] + ("..." if len(raw) > 500 else "")
-                            break
+            terjemahan_lower = terjemahan.lower()
 
-                results.append({
-                    "surah": surah_num,
-                    "ayah": ayat.get("nomorAyat"),
-                    "surah_name": surah_info.get("namaLatin", f"Surah {surah_num}"),
-                    "text_arab": ayat.get("teksArab", ""),
-                    "terjemahan": terjemahan,
-                    "tafsir_list": [
-                        {"name": "Kemenag RI", "text": tafsir_text}
-                    ] if tafsir_text else [],
-                    "faidah": "",
-                })
+            # Cek apakah salah satu keyword cocok
+            matched = any(kw in terjemahan_lower for kw in all_keywords)
+            if not matched:
+                continue
 
-                if len(results) >= 15:
-                    break
+            # Ambil tafsir Kemenag RI
+            tafsir_text = ""
+            tafsir_data = await fetch_equran(f"/tafsir/{surah_num}")
+            if tafsir_data:
+                for t in tafsir_data.get("tafsir", []):
+                    if t.get("ayat") == ayat.get("nomorAyat"):
+                        raw = t.get("teks", "")
+                        tafsir_text = strip_html(raw)
+                        break
 
-    # Pilih quote yang relevan
+            results.append({
+                "surah": surah_num,
+                "ayah": ayat.get("nomorAyat"),
+                "surah_name": surah_info.get("namaLatin", f"Surah {surah_num}"),
+                "text_arab": ayat.get("teksArab", ""),
+                "terjemahan": terjemahan,
+                "tafsir_list": [
+                    {"name": "Kemenag RI", "text": tafsir_text}
+                ] if tafsir_text else [],
+            })
+
+            if len(results) >= 15:
+                break
+
+    # Quote relevan
     quote_text = ""
     if results:
         pick = random.choice(results)
@@ -264,7 +286,6 @@ async def get_tafsir(surah: int, ayah: int):
     if surah < 1 or surah > 114:
         return {"error": "Nomor surah harus antara 1 dan 114"}
 
-    # Ambil teks ayat
     surah_data = await fetch_equran(f"/surat/{surah}")
     ayat_data = None
     if surah_data:
@@ -273,16 +294,15 @@ async def get_tafsir(surah: int, ayah: int):
                 ayat_data = a
                 break
 
-    # Ambil tafsir
     tafsir_text = ""
     tafsir_data = await fetch_equran(f"/tafsir/{surah}")
     if tafsir_data:
         for t in tafsir_data.get("tafsir", []):
             if t.get("ayat") == ayah:
-                tafsir_text = t.get("teks", "")
+                tafsir_text = strip_html(t.get("teks", ""))
                 break
 
-    result = {
+    return {
         "surah": surah,
         "ayah": ayah,
         "surah_name": surah_data.get("namaLatin", "") if surah_data else "",
@@ -293,8 +313,6 @@ async def get_tafsir(surah: int, ayah: int):
         "tafsir_source": "Kemenag RI",
     }
 
-    return result
-
 
 # ----------------------------------------------------------------
 # ENDPOINT: Quotes Random
@@ -302,9 +320,7 @@ async def get_tafsir(surah: int, ayah: int):
 @app.get("/api/v1/quotes/random", tags=["Quotes"])
 async def get_random_quote():
     """Ambil satu ayat acak dari Al-Qur'an sebagai quote."""
-    # Pilih surah acak dari daftar surah pendek/populer
     surah_num = random.choice(QUOTE_SURAHS)
-
     surah_data = await fetch_equran(f"/surat/{surah_num}")
     if surah_data and surah_data.get("ayat"):
         ayat_list = surah_data["ayat"]
@@ -314,8 +330,6 @@ async def get_random_quote():
             "surah": surah_data.get("namaLatin", ""),
             "ayah": pick.get("nomorAyat", 0),
         }
-
-    # Fallback
     return random.choice(FALLBACK_QUOTES)
 
 
@@ -348,63 +362,40 @@ async def get_daily_quote():
 
 
 # ----------------------------------------------------------------
-# ENDPOINT: Analitik Tematik
-# ----------------------------------------------------------------
-@app.get("/api/v1/analytics/themes", tags=["Analitik"])
-async def get_theme_analytics():
-    """Distribusi tema dalam Al-Qur'an (data realistis berdasarkan kajian ulama)."""
-    return {
-        "themes": [
-            {"name": "Tauhid dan Akidah", "percentage": 28, "ayat_count": 1748},
-            {"name": "Hukum dan Syariat", "percentage": 22, "ayat_count": 1372},
-            {"name": "Kisah Para Nabi", "percentage": 18, "ayat_count": 1122},
-            {"name": "Hari Akhir dan Alam Ghaib", "percentage": 15, "ayat_count": 935},
-            {"name": "Akhlak dan Adab", "percentage": 10, "ayat_count": 624},
-            {"name": "Alam Semesta dan Penciptaan", "percentage": 7, "ayat_count": 435},
-        ],
-        "total_ayat": 6236,
-        "note": "Distribusi berdasarkan kategorisasi ulama tafsir.",
-    }
-
-
-# ----------------------------------------------------------------
 # ENDPOINT: Daftar Mufassir
 # ----------------------------------------------------------------
 @app.get("/api/v1/mufassireen", tags=["Tafsir"])
 async def list_mufassireen():
     """Daftar mufassir yang tersedia."""
     return {
-        "total": 1,
+        "total": 3,
         "mufassireen": [
             {
+                "id": "ibnu-katsir",
+                "name": "Imam Ibnu Katsir",
+                "kitab": "Tafsir Al-Qur'an Al-Azhim",
+                "description": "Tafsir bil Ma'tsur — mengutamakan Al-Qur'an, Hadits Shahih, Atsar Sahabat",
+                "era": "700-774 H / 1300-1373 M",
+                "badge": "Rujukan Utama Ahlus Sunnah",
+            },
+            {
+                "id": "jalalayn",
+                "name": "Tafsir Jalalayn",
+                "kitab": "Tafsir al-Jalalayn",
+                "description": "Ringkas, padat, berbasis riwayat",
+                "era": "Jalaluddin Al-Mahalli & Jalaluddin As-Suyuthi",
+                "badge": "Tafsir Ringkas Mu'tamad",
+            },
+            {
                 "id": "kemenag",
-                "name": "Kemenag RI",
+                "name": "Tafsir Kemenag RI",
                 "kitab": "Tafsir Kemenag",
-                "description": "Tafsir resmi Kementerian Agama Republik Indonesia, tersedia melalui equran.id",
+                "description": "Tafsir resmi negara, pendekatan kontekstual Indonesia",
                 "era": "Kontemporer",
+                "badge": "Referensi Resmi Indonesia",
             },
         ],
-        "note": "Data tafsir bersumber dari equran.id (Tafsir Kemenag RI).",
-    }
-
-
-# ----------------------------------------------------------------
-# ENDPOINT: Daftar Fitur
-# ----------------------------------------------------------------
-@app.get("/api/v1/features", tags=["Fitur"])
-async def list_features():
-    """Daftar fitur platform."""
-    return {
-        "features": [
-            {"name": "Pencarian Tafsir", "description": "Cari ayat berdasarkan kata kunci di terjemahan", "status": "aktif"},
-            {"name": "Tafsir Kemenag", "description": "Tafsir lengkap dari Kemenag RI via equran.id", "status": "aktif"},
-            {"name": "Daftar Surah", "description": "114 surah lengkap dengan detail ayat", "status": "aktif"},
-            {"name": "Quotes Harian", "description": "Ayat acak untuk inspirasi harian", "status": "aktif"},
-            {"name": "Analitik Tematik", "description": "Distribusi tema dalam Al-Qur'an", "status": "aktif"},
-            {"name": "Audio Murattal", "description": "Audio dari qari pilihan (via equran.id CDN)", "status": "aktif"},
-            {"name": "Asisten AI", "description": "Tanya jawab seputar tafsir", "status": "segera hadir"},
-            {"name": "Catatan Studi", "description": "Bookmark dan catatan pribadi", "status": "segera hadir"},
-        ],
+        "note": "Hanya tafsir yang terverifikasi sesuai manhaj salaf.",
     }
 
 
@@ -413,16 +404,14 @@ async def list_features():
 # ----------------------------------------------------------------
 @app.get("/health", tags=["System"])
 async def health_check():
-    """Periksa status server."""
     return {"status": "Alhamdulillah, server berjalan normal", "uptime": "OK"}
 
 
 @app.get("/", tags=["System"])
 async def root():
-    """Endpoint utama."""
     return {
         "project": "Quran Tafsir API",
-        "version": "2.0.0",
+        "version": "3.0.0",
         "docs": "/docs",
-        "source": "Data dari equran.id (Kemenag RI)",
+        "source": "Data dari equran.id (Kemenag RI) | Manhaj Salaf",
     }

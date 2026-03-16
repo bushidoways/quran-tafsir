@@ -1,400 +1,1142 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quran Tafsir</title>
-  <meta name="description" content="Platform pencarian tafsir Al-Qur'an yang terverifikasi dan tervalidasi">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Quran Tafsir — Jelajahi Tafsir Al-Qur'an</title>
+  <meta name="description" content="Platform pencarian dan eksplorasi konteks dan tafsir ayat Al-Qur'an berdasarkan ulama ahlus sunnah wal jamaah dengan manhaj salaf.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .dark body { background-color: #0f172a; color: #e2e8f0; }
-    .nav-btn.active { background-color: rgba(16, 185, 129, 0.2); color: #34d399; }
-    .fade-in { animation: fadeIn 0.3s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .glass { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); }
-    .search-glow:focus { box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
+    /* ============================================================
+       CSS VARIABLES — LIGHT & DARK TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FFFFFF;
+      --bg-card: #F9FAFB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --border: #E5E7EB;
+      --accent: #059669;
+      --accent-light: #D1FAE5;
+      --accent-hover: #047857;
+      --orb-color: rgba(5, 150, 105, 0.045);
+      --modal-overlay: rgba(0,0,0,0.55);
+      --search-bg: #F9FAFB;
+      --pill-bg: #F3F4F6;
+      --pill-text: #6B7280;
+      --pill-border: #E5E7EB;
+      --toggle-bg: rgba(255,255,255,0.85);
+      --toggle-text: #374151;
+      --toggle-icon: '☀️';
+      --stat-bg: #F9FAFB;
+      --quote-bg: #F9FAFB;
+      --quote-border: #D1FAE5;
+      --footer-text: #9CA3AF;
+      --accordion-border: #E5E7EB;
+      --mufassir-badge-bg: #D1FAE5;
+      --mufassir-badge-text: #065F46;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0F1117;
+      --bg-card: #111827;
+      --text-primary: #F9FAFB;
+      --text-secondary: #9CA3AF;
+      --border: #1F2937;
+      --accent: #34D399;
+      --accent-light: rgba(52,211,153,0.1);
+      --accent-hover: #6EE7B7;
+      --orb-color: rgba(52, 211, 153, 0.05);
+      --modal-overlay: rgba(0,0,0,0.7);
+      --search-bg: #1F2937;
+      --pill-bg: #1F2937;
+      --pill-text: #9CA3AF;
+      --pill-border: #374151;
+      --toggle-bg: rgba(17,24,39,0.85);
+      --toggle-text: #D1D5DB;
+      --toggle-icon: '🌙';
+      --stat-bg: #111827;
+      --quote-bg: #111827;
+      --quote-border: rgba(52,211,153,0.2);
+      --footer-text: #4B5563;
+      --accordion-border: #1F2937;
+      --mufassir-badge-bg: rgba(52,211,153,0.12);
+      --mufassir-badge-text: #6EE7B7;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.75;
+      font-size: 16px;
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle gradient orb */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: var(--orb-color);
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -300px;
+      left: -200px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: var(--orb-color);
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       NAVBAR
+       ============================================================ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .navbar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+    }
+    .logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+    .logo-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-top: -2px;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      text-align: center;
+      padding: 64px 24px 0;
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    .hero .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       SEARCH BAR
+       ============================================================ */
+    .search-wrap {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+      padding: 0 24px;
+    }
+    .search-bar {
+      display: flex;
+      gap: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--search-bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-bar:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text-primary);
+    }
+    .search-bar input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+    .search-bar button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-bar button:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Quick topic pills */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .pill {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      border: 1px solid var(--pill-border);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* ============================================================
+       STATS BAR
+       ============================================================ */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 16px 8px;
+      background: var(--stat-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       DAILY QUOTE
+       ============================================================ */
+    .daily-quote {
+      max-width: 680px;
+      margin: 0 auto 56px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .quote-card {
+      background: var(--quote-bg);
+      border: 1px solid var(--quote-border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .quote-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .quote-text {
+      font-size: 16px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    .quote-source {
+      font-size: 13px;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+    .quote-reload {
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      margin-top: 8px;
+      font-family: inherit;
+      transition: color 0.2s;
+    }
+    .quote-reload:hover { color: var(--accent); }
+
+    /* ============================================================
+       SECTIONS — JELAJAHI TEMA & MUFASSIR
+       ============================================================ */
+    .section {
+      max-width: 960px;
+      margin: 0 auto 56px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    /* Theme grid */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .theme-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .theme-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .theme-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+    }
+    .theme-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .theme-group-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .theme-group-label:first-child { margin-top: 0; }
+
+    /* Mufassir cards */
+    .mufassir-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .mufassir-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s, background 0.3s;
+    }
+    .mufassir-card:hover { border-color: var(--accent); }
+    .mufassir-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .mufassir-era {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .mufassir-manhaj {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .mufassir-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--mufassir-badge-bg);
+      color: var(--mufassir-badge-text);
+    }
+
+    /* ============================================================
+       MODAL — SEARCH RESULTS
+       ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-overlay);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-container {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 720px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.15s ease, background 0.3s;
+      position: relative;
+    }
+    .modal-overlay.open .modal-container {
+      transform: translateY(0);
+    }
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      border-radius: 20px 20px 0 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .modal-body {
+      padding: 24px;
+    }
+
+    /* Quote in modal */
+    .modal-quote {
+      background: var(--accent-light);
+      border: 1px solid var(--quote-border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .modal-quote-text {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.65;
+    }
+
+    /* Ayat card in modal */
+    .ayat-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      background: var(--bg-card);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .ayat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .ayat-arab {
+      text-align: right;
+      direction: rtl;
+      font-size: 24px;
+      line-height: 1.8;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      font-family: 'Traditional Arabic', 'Scheherazade New', serif;
+    }
+    .ayat-terjemahan {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    /* Accordion */
+    .accordion {
+      border-top: 1px solid var(--accordion-border);
+      transition: border-color 0.3s;
+    }
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .accordion-header:hover { color: var(--accent); }
+    .accordion-arrow {
+      font-size: 11px;
+      transition: transform 0.2s;
+    }
+    .accordion-header.open .accordion-arrow { transform: rotate(180deg); }
+    .accordion-body {
+      display: none;
+      padding: 0 0 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+    .accordion-body.open { display: block; }
+
+    /* Empty / loading */
+    .modal-loading {
+      text-align: center;
+      padding: 48px 0;
+    }
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .modal-empty {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ============================================================
+       FLOATING DARK/LIGHT TOGGLE
+       ============================================================ */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 500;
+      background: var(--toggle-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--toggle-text);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .theme-toggle-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      max-width: 960px;
+      margin: 24px auto 0;
+      transition: border-color 0.3s;
+    }
+    .footer p, .footer a {
+      font-size: 13px;
+      color: var(--footer-text);
+    }
+    .footer a {
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--accent); }
+    .footer .divider { margin: 0 8px; }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 72px;
+      right: 24px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      z-index: 600;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: all 0.25s ease;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .hero .subtitle { font-size: 14px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .theme-grid { grid-template-columns: repeat(2, 1fr); }
+      .mufassir-grid { grid-template-columns: 1fr; }
+      .modal-overlay { padding: 16px 8px; }
+      .modal-container { border-radius: 16px; max-height: calc(100vh - 32px); }
+      .modal-header { border-radius: 16px 16px 0 0; padding: 16px; }
+      .modal-body { padding: 16px; }
+      .ayat-arab { font-size: 20px; }
+      .stat-value { font-size: 18px; }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-inner { padding: 10px 16px; }
+      .logo-text { font-size: 15px; }
+      .hero { padding: 40px 16px 0; }
+      .hero h1 { font-size: 24px; }
+      .search-wrap, .pills, .daily-quote, .section { padding: 0 16px; }
+      .stats { padding: 0 16px; gap: 8px; }
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-200 min-h-screen">
+<body>
 
-  <!-- NAVBAR -->
-  <nav class="sticky top-0 z-50 glass border-b border-slate-800">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-2xl font-bold text-emerald-400">QT</span>
+  <!-- NAVBAR — hanya Beranda -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">
+        <div class="logo-icon">QT</div>
         <div>
-          <h1 class="font-bold text-emerald-400 text-lg leading-none">Quran Tafsir</h1>
-          <p class="text-[10px] text-slate-500">Terverifikasi dan Tervalidasi</p>
+          <div class="logo-text">Quran Tafsir</div>
+          <div class="logo-sub">Manhaj Salaf</div>
         </div>
-      </div>
-      <div class="flex items-center gap-1 text-xs">
-        <button onclick="showSection('home')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-emerald-400 transition active" id="btn-home">Beranda</button>
-        <button onclick="showSection('surah')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-emerald-400 transition" id="btn-surah">Surah</button>
-        <button onclick="showSection('analytics')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-emerald-400 transition" id="btn-analytics">Analitik</button>
-        <button onclick="toggleDark()" id="darkBtn" class="px-3 py-1.5 rounded-lg text-sm bg-gray-800 hover:bg-gray-700 transition">Mode Gelap</button>
+      </a>
+      <div>
+        <span class="nav-link active">Beranda</span>
       </div>
     </div>
   </nav>
 
-  <main class="max-w-5xl mx-auto px-4 py-8">
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Jelajahi Tafsir Al-Qur'an</h1>
+    <p class="subtitle">Pahami makna dan konteks ayat Al-Qur'an berdasarkan tafsir ulama ahlus sunnah wal jamaah dengan manhaj salaf.</p>
+  </div>
 
-    <!-- HOME SECTION -->
-    <section id="section-home" class="fade-in">
-      <!-- Hero -->
-      <div class="text-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">Pencarian Tafsir Al-Qur'an</h2>
-        <p class="text-emerald-400 font-medium mb-2">Terverifikasi dan Tervalidasi</p>
-        <p class="text-slate-500 text-sm max-w-lg mx-auto">
-          Cari tafsir dari berbagai mufassir terpercaya seperti Ibnu Katsir, As-Sa'di, At-Tabari, dan lainnya.
-          Dilengkapi quotes Al-Qur'an yang relevan di setiap pencarian.
-        </p>
+  <!-- SEARCH BAR -->
+  <div class="search-wrap">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Cari tafsir... (contoh: sabar, tawakkal, nabi musa)"
+        onkeydown="if(event.key==='Enter') doSearch()">
+      <button onclick="doSearch()">Cari</button>
+    </div>
+  </div>
+
+  <!-- QUICK TOPIC PILLS -->
+  <div class="pills">
+    <span class="pill" onclick="quickSearch('tauhid')">Tauhid</span>
+    <span class="pill" onclick="quickSearch('sabar')">Sabar</span>
+    <span class="pill" onclick="quickSearch('rezeki')">Rezeki</span>
+    <span class="pill" onclick="quickSearch('tawakkal')">Tawakkal</span>
+    <span class="pill" onclick="quickSearch('shalat')">Shalat</span>
+    <span class="pill" onclick="quickSearch('taubat')">Taubat</span>
+    <span class="pill" onclick="quickSearch('doa')">Doa</span>
+    <span class="pill" onclick="quickSearch('akhirat')">Akhirat</span>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value">114</div>
+      <div class="stat-label">Surah</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">6.236</div>
+      <div class="stat-label">Ayat</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Mufassir Terverifikasi</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">&#x2713;</div>
+      <div class="stat-label">Manhaj Salaf</div>
+    </div>
+  </div>
+
+  <!-- DAILY QUOTE -->
+  <div class="daily-quote">
+    <div class="quote-card">
+      <div class="quote-label">Quote Hari Ini</div>
+      <p class="quote-text" id="dailyQuote">"Sesungguhnya bersama kesulitan ada kemudahan."</p>
+      <p class="quote-source" id="dailySource">— QS. Al-Insyirah: 6</p>
+      <button class="quote-reload" onclick="loadDailyQuote()">Muat ulang</button>
+    </div>
+  </div>
+
+  <!-- JELAJAHI TEMA -->
+  <div class="section">
+    <h2 class="section-title">Jelajahi Tema</h2>
+    <p class="section-desc">Klik tema untuk langsung mencari ayat dan tafsir terkait.</p>
+
+    <div class="theme-group-label">Tema Akidah &amp; Amal</div>
+    <div class="theme-grid" style="margin-bottom:16px;">
+      <div class="theme-card" onclick="quickSearch('tauhid')"><span class="theme-icon">☝️</span><span class="theme-label">Tauhid</span></div>
+      <div class="theme-card" onclick="quickSearch('taubat')"><span class="theme-icon">🤲</span><span class="theme-label">Taubat</span></div>
+      <div class="theme-card" onclick="quickSearch('sabar')"><span class="theme-icon">🌿</span><span class="theme-label">Sabar</span></div>
+      <div class="theme-card" onclick="quickSearch('doa')"><span class="theme-icon">🕌</span><span class="theme-label">Doa</span></div>
+      <div class="theme-card" onclick="quickSearch('rezeki')"><span class="theme-icon">🌾</span><span class="theme-label">Rezeki</span></div>
+      <div class="theme-card" onclick="quickSearch('akhlak')"><span class="theme-icon">💎</span><span class="theme-label">Akhlak</span></div>
+      <div class="theme-card" onclick="quickSearch('keluarga')"><span class="theme-icon">👨‍👩‍👧</span><span class="theme-label">Keluarga</span></div>
+      <div class="theme-card" onclick="quickSearch('akhirat')"><span class="theme-icon">⚖️</span><span class="theme-label">Akhirat</span></div>
+    </div>
+
+    <div class="theme-group-label">Kisah dalam Al-Qur'an</div>
+    <div class="theme-grid">
+      <div class="theme-card" onclick="quickSearch('nabi ibrahim')"><span class="theme-icon">🕋</span><span class="theme-label">Nabi Ibrahim</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi musa')"><span class="theme-icon">🌊</span><span class="theme-label">Nabi Musa</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi yusuf')"><span class="theme-icon">⭐</span><span class="theme-label">Nabi Yusuf</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi isa')"><span class="theme-icon">📖</span><span class="theme-label">Nabi Isa</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi nuh')"><span class="theme-icon">⛵</span><span class="theme-label">Nabi Nuh</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi sulaiman')"><span class="theme-icon">👑</span><span class="theme-label">Nabi Sulaiman</span></div>
+      <div class="theme-card" onclick="quickSearch('ashabul kahfi')"><span class="theme-icon">🏔️</span><span class="theme-label">Ashabul Kahfi</span></div>
+      <div class="theme-card" onclick="quickSearch('maryam')"><span class="theme-icon">🌹</span><span class="theme-label">Maryam</span></div>
+    </div>
+  </div>
+
+  <!-- MUFASSIR TERVERIFIKASI -->
+  <div class="section">
+    <h2 class="section-title">Mufassir Terverifikasi</h2>
+    <p class="section-desc">Sumber tafsir yang digunakan, sesuai manhaj ahlus sunnah wal jamaah.</p>
+
+    <div class="mufassir-grid">
+      <div class="mufassir-card">
+        <div class="mufassir-name">Imam Ibnu Katsir</div>
+        <div class="mufassir-era">700–774 H / 1300–1373 M</div>
+        <p class="mufassir-manhaj">Tafsir bil Ma'tsur — mengutamakan Al-Qur'an, Hadits Shahih, Atsar Sahabat.</p>
+        <span class="mufassir-badge">Rujukan Utama Ahlus Sunnah</span>
       </div>
-
-      <!-- Search Box -->
-      <div class="max-w-2xl mx-auto mb-8">
-        <div class="flex gap-2">
-          <input type="text" id="searchInput" placeholder="Cari tafsir... (contoh: sabar, tawakkal, rezeki)"
-            class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 search-glow transition"
-            onkeydown="if(event.key==='Enter') doSearch()">
-          <button onclick="doSearch()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-xl text-sm font-medium transition">
-            Cari
-          </button>
-        </div>
-
-        <!-- Quick Topics -->
-        <div class="flex flex-wrap gap-2 mt-3 justify-center">
-          <button onclick="quickSearch('tauhid')" class="px-3 py-1 bg-gray-800 hover:bg-emerald-900/40 border border-gray-700 rounded-full text-xs text-gray-400 hover:text-emerald-400 transition">Tauhid</button>
-          <button onclick="quickSearch('sabar')" class="px-3 py-1 bg-gray-800 hover:bg-emerald-900/40 border border-gray-700 rounded-full text-xs text-gray-400 hover:text-emerald-400 transition">Sabar</button>
-          <button onclick="quickSearch('ilmu')" class="px-3 py-1 bg-gray-800 hover:bg-emerald-900/40 border border-gray-700 rounded-full text-xs text-gray-400 hover:text-emerald-400 transition">Ilmu</button>
-          <button onclick="quickSearch('rezeki')" class="px-3 py-1 bg-gray-800 hover:bg-emerald-900/40 border border-gray-700 rounded-full text-xs text-gray-400 hover:text-emerald-400 transition">Rezeki</button>
-          <button onclick="quickSearch('shalat')" class="px-3 py-1 bg-gray-800 hover:bg-emerald-900/40 border border-gray-700 rounded-full text-xs text-gray-400 hover:text-emerald-400 transition">Shalat</button>
-          <button onclick="quickSearch('tawakkal')" class="px-3 py-1 bg-gray-800 hover:bg-emerald-900/40 border border-gray-700 rounded-full text-xs text-gray-400 hover:text-emerald-400 transition">Tawakkal</button>
-        </div>
+      <div class="mufassir-card">
+        <div class="mufassir-name">Tafsir Jalalayn</div>
+        <div class="mufassir-era">Jalaluddin Al-Mahalli &amp; Jalaluddin As-Suyuthi</div>
+        <p class="mufassir-manhaj">Ringkas, padat, berbasis riwayat.</p>
+        <span class="mufassir-badge">Tafsir Ringkas Mu'tamad</span>
       </div>
-
-      <!-- Stats Bar -->
-      <div class="grid grid-cols-4 gap-3 max-w-2xl mx-auto mb-8">
-        <div class="text-center bg-slate-900/60 border border-slate-800 rounded-xl p-3">
-          <p class="text-xl font-bold text-emerald-400">114</p>
-          <p class="text-xs text-gray-500 mt-1">Surah</p>
-        </div>
-        <div class="text-center bg-slate-900/60 border border-slate-800 rounded-xl p-3">
-          <p class="text-xl font-bold text-emerald-400">6.236</p>
-          <p class="text-xs text-gray-500 mt-1">Ayat</p>
-        </div>
-        <div class="text-center bg-slate-900/60 border border-slate-800 rounded-xl p-3">
-          <p class="text-xl font-bold text-emerald-400">10</p>
-          <p class="text-xs text-gray-500 mt-1">Mufassir Terverifikasi</p>
-        </div>
-        <div class="text-center bg-slate-900/60 border border-slate-800 rounded-xl p-3">
-          <p class="text-xl font-bold text-emerald-400">40+</p>
-          <p class="text-xs text-gray-500 mt-1">Cross-References</p>
-        </div>
+      <div class="mufassir-card">
+        <div class="mufassir-name">Tafsir Kemenag RI</div>
+        <div class="mufassir-era">Kementerian Agama Republik Indonesia</div>
+        <p class="mufassir-manhaj">Tafsir resmi negara, pendekatan kontekstual Indonesia.</p>
+        <span class="mufassir-badge">Referensi Resmi Indonesia</span>
       </div>
-
-      <!-- Daily Quote -->
-      <div class="max-w-2xl mx-auto mb-8">
-        <div class="bg-slate-900/60 border border-emerald-900/30 rounded-xl p-5">
-          <p class="text-xs text-emerald-500 font-medium mb-3">QUOTE HARI INI</p>
-          <blockquote id="dailyQuote" class="text-white font-medium italic text-sm leading-relaxed">
-            "Sesungguhnya bersama kesulitan ada kemudahan."
-          </blockquote>
-          <p id="dailySource" class="text-emerald-600 text-xs mt-2">— QS. Al-Insyirah: 6</p>
-          <button onclick="loadDailyQuote()" class="ml-4 text-gray-600 hover:text-emerald-400 transition text-xs mt-2">Muat Ulang</button>
-        </div>
-      </div>
-
-      <!-- Search Results Container -->
-      <div id="searchResults" class="max-w-2xl mx-auto mb-8 hidden">
-        <div class="flex items-center justify-between mb-4">
-          <h3 id="searchTitle" class="text-lg font-bold text-white">Hasil Pencarian</h3>
-          <button onclick="clearSearch()" class="text-xs text-gray-600 hover:text-red-400 transition">Tutup</button>
-        </div>
-        <div id="quoteResult" class="bg-emerald-900/20 border border-emerald-800/30 rounded-xl p-4 mb-4 hidden">
-          <p class="text-xs text-emerald-500 font-semibold uppercase tracking-wider mb-3">Ayat Al-Qur'an Relevan</p>
-          <p id="quoteText" class="text-emerald-300 italic text-sm"></p>
-          <p id="quoteSource" class="text-emerald-600 text-xs mt-2"></p>
-        </div>
-        <div id="resultsList"></div>
-      </div>
-
-      <!-- Empty State -->
-      <div id="emptyState" class="max-w-2xl mx-auto text-center py-8 hidden">
-        <p class="text-4xl mb-3">Tidak ada hasil</p>
-        <p class="text-gray-500 text-sm">Coba kata kunci lain atau gunakan topik cepat di atas.</p>
-      </div>
-
-      <!-- Feature Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl mx-auto mt-8">
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-          <p class="text-2xl mb-3 font-bold text-emerald-400">AT</p>
-          <p class="text-white text-sm font-medium">Analitik Tematik</p>
-          <p class="text-gray-500 text-xs mt-1">Statistik distribusi tema dalam Al-Qur'an</p>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-          <p class="text-2xl mb-3 font-bold text-emerald-400">AI</p>
-          <p class="text-white text-sm font-medium">Asisten AI</p>
-          <p class="text-gray-500 text-xs mt-1">Asisten AI yang membantu memahami konteks ayat dengan merujuk tafsir ulama</p>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-          <p class="text-2xl mb-3 font-bold text-emerald-400">KT</p>
-          <p class="text-white text-sm font-medium">Koneksi Tematik</p>
-          <p class="text-gray-500 text-xs mt-1">Temukan keterkaitan antar ayat berdasarkan tema</p>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-          <p class="text-2xl mb-3 font-bold text-emerald-400">AM</p>
-          <p class="text-white text-sm font-medium">Audio Murattal</p>
-          <p class="text-gray-500 text-xs mt-1">Dengarkan bacaan Al-Qur'an dari qari pilihan (segera hadir)</p>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-          <p class="text-2xl mb-3 font-bold text-emerald-400">CS</p>
-          <p class="text-white text-sm font-medium">Catatan Studi</p>
-          <p class="text-gray-500 text-xs mt-1">Simpan catatan dan bookmark untuk ayat tertentu (segera hadir)</p>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-          <p class="text-2xl mb-3 font-bold text-emerald-400">TP</p>
-          <p class="text-white text-sm font-medium">Tracking Progress</p>
-          <p class="text-gray-500 text-xs mt-1">Pantau perkembangan belajar Al-Qur'an Anda</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SURAH SECTION -->
-    <section id="section-surah" class="hidden fade-in">
-      <h2 class="text-2xl font-bold text-white mb-6">Daftar Surah</h2>
-      <div id="surahList" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
-    </section>
-
-    <!-- ANALYTICS SECTION -->
-    <section id="section-analytics" class="hidden fade-in">
-      <h2 class="text-2xl font-bold text-white mb-2">Analitik Tematik Al-Qur'an</h2>
-      <p class="text-gray-500 text-sm mb-6">Distribusi tema berdasarkan kategorisasi ulama tafsir</p>
-      <div id="analyticsChart" class="space-y-3"></div>
-    </section>
-
-  </main>
+    </div>
+  </div>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800 mt-12 py-6">
-    <div class="max-w-5xl mx-auto px-4 text-center">
-      <p class="text-gray-700 text-xs">Quran Tafsir -- Open Source untuk Umat</p>
-    </div>
+  <footer class="footer">
+    <p>
+      Quran Tafsir — Open Source untuk Umat
+      <span class="divider">|</span>
+      <a href="https://rumaysho.com" target="_blank" rel="noopener noreferrer">Referensi Bacaan: rumaysho.com</a>
+    </p>
+    <p style="margin-top:8px;">
+      <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
+    </p>
   </footer>
 
+  <!-- MODAL (hidden by default) -->
+  <div class="modal-overlay" id="searchModal" onclick="closeModalOverlay(event)">
+    <div class="modal-container">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle">Hasil Pencarian</span>
+        <button class="modal-close" onclick="closeModal()" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING THEME TOGGLE -->
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle tema">
+    <span class="theme-toggle-icon" id="toggleIcon">☀️</span>
+    <span id="toggleLabel">Mode Gelap</span>
+  </button>
+
   <!-- TOAST -->
-  <div id="toast" class="fixed bottom-4 right-4 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hidden transition-all"></div>
+  <div class="toast" id="toast"></div>
 
 <script>
-    function toggleDark() {
-      document.documentElement.classList.toggle('dark');
-      const btn = document.getElementById('darkBtn');
-      btn.textContent = document.documentElement.classList.contains('dark') ? 'Mode Terang' : 'Mode Gelap';
+  const API_BASE = '/api/v1';
+
+  /* =============================================================
+     THEME TOGGLE
+     ============================================================= */
+  function getTheme() {
+    return localStorage.getItem('qt-theme') || 'light';
+  }
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const icon = document.getElementById('toggleIcon');
+    const label = document.getElementById('toggleLabel');
+    if (theme === 'dark') {
+      icon.textContent = '🌙';
+      label.textContent = 'Mode Terang';
+    } else {
+      icon.textContent = '☀️';
+      label.textContent = 'Mode Gelap';
+    }
+  }
+  function toggleTheme() {
+    const current = getTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('qt-theme', next);
+    applyTheme(next);
+  }
+  // Init theme
+  applyTheme(getTheme());
+
+  /* =============================================================
+     TOAST
+     ============================================================= */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  /* =============================================================
+     DAILY QUOTE
+     ============================================================= */
+  async function loadDailyQuote() {
+    try {
+      const res = await fetch(API_BASE + '/quotes/random');
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById('dailyQuote').textContent = '"' + data.text + '"';
+        document.getElementById('dailySource').textContent = '— QS. ' + data.surah + ': ' + data.ayah;
+      }
+    } catch(e) {
+      console.log('API belum aktif, menggunakan quote default.');
+    }
+  }
+
+  /* =============================================================
+     SEARCH
+     ============================================================= */
+  function quickSearch(term) {
+    document.getElementById('searchInput').value = term;
+    doSearch();
+  }
+
+  async function doSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    if (!q) return;
+
+    openModal();
+    document.getElementById('modalTitle').textContent = 'Mencari: ' + q + '...';
+    document.getElementById('modalBody').innerHTML =
+      '<div class="modal-loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:13px;">Sedang mencari ayat...</p></div>';
+
+    try {
+      const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
+      if (res.ok) {
+        const data = await res.json();
+        renderModal(data);
+      } else {
+        renderOffline(q);
+      }
+    } catch(e) {
+      renderOffline(q);
+    }
+  }
+
+  function renderOffline(query) {
+    document.getElementById('modalTitle').textContent = 'Hasil: ' + query;
+    document.getElementById('modalBody').innerHTML =
+      '<div class="modal-empty">Tidak dapat terhubung ke server. Pastikan API aktif.</div>';
+  }
+
+  function renderModal(data) {
+    document.getElementById('modalTitle').textContent =
+      'Hasil: ' + data.query + ' (' + (data.total_results || 0) + ' ayat)';
+
+    let html = '';
+
+    // Quote at top
+    if (data.quote) {
+      html += '<div class="modal-quote"><p class="modal-quote-text">"' + escapeHtml(data.quote) + '"</p></div>';
     }
 
-    function showSection(name) {
-      document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
-      document.getElementById('section-' + name).classList.remove('hidden');
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      const btn = document.getElementById('btn-' + name);
-      if (btn) btn.classList.add('active');
-      if (name === 'surah') loadSurahList();
-      if (name === 'analytics') loadAnalytics();
-    }
-
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.remove('hidden');
-      setTimeout(() => t.classList.add('hidden'), 3000);
-    }
-
-    const API_BASE = '/api/v1';
-
-    async function loadDailyQuote() {
-      try {
-        const res = await fetch(API_BASE + '/quotes/random');
-        if (res.ok) {
-          const data = await res.json();
-          document.getElementById('dailyQuote').textContent = '"' + data.text + '"';
-          document.getElementById('dailySource').textContent = '-- QS. ' + data.surah + ': ' + data.ayah;
+    if (data.results && data.results.length > 0) {
+      data.results.forEach(function(r, idx) {
+        html += '<div class="ayat-card">';
+        html += '<div class="ayat-label">QS. ' + escapeHtml(r.surah_name || String(r.surah)) + ': ' + r.ayah + '</div>';
+        if (r.text_arab) {
+          html += '<div class="ayat-arab">' + r.text_arab + '</div>';
         }
-      } catch(e) {
-        console.log('API belum aktif, menggunakan quote default.');
-      }
-    }
-
-    function quickSearch(term) {
-      document.getElementById('searchInput').value = term;
-      doSearch();
-    }
-
-    async function doSearch() {
-      const q = document.getElementById('searchInput').value.trim();
-      if (!q) return;
-      showToast('Mencari: ' + q + '...');
-
-      const container = document.getElementById('searchResults');
-      const resultsList = document.getElementById('resultsList');
-      container.classList.remove('hidden');
-      document.getElementById('searchTitle').textContent = 'Mencari: ' + q + '...';
-      resultsList.innerHTML = '<div class="text-center py-8"><div class="inline-block w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div><p class="text-gray-500 text-sm mt-3">Sedang mencari ayat...</p></div>';
-      document.getElementById('quoteResult').classList.add('hidden');
-
-      try {
-        const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
-        if (res.ok) {
-          const data = await res.json();
-          displayResults(data);
-        } else {
-          displayOfflineResults(q);
+        if (r.terjemahan) {
+          html += '<p class="ayat-terjemahan">' + escapeHtml(r.terjemahan) + '</p>';
         }
-      } catch(e) {
-        displayOfflineResults(q);
-      }
-    }
 
-    function displayOfflineResults(query) {
-      const container = document.getElementById('searchResults');
-      const quoteResult = document.getElementById('quoteResult');
-      const resultsList = document.getElementById('resultsList');
-
-      container.classList.remove('hidden');
-      document.getElementById('searchTitle').textContent = 'Hasil untuk: ' + query;
-      quoteResult.classList.remove('hidden');
-      document.getElementById('quoteText').textContent = '"Sesungguhnya bersama kesulitan ada kemudahan."';
-      document.getElementById('quoteSource').textContent = '-- QS. Al-Insyirah: 6';
-      resultsList.innerHTML = '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4"><p class="text-sm text-white mb-2">Menampilkan hasil offline</p><p class="text-xs text-gray-500">Hubungkan ke API server untuk hasil pencarian lengkap.</p></div>';
-    }
-
-    function displayResults(data) {
-      const container = document.getElementById('searchResults');
-      const quoteResult = document.getElementById('quoteResult');
-      const resultsList = document.getElementById('resultsList');
-
-      container.classList.remove('hidden');
-      document.getElementById('searchTitle').textContent = 'Hasil untuk: ' + data.query + ' (' + (data.total_results || data.results.length) + ' ayat)';
-
-      if (data.quote) {
-        quoteResult.classList.remove('hidden');
-        document.getElementById('quoteText').textContent = '"' + data.quote + '"';
-      }
-
-      if (data.results && data.results.length > 0) {
-        resultsList.innerHTML = data.results.map(r => {
-          let html = '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 mb-3 fade-in">';
-          html += '<p class="text-xs text-emerald-500 font-medium mb-1">QS. ' + (r.surah_name || r.surah) + ': ' + r.ayah + '</p>';
-          if (r.text_arab) html += '<p class="text-white text-right text-lg mb-2">' + r.text_arab + '</p>';
-          if (r.terjemahan) html += '<p class="text-slate-300 text-sm mb-3">' + r.terjemahan + '</p>';
-
+        // Accordion per mufassir
+        var tafsirSources = ['Ibnu Katsir', 'Jalalayn', 'Kemenag RI'];
+        tafsirSources.forEach(function(mufassirName) {
+          var found = null;
           if (r.tafsir_list) {
-            r.tafsir_list.forEach(function(mufassir) {
-              html += '<div class="mt-3 border-t border-slate-800 pt-3">';
-              html += '<p class="text-xs text-gray-500 font-medium mb-2">Tafsir ' + (mufassir.name || '') + ':</p>';
-              html += '<p class="text-slate-400 text-xs leading-relaxed">' + (mufassir.text || '') + '</p>';
-              html += '</div>';
+            r.tafsir_list.forEach(function(t) {
+              if (t.name === mufassirName) found = t;
             });
           }
-
-          if (r.faidah) {
-            html += '<div class="mt-3 bg-amber-900/10 border border-amber-800/20 rounded-lg p-3">';
-            html += '<p class="text-xs text-amber-500 font-medium mb-2">Faidah:</p>';
-            html += '<p class="text-amber-200/80 text-xs">' + r.faidah + '</p>';
-            html += '</div>';
+          var accId = 'acc-' + idx + '-' + mufassirName.replace(/\s/g, '');
+          html += '<div class="accordion">';
+          html += '<button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
+          html += '<span>Tafsir ' + mufassirName + '</span>';
+          html += '<span class="accordion-arrow">▼</span>';
+          html += '</button>';
+          html += '<div class="accordion-body" id="' + accId + '">';
+          if (found && found.text) {
+            html += escapeHtml(found.text);
+          } else {
+            html += '<span style="opacity:0.5;">Tafsir belum tersedia untuk ayat ini.</span>';
           }
+          html += '</div></div>';
+        });
 
-          html += '</div>';
-          return html;
-        }).join('');
-      } else {
-        resultsList.innerHTML = '<div class="text-center py-8"><p class="text-gray-500 text-sm">Tidak ditemukan hasil untuk kata kunci ini.</p></div>';
-      }
+        html += '</div>';
+      });
+    } else {
+      html += '<div class="modal-empty">Tidak ditemukan ayat untuk kata kunci ini. Coba kata kunci lain.</div>';
     }
 
-    function clearSearch() {
-      document.getElementById('searchResults').classList.add('hidden');
-      document.getElementById('searchInput').value = '';
+    document.getElementById('modalBody').innerHTML = html;
+  }
+
+  function toggleAccordion(id, btn) {
+    var body = document.getElementById(id);
+    var isOpen = body.classList.contains('open');
+    if (isOpen) {
+      body.classList.remove('open');
+      btn.classList.remove('open');
+    } else {
+      body.classList.add('open');
+      btn.classList.add('open');
     }
+  }
 
-    async function loadSurahList() {
-      const container = document.getElementById('surahList');
-      if (container.children.length > 0) return;
-
-      try {
-        const res = await fetch(API_BASE + '/surah');
-        if (res.ok) {
-          const data = await res.json();
-          renderSurahList(data.surahs || []);
-          return;
-        }
-      } catch(e) {}
-
-      const offlineSurahs = [
-        {number:1, name_latin:"Al-Fatihah", total_ayah:7, tempat_turun:"Makkiyah"},
-        {number:2, name_latin:"Al-Baqarah", total_ayah:286, tempat_turun:"Madaniyah"},
-        {number:3, name_latin:"Ali Imran", total_ayah:200, tempat_turun:"Madaniyah"},
-        {number:4, name_latin:"An-Nisa", total_ayah:176, tempat_turun:"Madaniyah"},
-        {number:5, name_latin:"Al-Maidah", total_ayah:120, tempat_turun:"Madaniyah"},
-        {number:36, name_latin:"Ya-Sin", total_ayah:83, tempat_turun:"Makkiyah"},
-        {number:55, name_latin:"Ar-Rahman", total_ayah:78, tempat_turun:"Madaniyah"},
-        {number:67, name_latin:"Al-Mulk", total_ayah:30, tempat_turun:"Makkiyah"},
-        {number:112, name_latin:"Al-Ikhlas", total_ayah:4, tempat_turun:"Makkiyah"},
-        {number:114, name_latin:"An-Nas", total_ayah:6, tempat_turun:"Madaniyah"},
-      ];
-      renderSurahList(offlineSurahs);
+  /* =============================================================
+     MODAL CONTROLS
+     ============================================================= */
+  function openModal() {
+    document.getElementById('searchModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('searchModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOverlay(e) {
+    if (e.target === document.getElementById('searchModal')) {
+      closeModal();
     }
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
 
-    function renderSurahList(surahs) {
-      const container = document.getElementById('surahList');
-      container.innerHTML = surahs.map(function(s) {
-        return '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3 flex items-center gap-3 hover:border-emerald-800 transition cursor-pointer" onclick="showToast(&quot;Membuka Surah ' + s.name_latin + '...&quot;)">' +
-          '<div class="w-10 h-10 bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-400 font-bold text-sm">' + s.number + '</div>' +
-          '<div class="flex-1">' +
-            '<p class="text-white text-sm font-medium">' + s.name_latin + '</p>' +
-            '<p class="text-gray-500 text-xs">' + s.total_ayah + ' ayat | ' + s.tempat_turun + '</p>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-    }
+  /* =============================================================
+     UTILITIES
+     ============================================================= */
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
 
-    async function loadAnalytics() {
-      const container = document.getElementById('analyticsChart');
-      if (container.children.length > 0) return;
-
-      let themes = [
-        {name: "Tauhid dan Akidah", percentage: 28},
-        {name: "Hukum dan Syariat", percentage: 22},
-        {name: "Kisah Para Nabi", percentage: 18},
-        {name: "Hari Akhir", percentage: 15},
-        {name: "Akhlak dan Adab", percentage: 10},
-        {name: "Alam Semesta", percentage: 7},
-      ];
-
-      try {
-        const res = await fetch(API_BASE + '/analytics/themes');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.themes) themes = data.themes;
-        }
-      } catch(e) {}
-
-      container.innerHTML = themes.map(t =>
-        '<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4">' +
-          '<div class="flex justify-between items-center mb-2">' +
-            '<p class="text-white text-sm font-medium">' + t.name + '</p>' +
-            '<p class="text-emerald-400 text-sm font-bold">' + t.percentage + '%</p>' +
-          '</div>' +
-          '<div class="w-full bg-slate-800 rounded-full h-2">' +
-            '<div class="bg-emerald-500 h-2 rounded-full" style="width: ' + t.percentage + '%"></div>' +
-          '</div>' +
-        '</div>'
-      ).join('');
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      loadDailyQuote();
-    });
+  /* =============================================================
+     INIT
+     ============================================================= */
+  document.addEventListener('DOMContentLoaded', function() {
+    loadDailyQuote();
+  });
 </script>
 
 </body>
