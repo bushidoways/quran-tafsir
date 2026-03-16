@@ -19,7 +19,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quran Tafsir — Jelajahi Tafsir Al-Qur'an</title>
-  <meta name="description" content="Platform pencarian dan eksplorasi konteks dan tafsir ayat Al-Qur'an berdasarkan ulama ahlus sunnah wal jamaah dengan manhaj salaf.">
+  <meta name="description" content="Platform pencarian dan eksplorasi konteks dan tafsir ayat Al-Qur'an berdasarkan ulama ahlus sunnah wal jamaah.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -97,7 +97,6 @@
       overflow-x: hidden;
     }
 
-    /* Subtle gradient orb */
     body::before {
       content: '';
       position: fixed;
@@ -150,8 +149,6 @@
       gap: 10px;
       text-decoration: none;
     }
-
-    /* ── NEW LOGO ICON ── */
     .logo-icon {
       width: 36px;
       height: 36px;
@@ -187,8 +184,6 @@
       fill: #ffffff;
       display: block;
     }
-    /* ── END NEW LOGO ICON ── */
-
     .logo-text {
       font-size: 17px;
       font-weight: 700;
@@ -289,7 +284,6 @@
       background: var(--accent-hover);
     }
 
-    /* Quick topic pills */
     .pills {
       display: flex;
       flex-wrap: wrap;
@@ -402,7 +396,7 @@
     .quote-reload:hover { color: var(--accent); }
 
     /* ============================================================
-       SECTIONS — JELAJAHI TEMA & MUFASSIR
+       SECTIONS
        ============================================================ */
     .section {
       max-width: 960px;
@@ -424,7 +418,6 @@
       margin-bottom: 24px;
     }
 
-    /* Theme grid */
     .theme-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -468,7 +461,6 @@
     }
     .theme-group-label:first-child { margin-top: 0; }
 
-    /* Mufassir cards */
     .mufassir-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -510,7 +502,7 @@
     }
 
     /* ============================================================
-       MODAL — SEARCH RESULTS
+       MODAL
        ============================================================ */
     .modal-overlay {
       position: fixed;
@@ -585,8 +577,6 @@
     .modal-body {
       padding: 24px;
     }
-
-    /* Quote in modal */
     .modal-quote {
       background: var(--accent-light);
       border: 1px solid var(--quote-border);
@@ -600,8 +590,6 @@
       color: var(--accent);
       line-height: 1.65;
     }
-
-    /* Ayat card in modal */
     .ayat-card {
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -631,8 +619,6 @@
       line-height: 1.75;
       margin-bottom: 16px;
     }
-
-    /* Accordion */
     .accordion {
       border-top: 1px solid var(--accordion-border);
       transition: border-color 0.3s;
@@ -666,8 +652,6 @@
       line-height: 1.75;
     }
     .accordion-body.open { display: block; }
-
-    /* Empty / loading */
     .modal-loading {
       text-align: center;
       padding: 48px 0;
@@ -690,7 +674,7 @@
     }
 
     /* ============================================================
-       FLOATING DARK/LIGHT TOGGLE
+       FLOATING TOGGLE
        ============================================================ */
     .theme-toggle {
       position: fixed;
@@ -798,12 +782,11 @@
 </head>
 <body>
 
-  <!-- NAVBAR — hanya Beranda -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="navbar-inner">
       <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">
         <div class="logo-icon">
-          <!-- Huruf ق (Qaf) — SVG custom path -->
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M19 7.5C19 5.015 16.985 3 14.5 3S10 5.015 10 7.5c0 1.8 1.02 3.36 2.5 4.16V14a2.5 2.5 0 0 1-5 0v-1h-2v1a4.5 4.5 0 0 0 9 0v-2.34A4.502 4.502 0 0 0 19 7.5zm-4.5 2.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
           </svg>
@@ -819,7 +802,7 @@
   <!-- HERO -->
   <div class="hero">
     <h1>Jelajahi Tafsir Al-Qur'an</h1>
-    <p class="subtitle">Pahami makna dan konteks ayat Al-Qur'an berdasarkan tafsir ulama ahlus sunnah wal jamaah dengan manhaj salaf.</p>
+    <p class="subtitle">Pahami makna dan konteks ayat Al-Qur'an berdasarkan tafsir ulama ahlus sunnah wal jamaah.</p>
   </div>
 
   <!-- SEARCH BAR -->
@@ -859,7 +842,7 @@
     </div>
     <div class="stat-item">
       <div class="stat-value">&#x2713;</div>
-      <div class="stat-label">Manhaj Salaf</div>
+      <div class="stat-label">Terverifikasi</div>
     </div>
   </div>
 
@@ -942,7 +925,7 @@
     </p>
   </footer>
 
-  <!-- MODAL (hidden by default) -->
+  <!-- MODAL -->
   <div class="modal-overlay" id="searchModal" onclick="closeModalOverlay(event)">
     <div class="modal-container">
       <div class="modal-header">
@@ -967,9 +950,6 @@
 <script>
   const API_BASE = '/api/v1';
 
-  /* =============================================================
-     THEME TOGGLE
-     ============================================================= */
   function getTheme() {
     return localStorage.getItem('qt-theme') || 'light';
   }
@@ -991,12 +971,8 @@
     localStorage.setItem('qt-theme', next);
     applyTheme(next);
   }
-  // Init theme
   applyTheme(getTheme());
 
-  /* =============================================================
-     TOAST
-     ============================================================= */
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -1004,9 +980,6 @@
     setTimeout(() => t.classList.remove('show'), 2500);
   }
 
-  /* =============================================================
-     DAILY QUOTE
-     ============================================================= */
   async function loadDailyQuote() {
     try {
       const res = await fetch(API_BASE + '/quotes/random');
@@ -1020,9 +993,6 @@
     }
   }
 
-  /* =============================================================
-     SEARCH
-     ============================================================= */
   function quickSearch(term) {
     document.getElementById('searchInput').value = term;
     doSearch();
@@ -1062,7 +1032,6 @@
 
     let html = '';
 
-    // Quote at top
     if (data.quote) {
       html += '<div class="modal-quote"><p class="modal-quote-text">"' + escapeHtml(data.quote) + '"</p></div>';
     }
@@ -1077,11 +1046,9 @@
         if (r.terjemahan) {
           html += '<p class="ayat-terjemahan">' + escapeHtml(r.terjemahan) + '</p>';
         }
-
-        // Accordion per mufassir — only show if tafsir text exists
         if (r.tafsir_list && r.tafsir_list.length > 0) {
           r.tafsir_list.forEach(function(t, tIdx) {
-            if (!t.text) return; // skip empty tafsir entirely
+            if (!t.text) return;
             var accId = 'acc-' + idx + '-' + tIdx;
             html += '<div class="accordion">';
             html += '<button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
@@ -1097,7 +1064,6 @@
             html += '</div></div>';
           });
         }
-
         html += '</div>';
       });
     } else {
@@ -1119,9 +1085,6 @@
     }
   }
 
-  /* =============================================================
-     MODAL CONTROLS
-     ============================================================= */
   function openModal() {
     document.getElementById('searchModal').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1139,9 +1102,6 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  /* =============================================================
-     UTILITIES
-     ============================================================= */
   function escapeHtml(str) {
     if (!str) return '';
     var div = document.createElement('div');
@@ -1149,9 +1109,6 @@
     return div.innerHTML;
   }
 
-  /* =============================================================
-     INIT
-     ============================================================= */
   document.addEventListener('DOMContentLoaded', function() {
     loadDailyQuote();
   });
