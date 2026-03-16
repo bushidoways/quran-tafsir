@@ -1,7 +1,7 @@
 """
 Quran Tafsir - Backend API
 
-Server utama dengan data nyata dari equran.id API.
+Server utama dengan data nyata dari equran.id API + tafsir dari CDN dan quran.com.
 Manhaj: Ibnu Katsir, Jalalayn, Kemenag RI saja.
 """
 import random
@@ -17,7 +17,7 @@ import httpx
 app = FastAPI(
     title="Quran Tafsir API",
     description="API untuk pencarian tafsir Al-Qur'an — Manhaj Salaf",
-    version="3.0.0",
+    version="3.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -49,6 +49,80 @@ def cache_set(key: str, data):
 
 
 # ----------------------------------------------------------------
+# TAFSIR CACHE — Jalalayn & Kemenag (loaded at startup)
+# ----------------------------------------------------------------
+TAFSIR_CACHE = {
+    "jalalayn": {},
+    "kemenag": {},
+}
+IBNU_KATSIR_CACHE: dict = {}
+
+
+async def load_tafsir_data():
+    """Load Jalalayn & Kemenag data from CDN at startup."""
+    urls = {
+        "jalalayn": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ind-jalaladdinalmah.min.json",
+        "kemenag": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ind-indonesianislam.min.json",
+    }
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        for name, url in urls.items():
+            try:
+                res = await client.get(url)
+                data = res.json()
+                for item in data["quran"]:
+                    key = f"{item['chapter']}:{item['verse']}"
+                    TAFSIR_CACHE[name][key] = item["text"]
+                print(f"[STARTUP] Loaded {name}: {len(TAFSIR_CACHE[name])} ayat")
+            except Exception as e:
+                print(f"[STARTUP ERROR] Failed to load {name}: {e}")
+
+
+@app.on_event("startup")
+async def startup_event():
+    await load_tafsir_data()
+
+
+# ----------------------------------------------------------------
+# Helper: Ibnu Katsir per-ayat (from quran.com API v4)
+# ----------------------------------------------------------------
+async def fetch_ibnu_katsir(surah: int, ayah: int) -> str:
+    """Fetch Ibnu Katsir tafsir (English) for a single ayah.
+    Uses quran.com API v4, resource_id 169 (Ibn Kathir abridged).
+    Returns plain text (HTML stripped) or empty string on failure."""
+    cache_key = f"{surah}:{ayah}"
+    if cache_key in IBNU_KATSIR_CACHE:
+        return IBNU_KATSIR_CACHE[cache_key]
+
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            url = f"https://api.quran.com/api/v4/tafsirs/169/by_ayah/{surah}:{ayah}"
+            resp = await client.get(url)
+            if resp.status_code == 200:
+                data = resp.json()
+                raw_html = data.get("tafsir", {}).get("text", "")
+                # Strip HTML tags
+                text = strip_html_bs(raw_html)
+                IBNU_KATSIR_CACHE[cache_key] = text
+                return text
+    except Exception:
+        pass
+    return ""
+
+
+def strip_html_bs(html_text: str) -> str:
+    """Strip HTML tags using BeautifulSoup (more robust than regex for nested HTML)."""
+    if not html_text:
+        return ""
+    try:
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(html_text, "html.parser")
+        return soup.get_text(separator=" ", strip=True)
+    except ImportError:
+        # Fallback to regex if bs4 not installed
+        return re.sub(r"<[^>]+>", "", html_text).strip()
+
+
+# ----------------------------------------------------------------
 # Helper: ambil data dari equran.id
 # ----------------------------------------------------------------
 EQURAN_BASE = "https://equran.id/api/v2"
@@ -74,6 +148,44 @@ def strip_html(text: str) -> str:
     if not text:
         return ""
     return re.sub(r"<[^>]+>", "", text)
+
+
+# ----------------------------------------------------------------
+# Helper: build tafsir_list for an ayah (all 3 sources)
+# ----------------------------------------------------------------
+async def build_tafsir_list(surah: int, ayah: int) -> list:
+    """Assemble tafsir from all 3 verified sources for a given ayah."""
+    key = f"{surah}:{ayah}"
+    tafsir_list = []
+
+    # 1. Ibnu Katsir (English) — per-ayat API call
+    ik_text = await fetch_ibnu_katsir(surah, ayah)
+    if ik_text:
+        tafsir_list.append({
+            "name": "Ibnu Katsir (English)",
+            "sub_label": "Abridged · Hafiz Ibn Kathir",
+            "text": ik_text,
+        })
+
+    # 2. Jalalayn (Indonesian) — from pre-loaded cache
+    jal_text = TAFSIR_CACHE["jalalayn"].get(key, "")
+    if jal_text:
+        tafsir_list.append({
+            "name": "Jalalayn",
+            "sub_label": "",
+            "text": jal_text,
+        })
+
+    # 3. Kemenag RI (Indonesian) — from pre-loaded cache
+    kem_text = TAFSIR_CACHE["kemenag"].get(key, "")
+    if kem_text:
+        tafsir_list.append({
+            "name": "Kemenag RI",
+            "sub_label": "",
+            "text": kem_text,
+        })
+
+    return tafsir_list
 
 
 # ----------------------------------------------------------------
@@ -178,7 +290,7 @@ QUOTE_SURAHS = [1, 2, 3, 13, 14, 17, 20, 31, 36, 39, 40, 55, 65, 67, 93, 94, 103
 
 
 # ----------------------------------------------------------------
-# ENDPOINT: Pencarian (dengan Synonym Expansion)
+# ENDPOINT: Pencarian (dengan Synonym Expansion + 3 Tafsir)
 # ----------------------------------------------------------------
 @app.get("/api/v1/search", tags=["Pencarian"])
 async def search_tafsir(
@@ -186,7 +298,7 @@ async def search_tafsir(
 ):
     """
     Cari ayat yang mengandung keyword (+ sinonim) di terjemahan Indonesia.
-    Mengambil tafsir Kemenag RI untuk setiap ayat yang ditemukan.
+    Mengambil tafsir dari 3 sumber: Ibnu Katsir (English), Jalalayn, Kemenag RI.
     """
     keyword = q.strip().lower()
 
@@ -233,25 +345,18 @@ async def search_tafsir(
             if not matched:
                 continue
 
-            # Ambil tafsir Kemenag RI
-            tafsir_text = ""
-            tafsir_data = await fetch_equran(f"/tafsir/{surah_num}")
-            if tafsir_data:
-                for t in tafsir_data.get("tafsir", []):
-                    if t.get("ayat") == ayat.get("nomorAyat"):
-                        raw = t.get("teks", "")
-                        tafsir_text = strip_html(raw)
-                        break
+            ayah_num = ayat.get("nomorAyat")
+
+            # Build tafsir list from all 3 sources
+            tafsir_list = await build_tafsir_list(surah_num, ayah_num)
 
             results.append({
                 "surah": surah_num,
-                "ayah": ayat.get("nomorAyat"),
+                "ayah": ayah_num,
                 "surah_name": surah_info.get("namaLatin", f"Surah {surah_num}"),
                 "text_arab": ayat.get("teksArab", ""),
                 "terjemahan": terjemahan,
-                "tafsir_list": [
-                    {"name": "Kemenag RI", "text": tafsir_text}
-                ] if tafsir_text else [],
+                "tafsir_list": tafsir_list,
             })
 
             if len(results) >= 15:
@@ -278,11 +383,11 @@ async def search_tafsir(
 
 
 # ----------------------------------------------------------------
-# ENDPOINT: Tafsir per Ayat
+# ENDPOINT: Tafsir per Ayat (all 3 sources)
 # ----------------------------------------------------------------
 @app.get("/api/v1/tafsir/{surah}/{ayah}", tags=["Tafsir"])
 async def get_tafsir(surah: int, ayah: int):
-    """Ambil tafsir untuk surah dan ayat tertentu."""
+    """Ambil tafsir dari 3 sumber untuk surah dan ayat tertentu."""
     if surah < 1 or surah > 114:
         return {"error": "Nomor surah harus antara 1 dan 114"}
 
@@ -294,13 +399,7 @@ async def get_tafsir(surah: int, ayah: int):
                 ayat_data = a
                 break
 
-    tafsir_text = ""
-    tafsir_data = await fetch_equran(f"/tafsir/{surah}")
-    if tafsir_data:
-        for t in tafsir_data.get("tafsir", []):
-            if t.get("ayat") == ayah:
-                tafsir_text = strip_html(t.get("teks", ""))
-                break
+    tafsir_list = await build_tafsir_list(surah, ayah)
 
     return {
         "surah": surah,
@@ -309,8 +408,7 @@ async def get_tafsir(surah: int, ayah: int):
         "text_arab": ayat_data.get("teksArab", "") if ayat_data else "",
         "text_latin": ayat_data.get("teksLatin", "") if ayat_data else "",
         "terjemahan": ayat_data.get("teksIndonesia", "") if ayat_data else "",
-        "tafsir": tafsir_text,
-        "tafsir_source": "Kemenag RI",
+        "tafsir_list": tafsir_list,
     }
 
 
@@ -377,6 +475,7 @@ async def list_mufassireen():
                 "description": "Tafsir bil Ma'tsur — mengutamakan Al-Qur'an, Hadits Shahih, Atsar Sahabat",
                 "era": "700-774 H / 1300-1373 M",
                 "badge": "Rujukan Utama Ahlus Sunnah",
+                "language": "English (Abridged)",
             },
             {
                 "id": "jalalayn",
@@ -385,6 +484,7 @@ async def list_mufassireen():
                 "description": "Ringkas, padat, berbasis riwayat",
                 "era": "Jalaluddin Al-Mahalli & Jalaluddin As-Suyuthi",
                 "badge": "Tafsir Ringkas Mu'tamad",
+                "language": "Bahasa Indonesia",
             },
             {
                 "id": "kemenag",
@@ -393,6 +493,7 @@ async def list_mufassireen():
                 "description": "Tafsir resmi negara, pendekatan kontekstual Indonesia",
                 "era": "Kontemporer",
                 "badge": "Referensi Resmi Indonesia",
+                "language": "Bahasa Indonesia",
             },
         ],
         "note": "Hanya tafsir yang terverifikasi sesuai manhaj salaf.",
@@ -404,14 +505,20 @@ async def list_mufassireen():
 # ----------------------------------------------------------------
 @app.get("/health", tags=["System"])
 async def health_check():
-    return {"status": "Alhamdulillah, server berjalan normal", "uptime": "OK"}
+    return {
+        "status": "Alhamdulillah, server berjalan normal",
+        "uptime": "OK",
+        "tafsir_jalalayn_loaded": len(TAFSIR_CACHE["jalalayn"]),
+        "tafsir_kemenag_loaded": len(TAFSIR_CACHE["kemenag"]),
+        "ibnu_katsir_cached": len(IBNU_KATSIR_CACHE),
+    }
 
 
 @app.get("/", tags=["System"])
 async def root():
     return {
         "project": "Quran Tafsir API",
-        "version": "3.0.0",
+        "version": "3.1.0",
         "docs": "/docs",
-        "source": "Data dari equran.id (Kemenag RI) | Manhaj Salaf",
+        "source": "Ibnu Katsir (quran.com) + Jalalayn & Kemenag (CDN) | Manhaj Salaf",
     }

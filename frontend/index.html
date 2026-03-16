@@ -1056,29 +1056,25 @@
           html += '<p class="ayat-terjemahan">' + escapeHtml(r.terjemahan) + '</p>';
         }
 
-        // Accordion per mufassir
-        var tafsirSources = ['Ibnu Katsir', 'Jalalayn', 'Kemenag RI'];
-        tafsirSources.forEach(function(mufassirName) {
-          var found = null;
-          if (r.tafsir_list) {
-            r.tafsir_list.forEach(function(t) {
-              if (t.name === mufassirName) found = t;
-            });
-          }
-          var accId = 'acc-' + idx + '-' + mufassirName.replace(/\s/g, '');
-          html += '<div class="accordion">';
-          html += '<button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
-          html += '<span>Tafsir ' + mufassirName + '</span>';
-          html += '<span class="accordion-arrow">▼</span>';
-          html += '</button>';
-          html += '<div class="accordion-body" id="' + accId + '">';
-          if (found && found.text) {
-            html += escapeHtml(found.text);
-          } else {
-            html += '<span style="opacity:0.5;">Tafsir belum tersedia untuk ayat ini.</span>';
-          }
-          html += '</div></div>';
-        });
+        // Accordion per mufassir — only show if tafsir text exists
+        if (r.tafsir_list && r.tafsir_list.length > 0) {
+          r.tafsir_list.forEach(function(t, tIdx) {
+            if (!t.text) return; // skip empty tafsir entirely
+            var accId = 'acc-' + idx + '-' + tIdx;
+            html += '<div class="accordion">';
+            html += '<button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
+            html += '<span>Tafsir ' + escapeHtml(t.name);
+            if (t.sub_label) {
+              html += ' <span style="font-weight:400;font-size:11px;opacity:0.7;">— ' + escapeHtml(t.sub_label) + '</span>';
+            }
+            html += '</span>';
+            html += '<span class="accordion-arrow">▼</span>';
+            html += '</button>';
+            html += '<div class="accordion-body" id="' + accId + '">';
+            html += escapeHtml(t.text);
+            html += '</div></div>';
+          });
+        }
 
         html += '</div>';
       });
