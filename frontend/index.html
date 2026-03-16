@@ -150,19 +150,45 @@
       gap: 10px;
       text-decoration: none;
     }
+
+    /* ── NEW LOGO ICON ── */
     .logo-icon {
       width: 36px;
       height: 36px;
-      background: var(--accent);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -0.5px;
+      box-shadow: 0 0 0 0 rgba(5,150,105,0.5);
+      animation: logo-pulse 3s ease-in-out infinite;
+      flex-shrink: 0;
     }
+    [data-theme="dark"] .logo-icon {
+      background: linear-gradient(135deg, #34D399 0%, #059669 100%);
+      box-shadow: 0 0 0 0 rgba(52,211,153,0.4);
+    }
+    @keyframes logo-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(5,150,105,0.45); }
+      50%  { box-shadow: 0 0 0 6px rgba(5,150,105,0); }
+      100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
+    }
+    [data-theme="dark"] .logo-icon {
+      animation: logo-pulse-dark 3s ease-in-out infinite;
+    }
+    @keyframes logo-pulse-dark {
+      0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+      50%  { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+      100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+    }
+    .logo-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+      display: block;
+    }
+    /* ── END NEW LOGO ICON ── */
+
     .logo-text {
       font-size: 17px;
       font-weight: 700;
@@ -782,7 +808,12 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">
-        <div class="logo-icon">QT</div>
+        <div class="logo-icon">
+          <!-- Huruf ق (Qaf) — SVG custom path -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M19 7.5C19 5.015 16.985 3 14.5 3S10 5.015 10 7.5c0 1.8 1.02 3.36 2.5 4.16V14a2.5 2.5 0 0 1-5 0v-1h-2v1a4.5 4.5 0 0 0 9 0v-2.34A4.502 4.502 0 0 0 19 7.5zm-4.5 2.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+          </svg>
+        </div>
         <div>
           <div class="logo-text">Quran Tafsir</div>
           <div class="logo-sub">Manhaj Salaf</div>
