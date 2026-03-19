@@ -1,0 +1,289 @@
+/* ============================================================
+   ONE DAY ONE VERSE — Popup Styles
+   Tambahkan ke styles.css atau file CSS terpisah
+   ============================================================ */
+
+/* Backdrop */
+.odov-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+  transition: opacity 0.3s ease;
+}
+
+/* Popup container */
+.odov-popup {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(520px, 94vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 20px;
+  z-index: 9999;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  background: linear-gradient(
+    135deg,
+    var(--odov-from, #1a1a2e),
+    var(--odov-via,  #16213e),
+    var(--odov-to,   #0f3460)
+  );
+  color: var(--odov-text, #e0e0ff);
+  transition: background 0.5s ease, color 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+  height: fit-content;
+  top: 0;
+  bottom: 0;
+}
+
+.odov-popup::-webkit-scrollbar { width: 5px; }
+.odov-popup::-webkit-scrollbar-track { background: transparent; }
+.odov-popup::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+/* Header */
+.odov-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.odov-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.odov-close {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: inherit;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.odov-close:hover { background: rgba(255,255,255,0.2); }
+
+/* Theme Badge */
+.odov-theme-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  width: fit-content;
+}
+
+/* GenZ Hook */
+.odov-hook {
+  font-size: 0.92rem;
+  opacity: 0.82;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Arab Text */
+.odov-arab {
+  font-family: "Amiri", "KFGQPC Uthmanic Script HAFS", serif;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  line-height: 2;
+  text-align: right;
+  padding: 16px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  border-right: 3px solid rgba(255,255,255,0.3);
+}
+
+/* Latin */
+.odov-latin {
+  font-size: 0.82rem;
+  opacity: 0.65;
+  font-style: italic;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Terjemahan */
+.odov-terjemahan {
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Surah Info */
+.odov-surah-info {
+  font-size: 0.78rem;
+  opacity: 0.6;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Tafsir Accordion */
+.odov-tafsir-section { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px; }
+
+.odov-tafsir-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.odov-tafsir-toggle:hover { opacity: 1; }
+
+.odov-chevron {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.odov-chevron.open { transform: rotate(180deg); }
+
+.odov-tafsir-body { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+
+.odov-tafsir-item {
+  background: rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.odov-tafsir-name {
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.odov-tafsir-text {
+  font-size: 0.84rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.odov-tafsir-text.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+.odov-tafsir-readmore {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  cursor: pointer;
+  margin-top: 4px;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+
+/* Actions */
+.odov-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.odov-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.2s;
+}
+.odov-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+.odov-btn:active { transform: translateY(0); }
+
+.odov-btn-primary {
+  background: rgba(255,255,255,0.9);
+  color: #1a1a2e;
+}
+.odov-btn-secondary {
+  background: rgba(255,255,255,0.12);
+  color: inherit;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Meta */
+.odov-meta {
+  font-size: 0.68rem;
+  opacity: 0.45;
+  text-align: center;
+  margin: 0;
+}
+
+/* Loader */
+.odov-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 0;
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+.odov-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255,255,255,0.2);
+  border-top-color: rgba(255,255,255,0.8);
+  border-radius: 50%;
+  animation: odov-spin 0.8s linear infinite;
+}
+@keyframes odov-spin { to { transform: rotate(360deg); } }
+
+/* Error */
+.odov-error {
+  text-align: center;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Utility */
+.hidden { display: none !important; }
+
+/* Animate in */
+@keyframes odov-slide-up {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+.odov-popup:not(.hidden) {
+  animation: odov-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .odov-popup { padding: 20px 16px 20px; border-radius: 16px 16px 0 0; bottom: 0; top: auto; max-height: 92vh; width: 100vw; }
+}

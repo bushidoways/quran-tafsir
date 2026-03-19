@@ -1,0 +1,68 @@
+<!-- One Day One Verse Popup Component -->
+<!-- Letakkan di dalam <body> halaman utama -->
+
+<div id="odov-backdrop" class="odov-backdrop hidden" aria-hidden="true"></div>
+
+<div id="odov-popup" class="odov-popup hidden" role="dialog" aria-modal="true" aria-label="One Day One Verse">
+  <!-- Header -->
+  <div class="odov-header">
+    <div class="odov-label">✦ ONE DAY ONE VERSE ✦</div>
+    <button id="odov-close" class="odov-close" aria-label="Tutup">&times;</button>
+  </div>
+
+  <!-- Loader -->
+  <div id="odov-loader" class="odov-loader">
+    <div class="odov-spinner"></div>
+    <p>Memuat ayat hari ini...</p>
+  </div>
+
+  <!-- Content -->
+  <div id="odov-content" class="odov-content hidden">
+    <!-- Theme Badge -->
+    <div id="odov-theme-badge" class="odov-theme-badge"></div>
+
+    <!-- Genz Hook -->
+    <p id="odov-hook" class="odov-hook"></p>
+
+    <!-- Arab Text -->
+    <div id="odov-arab" class="odov-arab" dir="rtl" lang="ar"></div>
+
+    <!-- Latin -->
+    <p id="odov-latin" class="odov-latin"></p>
+
+    <!-- Terjemahan ID -->
+    <p id="odov-terjemahan" class="odov-terjemahan"></p>
+
+    <!-- Surah Info -->
+    <div id="odov-surah-info" class="odov-surah-info"></div>
+
+    <!-- Tafsir Accordion -->
+    <div id="odov-tafsir-section" class="odov-tafsir-section">
+      <button class="odov-tafsir-toggle" id="odov-tafsir-toggle">
+        📖 Lihat Tafsir Ulama <span class="odov-chevron">▾</span>
+      </button>
+      <div id="odov-tafsir-body" class="odov-tafsir-body hidden">
+        <div id="odov-tafsir-list"></div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="odov-actions">
+      <button id="odov-regenerate" class="odov-btn odov-btn-secondary">
+        🔄 Ayat Lain
+      </button>
+      <button id="odov-share" class="odov-btn odov-btn-primary">
+        📤 Bagikan
+      </button>
+    </div>
+
+    <!-- Meta -->
+    <p id="odov-meta" class="odov-meta"></p>
+  </div>
+
+  <!-- Error -->
+  <div id="odov-error" class="odov-error hidden">
+    <p>😔 Gagal memuat ayat. Coba lagi.</p>
+    <button id="odov-retry" class="odov-btn odov-btn-primary">Coba Lagi</button>
+  </div>
+</div>
