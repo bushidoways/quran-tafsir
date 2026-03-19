@@ -2,7 +2,7 @@
 Quran Tafsir - Backend API
 
 Server utama dengan data nyata dari equran.id API + tafsir dari CDN dan quran.com.
-Manhaj: Ibnu Katsir, Jalalayn, Kemenag RI saja.
+Rujukan Tafsir : Ibnu Katsir, Jalalayn, Kemenag RI saja.
 """
 import random
 import time
@@ -12,6 +12,11 @@ from pathlib import Path
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
+###   _  _                   
+ | \| |__ _ _ _  __ _ ___
+ | .` / _` | ' \/ _` (_-<  
+ |_|\_\__,_|_||_\__, /__/
+                |___/    ###
 
 # ----------------------------------------------------------------
 # Inisialisasi Aplikasi
