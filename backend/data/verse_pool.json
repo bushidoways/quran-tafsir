@@ -1,0 +1,959 @@
+{
+  "total": 106,
+  "verses": [
+    {
+      "surah": 94,
+      "ayah": 5,
+      "theme": "anxiety",
+      "theme_label": "Overthinking & Anxiety",
+      "tags": ["hopeful", "struggle", "relief"],
+      "genz_hook": "Buat kamu yang lagi ngerasa semua beban datang barengan.",
+      "translation_en": "For indeed, with hardship will be ease."
+    },
+    {
+      "surah": 94,
+      "ayah": 6,
+      "theme": "anxiety",
+      "theme_label": "Overthinking & Anxiety",
+      "tags": ["hopeful", "relief", "repeat"],
+      "genz_hook": "Allah ngulang ini dua kali. Bukan kebetulan.",
+      "translation_en": "Indeed, with hardship will be ease."
+    },
+    {
+      "surah": 2,
+      "ayah": 286,
+      "theme": "anxiety",
+      "theme_label": "Overthinking & Anxiety",
+      "tags": ["capacity", "burden", "mercy"],
+      "genz_hook": "Allah tau batas kamu. Dia ga akan kasih lebih dari yang kamu sanggup.",
+      "translation_en": "Allah does not burden a soul beyond that it can bear."
+    },
+    {
+      "surah": 65,
+      "ayah": 3,
+      "theme": "anxiety",
+      "theme_label": "Overthinking & Anxiety",
+      "tags": ["tawakkal", "enough", "trust"],
+      "genz_hook": "Kalau udah serahin ke Allah, Dia yang urus sisanya.",
+      "translation_en": "And whoever relies upon Allah — then He is sufficient for him."
+    },
+    {
+      "surah": 3,
+      "ayah": 139,
+      "theme": "anxiety",
+      "theme_label": "Overthinking & Anxiety",
+      "tags": ["strong", "believer", "don't grieve"],
+      "genz_hook": "Stop ngerasa lemah. Kamu lebih kuat dari yang kamu kira.",
+      "translation_en": "Do not weaken and do not grieve, and you will be superior if you are true believers."
+    },
+    {
+      "surah": 39,
+      "ayah": 53,
+      "theme": "anxiety",
+      "theme_label": "Overthinking & Anxiety",
+      "tags": ["hope", "mercy", "don't despair"],
+      "genz_hook": "Seberapa jauh pun kamu ngerasa udah 'kejauhan' — pintu ini belum tutup.",
+      "translation_en": "Do not despair of the mercy of Allah. Indeed, Allah forgives all sins."
+    },
+    {
+      "surah": 50,
+      "ayah": 16,
+      "theme": "loneliness",
+      "theme_label": "Loneliness & Feeling Unseen",
+      "tags": ["close", "Allah sees", "intimate"],
+      "genz_hook": "Di saat kamu ngerasa ga ada yang ngerti — Dia lebih dekat dari urat nadimu sendiri.",
+      "translation_en": "We are closer to him than his jugular vein."
+    },
+    {
+      "surah": 2,
+      "ayah": 186,
+      "theme": "loneliness",
+      "theme_label": "Loneliness & Feeling Unseen",
+      "tags": ["prayer", "near", "respond"],
+      "genz_hook": "Ga perlu perantara. Ga perlu nunggu. Dia langsung dengerin.",
+      "translation_en": "I am near. I respond to the invocation of the supplicant when he calls upon Me."
+    },
+    {
+      "surah": 9,
+      "ayah": 40,
+      "theme": "loneliness",
+      "theme_label": "Loneliness & Feeling Unseen",
+      "tags": ["Allah is with us", "comfort", "companion"],
+      "genz_hook": "Waktu semua orang ninggalin — ada yang bilang 'jangan sedih, Allah bersama kita'.",
+      "translation_en": "Do not grieve; indeed Allah is with us."
+    },
+    {
+      "surah": 93,
+      "ayah": 3,
+      "theme": "loneliness",
+      "theme_label": "Loneliness & Feeling Unseen",
+      "tags": ["not abandoned", "forgotten", "love"],
+      "genz_hook": "Allah ga pernah ninggalin kamu. Meski rasanya sepi banget.",
+      "translation_en": "Your Lord has not taken leave of you, nor has He detested you."
+    },
+    {
+      "surah": 95,
+      "ayah": 4,
+      "theme": "self_worth",
+      "theme_label": "Self-Worth & Identity",
+      "tags": ["dignity", "creation", "best form"],
+      "genz_hook": "Kamu diciptakan dalam bentuk yang sebaik-baiknya. Bukan kebetulan.",
+      "translation_en": "We have certainly created man in the best of stature."
+    },
+    {
+      "surah": 17,
+      "ayah": 70,
+      "theme": "self_worth",
+      "theme_label": "Self-Worth & Identity",
+      "tags": ["honored", "dignity", "humans"],
+      "genz_hook": "Allah muliakan manusia. Termasuk kamu — exactly as you are.",
+      "translation_en": "We have honored the children of Adam."
+    },
+    {
+      "surah": 4,
+      "ayah": 32,
+      "theme": "self_worth",
+      "theme_label": "Self-Worth & Identity",
+      "tags": ["comparison", "jealousy", "your own portion"],
+      "genz_hook": "Stop bandingin hidupmu sama orang lain di FYP. Rezekim sendiri udah dijamin.",
+      "translation_en": "Do not wish for what Allah has given some of you over others."
+    },
+    {
+      "surah": 49,
+      "ayah": 13,
+      "theme": "self_worth",
+      "theme_label": "Self-Worth & Identity",
+      "tags": ["equality", "no racism", "taqwa"],
+      "genz_hook": "Ga ada yang lebih tinggi karena followers, harta, atau keturunan. Yang beda cuma taqwa.",
+      "translation_en": "Indeed, the most noble of you in the sight of Allah is the most righteous of you."
+    },
+    {
+      "surah": 53,
+      "ayah": 39,
+      "theme": "hustle",
+      "theme_label": "Hustle, Effort & Reward",
+      "tags": ["effort", "work", "result"],
+      "genz_hook": "Usahamu ga akan pernah sia-sia. Setiap gerak itu dicatat.",
+      "translation_en": "And that there is not for man except that for which he strives."
+    },
+    {
+      "surah": 13,
+      "ayah": 11,
+      "theme": "hustle",
+      "theme_label": "Hustle, Effort & Reward",
+      "tags": ["change", "self", "effort"],
+      "genz_hook": "Allah ga akan ubah nasibmu sampai kamu sendiri yang mulai bergerak.",
+      "translation_en": "Allah will not change the condition of a people until they change what is in themselves."
+    },
+    {
+      "surah": 11,
+      "ayah": 6,
+      "theme": "hustle",
+      "theme_label": "Hustle, Effort & Reward",
+      "tags": ["rizq", "guaranteed", "trust"],
+      "genz_hook": "Rezekim udah ada. Tugas kamu cuma jalan dan jemput.",
+      "translation_en": "There is no creature on earth but that its provision is due from Allah."
+    },
+    {
+      "surah": 94,
+      "ayah": 7,
+      "theme": "hustle",
+      "theme_label": "Hustle, Effort & Reward",
+      "tags": ["done", "next", "striving"],
+      "genz_hook": "Udah selesai satu hal? Langsung cari yang berikutnya. Jangan nganggur.",
+      "translation_en": "So when you have finished your duties, then stand up for worship."
+    },
+    {
+      "surah": 28,
+      "ayah": 77,
+      "theme": "hustle",
+      "theme_label": "Hustle, Effort & Reward",
+      "tags": ["balance", "dunya akhirat", "don't forget"],
+      "genz_hook": "Ngejar dunia boleh. Tapi jangan sampe lupa bagianmu di akhirat.",
+      "translation_en": "Seek the home of the Hereafter, but do not forget your share of the world."
+    },
+    {
+      "surah": 2,
+      "ayah": 155,
+      "theme": "heartbreak",
+      "theme_label": "Heartbreak & Loss",
+      "tags": ["test", "loss", "patience"],
+      "genz_hook": "Kehilangan itu nyata. Dan kamu boleh ngerasa sakit.",
+      "translation_en": "We will surely test you with fear and hunger and loss of wealth and lives and fruits."
+    },
+    {
+      "surah": 2,
+      "ayah": 156,
+      "theme": "heartbreak",
+      "theme_label": "Heartbreak & Loss",
+      "tags": ["inna lillahi", "return", "acceptance"],
+      "genz_hook": "Kalimat yang paling ikhlas yang pernah ada — untuk setiap kehilangan.",
+      "translation_en": "Indeed we belong to Allah, and indeed to Him we will return."
+    },
+    {
+      "surah": 12,
+      "ayah": 86,
+      "theme": "heartbreak",
+      "theme_label": "Heartbreak & Loss",
+      "tags": ["grief", "Allah alone", "complaint"],
+      "genz_hook": "Nabi Yaqub nangis sampai buta. Kesedihan itu manusiawi.",
+      "translation_en": "I only complain of my suffering and my grief to Allah."
+    },
+    {
+      "surah": 93,
+      "ayah": 5,
+      "theme": "heartbreak",
+      "theme_label": "Heartbreak & Loss",
+      "tags": ["soon", "better", "promise"],
+      "genz_hook": "Hari ini mungkin masih gelap. Tapi ada hari yang lebih baik yang dijanjikan.",
+      "translation_en": "And your Lord is going to give you, and you will be satisfied."
+    },
+    {
+      "surah": 12,
+      "ayah": 87,
+      "theme": "hope",
+      "theme_label": "Hope in Dark Times",
+      "tags": ["don't lose hope", "mercy", "disbelief"],
+      "genz_hook": "Putus asa dari rahmat Allah — itu yang dilarang. Bukan ngerasa sedihnya.",
+      "translation_en": "Do not despair of relief from Allah. Indeed, no one despairs of relief from Allah except the disbelieving people."
+    },
+    {
+      "surah": 65,
+      "ayah": 2,
+      "theme": "hope",
+      "theme_label": "Hope in Dark Times",
+      "tags": ["way out", "unexpected", "taqwa"],
+      "genz_hook": "Jalan keluar itu ada. Kadang datang dari arah yang ga kamu sangka.",
+      "translation_en": "Whoever fears Allah — He will make for him a way out."
+    },
+    {
+      "surah": 2,
+      "ayah": 45,
+      "theme": "hope",
+      "theme_label": "Hope in Dark Times",
+      "tags": ["patience", "prayer", "help"],
+      "genz_hook": "Dua senjata yang paling underrated: sabar dan sholat.",
+      "translation_en": "Seek help through patience and prayer. Indeed, it is a burden except for the humble."
+    },
+    {
+      "surah": 3,
+      "ayah": 173,
+      "theme": "hope",
+      "theme_label": "Hope in Dark Times",
+      "tags": ["Allah is enough", "trust", "guardian"],
+      "genz_hook": "Waktu semua terasa melawan — cukup bilang ini.",
+      "translation_en": "Sufficient for us is Allah, and He is the best Disposer of affairs."
+    },
+    {
+      "surah": 57,
+      "ayah": 4,
+      "theme": "hope",
+      "theme_label": "Hope in Dark Times",
+      "tags": ["He is with you", "wherever", "witness"],
+      "genz_hook": "Dimanapun kamu berada sekarang — Dia ada di sana juga.",
+      "translation_en": "He is with you wherever you are, and Allah is Seeing of what you do."
+    },
+    {
+      "surah": 14,
+      "ayah": 7,
+      "theme": "gratitude",
+      "theme_label": "Gratitude & Syukur",
+      "tags": ["more", "increase", "syukur"],
+      "genz_hook": "Syukur itu bukan sekadar ucapan. Itu cara nambah nikmat.",
+      "translation_en": "If you are grateful, I will surely increase you in favor."
+    },
+    {
+      "surah": 55,
+      "ayah": 13,
+      "theme": "gratitude",
+      "theme_label": "Gratitude & Syukur",
+      "tags": ["which favors", "deny", "blessings"],
+      "genz_hook": "Allah tanya ini 31 kali dalam satu surah. Jawab dengan jujur.",
+      "translation_en": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "surah": 16,
+      "ayah": 18,
+      "theme": "gratitude",
+      "theme_label": "Gratitude & Syukur",
+      "tags": ["count", "cannot", "blessings"],
+      "genz_hook": "Coba hitung nikmat kamu hari ini. Kamu ga akan bisa selesai.",
+      "translation_en": "If you tried to count the favors of Allah, you could not enumerate them."
+    },
+    {
+      "surah": 2,
+      "ayah": 152,
+      "theme": "gratitude",
+      "theme_label": "Gratitude & Syukur",
+      "tags": ["remember", "zikir", "exchange"],
+      "genz_hook": "Kamu ingat Allah, Dia ingat kamu. Deal yang paling worth it.",
+      "translation_en": "So remember Me; I will remember you. And be grateful to Me and do not deny Me."
+    },
+    {
+      "surah": 4,
+      "ayah": 135,
+      "theme": "justice",
+      "theme_label": "Justice & Speaking Truth",
+      "tags": ["stand firm", "witness", "justice"],
+      "genz_hook": "Keadilan bukan cuma buat orang lain. Kadang harus lawan diri sendiri juga.",
+      "translation_en": "Be persistently standing firm in justice, witnesses for Allah, even if it be against yourselves."
+    },
+    {
+      "surah": 57,
+      "ayah": 25,
+      "theme": "justice",
+      "theme_label": "Justice & Speaking Truth",
+      "tags": ["scripture", "balance", "justice"],
+      "genz_hook": "Agama diturunkan salah satunya supaya manusia bisa tegak dalam keadilan.",
+      "translation_en": "We sent Our messengers with clear proofs and sent down with them the Scripture and the balance that the people may maintain justice."
+    },
+    {
+      "surah": 4,
+      "ayah": 148,
+      "theme": "justice",
+      "theme_label": "Justice & Speaking Truth",
+      "tags": ["speak out", "oppression", "allowed"],
+      "genz_hook": "Kalau kamu dizalimi — kamu boleh ngomong. Itu bukan dosa.",
+      "translation_en": "Allah does not like public mention of evil except by one who has been wronged."
+    },
+    {
+      "surah": 9,
+      "ayah": 71,
+      "theme": "justice",
+      "theme_label": "Justice & Speaking Truth",
+      "tags": ["amar maruf", "nahi munkar", "community"],
+      "genz_hook": "Saling jaga, saling ingetin — itu tugas kita satu sama lain.",
+      "translation_en": "The believing men and believing women are allies of one another. They enjoin what is right and forbid what is wrong."
+    },
+    {
+      "surah": 2,
+      "ayah": 153,
+      "theme": "patience",
+      "theme_label": "Patience & Perseverance",
+      "tags": ["Allah with patient", "help", "sabar"],
+      "genz_hook": "Allah langsung nyebut Dia bersama orang-orang yang sabar. Langsung.",
+      "translation_en": "Indeed, Allah is with the patient."
+    },
+    {
+      "surah": 39,
+      "ayah": 10,
+      "theme": "patience",
+      "theme_label": "Patience & Perseverance",
+      "tags": ["reward", "unlimited", "account"],
+      "genz_hook": "Pahala sabar itu ga ada batasnya. Literally unlimited.",
+      "translation_en": "Indeed, the patient will be given their reward without account."
+    },
+    {
+      "surah": 3,
+      "ayah": 200,
+      "theme": "patience",
+      "theme_label": "Patience & Perseverance",
+      "tags": ["persevere", "stand firm", "fear Allah"],
+      "genz_hook": "Sabar, terus sabar, terus lebih sabar lagi. Bertahap — tapi jangan berhenti.",
+      "translation_en": "Be patient and persevere and remain stationed and fear Allah that you may be successful."
+    },
+    {
+      "surah": 16,
+      "ayah": 127,
+      "theme": "patience",
+      "theme_label": "Patience & Perseverance",
+      "tags": ["patience from Allah", "don't grieve", "distress"],
+      "genz_hook": "Kemampuan sabar itu bukan dari kamu sendiri — itu dikasih Allah.",
+      "translation_en": "And be patient, and your patience is not but through Allah."
+    },
+    {
+      "surah": 3,
+      "ayah": 135,
+      "theme": "taubat",
+      "theme_label": "Forgiveness & Comeback",
+      "tags": ["remember Allah", "forgive sins", "not persist"],
+      "genz_hook": "Jatuh itu manusiawi. Yang penting bangun dan minta maaf ke Allah.",
+      "translation_en": "Those who remember Allah and seek forgiveness for their sins — and who forgives sins except Allah?"
+    },
+    {
+      "surah": 66,
+      "ayah": 8,
+      "theme": "taubat",
+      "theme_label": "Forgiveness & Comeback",
+      "tags": ["sincere taubat", "reform", "light"],
+      "genz_hook": "Taubat yang sungguh-sungguh bisa ubah kegelapan jadi cahaya.",
+      "translation_en": "Turn to Allah in sincere repentance; perhaps your Lord will remove from you your misdeeds."
+    },
+    {
+      "surah": 4,
+      "ayah": 110,
+      "theme": "taubat",
+      "theme_label": "Forgiveness & Comeback",
+      "tags": ["wrong yourself", "seek forgiveness", "merciful"],
+      "genz_hook": "Seberapa besar pun dosamu — ini ayat yang harus kamu baca.",
+      "translation_en": "Whoever does evil or wrongs himself then seeks the forgiveness of Allah will find Allah Forgiving and Merciful."
+    },
+    {
+      "surah": 20,
+      "ayah": 82,
+      "theme": "taubat",
+      "theme_label": "Forgiveness & Comeback",
+      "tags": ["forgive", "believe", "righteous"],
+      "genz_hook": "Pengampunan Allah itu luas banget. Lebih luas dari semua dosamu.",
+      "translation_en": "I am the Perpetual Forgiver of whoever repents and believes and does righteousness."
+    },
+    {
+      "surah": 96,
+      "ayah": 1,
+      "theme": "knowledge",
+      "theme_label": "Knowledge & Learning",
+      "tags": ["read", "first", "revelation"],
+      "genz_hook": "Perintah pertama yang turun ke manusia: Baca. Belajar. Pahami.",
+      "translation_en": "Read in the name of your Lord who created."
+    },
+    {
+      "surah": 20,
+      "ayah": 114,
+      "theme": "knowledge",
+      "theme_label": "Knowledge & Learning",
+      "tags": ["increase knowledge", "pray", "ask"],
+      "genz_hook": "Nabi sendiri diperintah minta tambah ilmu. Kamu juga harusnya.",
+      "translation_en": "My Lord, increase me in knowledge."
+    },
+    {
+      "surah": 58,
+      "ayah": 11,
+      "theme": "knowledge",
+      "theme_label": "Knowledge & Learning",
+      "tags": ["raise degrees", "scholars", "believers"],
+      "genz_hook": "Ilmu itu yang angkat derajat. Bukan follower count.",
+      "translation_en": "Allah will raise those who have believed among you and those who were given knowledge, by degrees."
+    },
+    {
+      "surah": 39,
+      "ayah": 9,
+      "theme": "knowledge",
+      "theme_label": "Knowledge & Learning",
+      "tags": ["equal", "know vs not know", "reflect"],
+      "genz_hook": "Orang yang tau dan yang ga tau — emang sama? Pikirin.",
+      "translation_en": "Are those who know equal to those who do not know?"
+    },
+    {
+      "surah": 107,
+      "ayah": 6,
+      "theme": "riya",
+      "theme_label": "Authenticity vs Show-Off",
+      "tags": ["show off", "prayer", "woe"],
+      "genz_hook": "Ngelakuin kebaikan cuma biar dilihat? Ada ayat khusus buat itu.",
+      "translation_en": "Those who make show of their deeds."
+    },
+    {
+      "surah": 2,
+      "ayah": 264,
+      "theme": "riya",
+      "theme_label": "Authenticity vs Show-Off",
+      "tags": ["void", "showing off", "charity"],
+      "genz_hook": "Sedekah yang difollow-up sama pamer — pahalanya hangus.",
+      "translation_en": "Do not invalidate your charities with reminders or injury as does one who spends his wealth to be seen by the people."
+    },
+    {
+      "surah": 31,
+      "ayah": 18,
+      "theme": "riya",
+      "theme_label": "Authenticity vs Show-Off",
+      "tags": ["arrogance", "don't turn cheek", "walk humbly"],
+      "genz_hook": "Sombong itu subtle. Bisa kelihatan dari cara jalan dan cara ngomong.",
+      "translation_en": "Do not turn your cheek in contempt toward people and do not walk through the earth exultantly."
+    },
+    {
+      "surah": 4,
+      "ayah": 36,
+      "theme": "riya",
+      "theme_label": "Authenticity vs Show-Off",
+      "tags": ["show off", "not love", "arrogant"],
+      "genz_hook": "Allah ga suka yang pamer. Dan itu disebut langsung.",
+      "translation_en": "Allah does not like those who are self-deluding and boastful."
+    },
+    {
+      "surah": 51,
+      "ayah": 56,
+      "theme": "purpose",
+      "theme_label": "Purpose & Meaning of Life",
+      "tags": ["created", "worship", "why"],
+      "genz_hook": "Kalau lagi questioning 'buat apa hidup' — ini jawabannya.",
+      "translation_en": "I did not create jinn and mankind except to worship Me."
+    },
+    {
+      "surah": 2,
+      "ayah": 30,
+      "theme": "purpose",
+      "theme_label": "Purpose & Meaning of Life",
+      "tags": ["khalifah", "earth", "mission"],
+      "genz_hook": "Kamu bukan cuma penumpang di bumi ini. Kamu khalifah.",
+      "translation_en": "Indeed, I will make upon the earth a successive authority."
+    },
+    {
+      "surah": 23,
+      "ayah": 115,
+      "theme": "purpose",
+      "theme_label": "Purpose & Meaning of Life",
+      "tags": ["useless", "created", "purpose"],
+      "genz_hook": "Diciptain sia-sia? Allah sendiri yang tanya itu ke kita.",
+      "translation_en": "Did you think that We created you uselessly and that to Us you would not be returned?"
+    },
+    {
+      "surah": 67,
+      "ayah": 2,
+      "theme": "purpose",
+      "theme_label": "Purpose & Meaning of Life",
+      "tags": ["test", "best deed", "life and death"],
+      "genz_hook": "Hidup ini ujian. Pertanyaannya bukan seberapa banyak — tapi seberapa baik.",
+      "translation_en": "He who created death and life to test you as to which of you is best in deed."
+    },
+    {
+      "surah": 43,
+      "ayah": 67,
+      "theme": "friendship",
+      "theme_label": "True Friendship",
+      "tags": ["friends become enemies", "taqwa", "real"],
+      "genz_hook": "Di akhirat, teman dunia bisa jadi musuh — kecuali yang saling bawa kebaikan.",
+      "translation_en": "Close friends, that day, will be enemies to each other, except for the righteous."
+    },
+    {
+      "surah": 18,
+      "ayah": 28,
+      "theme": "friendship",
+      "theme_label": "True Friendship",
+      "tags": ["company", "morning evening", "don't leave"],
+      "genz_hook": "Jaga circle yang inget Allah bareng kamu. Itu harta yang ga ternilai.",
+      "translation_en": "Keep yourself patient with those who call upon their Lord in the morning and the evening, seeking His face."
+    },
+    {
+      "surah": 49,
+      "ayah": 11,
+      "theme": "friendship",
+      "theme_label": "True Friendship",
+      "tags": ["mock", "no ridicule", "brotherhood"],
+      "genz_hook": "Ga ada tempat buat nge-bully dan ngerendahin — even bercanda.",
+      "translation_en": "Do not let a people ridicule another people; perhaps they may be better than them."
+    },
+    {
+      "surah": 49,
+      "ayah": 12,
+      "theme": "friendship",
+      "theme_label": "True Friendship",
+      "tags": ["suspicion", "backbite", "spy"],
+      "genz_hook": "Julid, gossip, stalking gebetan orang — semua ada di ayat ini.",
+      "translation_en": "Avoid much suspicion; indeed, some suspicion is sin. And do not spy or backbite each other."
+    },
+    {
+      "surah": 2,
+      "ayah": 275,
+      "theme": "rizq",
+      "theme_label": "Money, Rizq & Halal",
+      "tags": ["riba", "haram", "trade"],
+      "genz_hook": "Paylater, pinjol, riba — ada konsekuensinya yang serius.",
+      "translation_en": "Allah has permitted trade and has forbidden interest."
+    },
+    {
+      "surah": 64,
+      "ayah": 17,
+      "theme": "rizq",
+      "theme_label": "Money, Rizq & Halal",
+      "tags": ["lend Allah", "multiply", "forgive"],
+      "genz_hook": "Sedekah itu bukan rugi. Itu investasi dengan return yang ga ada batasnya.",
+      "translation_en": "If you loan Allah a goodly loan, He will multiply it for you and forgive you."
+    },
+    {
+      "surah": 62,
+      "ayah": 10,
+      "theme": "rizq",
+      "theme_label": "Money, Rizq & Halal",
+      "tags": ["seek bounty", "spread earth", "prayer done"],
+      "genz_hook": "Selesai sholat — langsung gerak. Rizq itu dijemput, bukan ditunggu.",
+      "translation_en": "When the prayer has concluded, spread through the land and seek from the bounty of Allah."
+    },
+    {
+      "surah": 3,
+      "ayah": 185,
+      "theme": "akhirat",
+      "theme_label": "Death & What Comes After",
+      "tags": ["every soul", "taste death", "test"],
+      "genz_hook": "Satu hal yang pasti dan ga bisa di-skip: mati.",
+      "translation_en": "Every soul will taste death, and you will only be given your full compensation on the Day of Resurrection."
+    },
+    {
+      "surah": 56,
+      "ayah": 60,
+      "theme": "akhirat",
+      "theme_label": "Death & What Comes After",
+      "tags": ["decreed death", "not escaped", "Allah"],
+      "genz_hook": "Kematian itu sudah tertulis. Persiapannya yang belum.",
+      "translation_en": "We have decreed death among you, and We are not to be outdone."
+    },
+    {
+      "surah": 78,
+      "ayah": 40,
+      "theme": "akhirat",
+      "theme_label": "Death & What Comes After",
+      "tags": ["warning", "near day", "see deeds"],
+      "genz_hook": "Hari itu datang. Kamu akan lihat sendiri semua yang kamu perbuat.",
+      "translation_en": "Indeed, We have warned you of a near punishment on the Day when a man will observe what his hands have put forth."
+    },
+    {
+      "surah": 99,
+      "ayah": 7,
+      "theme": "akhirat",
+      "theme_label": "Death & What Comes After",
+      "tags": ["atom weight", "good", "see it"],
+      "genz_hook": "Sebiji zarah kebaikan pun kelihatan. Ga ada yang hilang.",
+      "translation_en": "So whoever does an atom's weight of good will see it."
+    },
+    {
+      "surah": 99,
+      "ayah": 8,
+      "theme": "akhirat",
+      "theme_label": "Death & What Comes After",
+      "tags": ["atom weight", "evil", "see it"],
+      "genz_hook": "Dan sebiji zarah keburukan pun kelihatan. Ga ada yang tersembunyi.",
+      "translation_en": "And whoever does an atom's weight of evil will see it."
+    },
+    {
+      "surah": 17,
+      "ayah": 23,
+      "theme": "family",
+      "theme_label": "Family & Honoring Parents",
+      "tags": ["parents", "uff", "kind"],
+      "genz_hook": "Nyebut 'ih' ke orang tua pun dilarang. Serius.",
+      "translation_en": "Your Lord has decreed that you worship none but Him, and that you be kind to parents. Say not to them 'uff.'"
+    },
+    {
+      "surah": 31,
+      "ayah": 14,
+      "theme": "family",
+      "theme_label": "Family & Honoring Parents",
+      "tags": ["mother", "hardship", "gratitude"],
+      "genz_hook": "Semua yang ibu kamu lalui buat kamu — Allah catat semua.",
+      "translation_en": "His mother carried him with hardship and gave birth to him with hardship. Be grateful to Me and to your parents."
+    },
+    {
+      "surah": 17,
+      "ayah": 24,
+      "theme": "family",
+      "theme_label": "Family & Honoring Parents",
+      "tags": ["mercy", "wing", "raised"],
+      "genz_hook": "Doa ini pendek — tapi beratnya luar biasa buat orang tua.",
+      "translation_en": "My Lord, have mercy upon them as they brought me up when I was small."
+    },
+    {
+      "surah": 3,
+      "ayah": 190,
+      "theme": "signs",
+      "theme_label": "Signs of Allah in the Universe",
+      "tags": ["sky", "earth", "creation", "signs"],
+      "genz_hook": "Langit dan bumi bukan dekorasi. Itu tanda-tanda buat yang mau mikir.",
+      "translation_en": "Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding."
+    },
+    {
+      "surah": 30,
+      "ayah": 21,
+      "theme": "signs",
+      "theme_label": "Signs of Allah in the Universe",
+      "tags": ["love", "spouse", "mercy", "sign"],
+      "genz_hook": "Rasa tenang di sisi pasangan yang baik — itu tanda kebesaran Allah.",
+      "translation_en": "He created for you mates that you may find tranquility in them; and He placed between you affection and mercy."
+    },
+    {
+      "surah": 55,
+      "ayah": 5,
+      "theme": "signs",
+      "theme_label": "Signs of Allah in the Universe",
+      "tags": ["sun", "moon", "calculation"],
+      "genz_hook": "Matahari dan bulan bergerak dengan hitungan yang presisi banget. Siapa yang ngatur?",
+      "translation_en": "The sun and the moon follow their calculated courses."
+    },
+    {
+      "surah": 24,
+      "ayah": 45,
+      "theme": "signs",
+      "theme_label": "Signs of Allah in the Universe",
+      "tags": ["water", "living", "creation"],
+      "genz_hook": "Semua yang hidup — dari air. Sains baru buktiin ini ribuan tahun kemudian.",
+      "translation_en": "Allah has created every moving creature from water."
+    },
+    {
+      "surah": 13,
+      "ayah": 28,
+      "theme": "mindfulness",
+      "theme_label": "Peace of Mind & Zikir",
+      "tags": ["hearts at rest", "zikir", "peace"],
+      "genz_hook": "Kalau lagi gelisah dan ga tau kenapa — ini yang dibutuhin.",
+      "translation_en": "Verily, in the remembrance of Allah do hearts find rest."
+    },
+    {
+      "surah": 33,
+      "ayah": 41,
+      "theme": "mindfulness",
+      "theme_label": "Peace of Mind & Zikir",
+      "tags": ["remember much", "zikir", "often"],
+      "genz_hook": "Perbanyak ingat Allah. Bukan cuma pas susah.",
+      "translation_en": "O you who have believed, remember Allah with much remembrance."
+    },
+    {
+      "surah": 7,
+      "ayah": 205,
+      "theme": "mindfulness",
+      "theme_label": "Peace of Mind & Zikir",
+      "tags": ["remember Lord", "humble", "fear", "morning evening"],
+      "genz_hook": "Morning routine yang paling worth: mulai dengan ingat Allah.",
+      "translation_en": "Remember your Lord within yourself in humility and in fear — morning and evening."
+    },
+    {
+      "surah": 9,
+      "ayah": 119,
+      "theme": "integrity",
+      "theme_label": "Honesty & Integrity",
+      "tags": ["truthful", "be with", "fear Allah"],
+      "genz_hook": "Jaga kejujuran. Bergaul sama orang-orang yang jujur.",
+      "translation_en": "O you who believe, fear Allah and be with the truthful."
+    },
+    {
+      "surah": 33,
+      "ayah": 70,
+      "theme": "integrity",
+      "theme_label": "Honesty & Integrity",
+      "tags": ["speak right", "straight words", "taqwa"],
+      "genz_hook": "Fear Allah dan ngomong yang bener. Sesimpel itu — dan seberat itu.",
+      "translation_en": "Fear Allah and speak words of appropriate justice."
+    },
+    {
+      "surah": 22,
+      "ayah": 30,
+      "theme": "integrity",
+      "theme_label": "Honesty & Integrity",
+      "tags": ["avoid false word", "falsehood", "stay away"],
+      "genz_hook": "Jauhi perkataan palsu. Hoaks, gossip, fitnah — semua masuk kategori ini.",
+      "translation_en": "Avoid the uncleanliness of idols and avoid false statement."
+    },
+    {
+      "surah": 29,
+      "ayah": 2,
+      "theme": "resilience",
+      "theme_label": "Resilience Through Tests",
+      "tags": ["tested", "believe", "left alone"],
+      "genz_hook": "Ngaku beriman tapi ga mau diuji? Itu ga nyambung.",
+      "translation_en": "Do the people think that they will be left to say 'We believe' and they will not be tried?"
+    },
+    {
+      "surah": 2,
+      "ayah": 214,
+      "theme": "resilience",
+      "theme_label": "Resilience Through Tests",
+      "tags": ["hardship", "before you", "near"],
+      "genz_hook": "Orang-orang sebelum kamu juga diuji. Bahkan lebih berat. Dan mereka bertahan.",
+      "translation_en": "Or do you think you will enter Paradise while such trial has not yet come to you as came to those who passed before you?"
+    },
+    {
+      "surah": 21,
+      "ayah": 35,
+      "theme": "resilience",
+      "theme_label": "Resilience Through Tests",
+      "tags": ["every soul", "tested", "evil and good"],
+      "genz_hook": "Kesenangan juga ujian. Bukan cuma kesulitan.",
+      "translation_en": "Every soul will taste death. And We test you with evil and with good as trial; and to Us you will be returned."
+    },
+    {
+      "surah": 40,
+      "ayah": 60,
+      "theme": "dua",
+      "theme_label": "The Power of Dua",
+      "tags": ["call on Me", "respond", "prayer"],
+      "genz_hook": "Allah sendiri yang minta kamu berdoa. Dan Dia janji bakal jawab.",
+      "translation_en": "Call upon Me; I will respond to you."
+    },
+    {
+      "surah": 27,
+      "ayah": 62,
+      "theme": "dua",
+      "theme_label": "The Power of Dua",
+      "tags": ["distressed", "calls", "relief"],
+      "genz_hook": "Di titik paling gelap, waktu ga ada yang bisa bantu — siapa yang dengerin?",
+      "translation_en": "Who responds to the desperate when he calls upon Him and removes evil?"
+    },
+    {
+      "surah": 7,
+      "ayah": 55,
+      "theme": "dua",
+      "theme_label": "The Power of Dua",
+      "tags": ["humbly", "privately", "not exceed"],
+      "genz_hook": "Doa yang paling makbul: yang rendah hati dan tulus, bukan yang keras-keras.",
+      "translation_en": "Call upon your Lord in humility and privately; indeed, He does not like transgressors."
+    },
+    {
+      "surah": 1,
+      "ayah": 5,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["worship", "help", "you alone"],
+      "genz_hook": "Satu ayat yang kamu ulang 17 kali sehari. Tapi sudah sungguh-sungguh belum?",
+      "translation_en": "It is You we worship and You we ask for help."
+    },
+    {
+      "surah": 112,
+      "ayah": 1,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["tauhid", "one", "Allah"],
+      "genz_hook": "Sepertiga Al-Qur'an dalam satu surah. Simpel. Absolut.",
+      "translation_en": "Say: He is Allah, the One."
+    },
+    {
+      "surah": 103,
+      "ayah": 3,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["time", "loss", "except"],
+      "genz_hook": "Semua rugi, kecuali yang ini. Cek checklist kamu hari ini.",
+      "translation_en": "Except for those who have believed and done righteous deeds and advised each other to truth and advised each other to patience."
+    },
+    {
+      "surah": 2,
+      "ayah": 255,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["ayatul kursi", "living", "eternal"],
+      "genz_hook": "Ayat paling agung dalam Al-Qur'an. Baca sebelum tidur.",
+      "translation_en": "Allah — there is no deity except Him, the Ever-Living, the Sustainer of existence."
+    },
+    {
+      "surah": 18,
+      "ayah": 10,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["cave", "youth", "mercy guidance"],
+      "genz_hook": "Pemuda yang lari dari kedzaliman sambil tetap pegang iman — itu Ashabul Kahfi.",
+      "translation_en": "Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance."
+    },
+    {
+      "surah": 7,
+      "ayah": 23,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["wronged ourselves", "forgive", "mercy"],
+      "genz_hook": "Doa Nabi Adam pas ngerasa udah beneran salah besar.",
+      "translation_en": "Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers."
+    },
+    {
+      "surah": 2,
+      "ayah": 201,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["dunya akhirat", "balance", "protect"],
+      "genz_hook": "Doa paling balance: minta kebaikan dunia, akhirat, dan perlindungan dari neraka.",
+      "translation_en": "Our Lord, give us in this world that which is good and in the Hereafter that which is good and protect us from the punishment of the Fire."
+    },
+    {
+      "surah": 25,
+      "ayah": 74,
+      "theme": "daily",
+      "theme_label": "Daily Reminder",
+      "tags": ["spouse", "children", "coolness of eyes"],
+      "genz_hook": "Buat yang udah nikah atau mau nikah — doa ini yang dijaga.",
+      "translation_en": "Our Lord, grant us from among our wives and offspring comfort to our eyes and make us an example for the righteous."
+    },
+    {
+      "surah": 2,
+      "ayah": 216,
+      "theme": "trust",
+      "theme_label": "Trusting Allah's Plan",
+      "tags": ["may dislike", "good for you", "Allah knows"],
+      "genz_hook": "Yang kamu benci mungkin justru yang terbaik buat kamu. Allah yang tau.",
+      "translation_en": "Perhaps you dislike a thing and it is good for you; and perhaps you love a thing and it is bad for you. Allah knows, while you know not."
+    },
+    {
+      "surah": 8,
+      "ayah": 30,
+      "theme": "trust",
+      "theme_label": "Trusting Allah's Plan",
+      "tags": ["plan", "Allah plans", "best planner"],
+      "genz_hook": "Manusia berencana, Allah yang menentukan. Dan rencana-Nya selalu lebih baik.",
+      "translation_en": "They plan, and Allah plans. And Allah is the best of planners."
+    },
+    {
+      "surah": 4,
+      "ayah": 79,
+      "theme": "trust",
+      "theme_label": "Trusting Allah's Plan",
+      "tags": ["good from Allah", "evil from yourself", "decree"],
+      "genz_hook": "Nikmat dari Allah, musibah — coba evaluasi dirimu dulu.",
+      "translation_en": "What comes to you of good is from Allah, but what comes to you of evil is from yourself."
+    },
+    {
+      "surah": 64,
+      "ayah": 11,
+      "theme": "trust",
+      "theme_label": "Trusting Allah's Plan",
+      "tags": ["no calamity", "except by permission", "guide heart"],
+      "genz_hook": "Ga ada musibah yang terjadi tanpa izin Allah. Dan orang yang beriman — hatinya tetap tenang.",
+      "translation_en": "No disaster strikes except by permission of Allah. And whoever believes in Allah — He will guide his heart."
+    },
+    {
+      "surah": 31,
+      "ayah": 19,
+      "theme": "character",
+      "theme_label": "Character & Humility",
+      "tags": ["walk modestly", "lower voice", "donkey"],
+      "genz_hook": "Suara keras bukan tanda kuat. Bahkan suara keledai disebut paling buruk.",
+      "translation_en": "Be moderate in your pace and lower your voice; indeed, the most disagreeable of sounds is the voice of donkeys."
+    },
+    {
+      "surah": 25,
+      "ayah": 63,
+      "theme": "character",
+      "theme_label": "Character & Humility",
+      "tags": ["walk humbly", "peace", "servants of Rahman"],
+      "genz_hook": "Ciri hamba Allah yang sejati: jalan dengan tenang, ngomong damai.",
+      "translation_en": "The servants of the Most Merciful are those who walk upon the earth easily, and when the ignorant address them harshly, they say words of peace."
+    },
+    {
+      "surah": 49,
+      "ayah": 6,
+      "theme": "character",
+      "theme_label": "Character & Humility",
+      "tags": ["verify news", "fasiq", "harm unknowingly"],
+      "genz_hook": "Scroll TikTok liat berita — tabayyun dulu sebelum share. Ini perintah Allah.",
+      "translation_en": "O you who have believed, if there comes to you a disobedient one with information, investigate."
+    },
+    {
+      "surah": 17,
+      "ayah": 9,
+      "theme": "quran",
+      "theme_label": "Quran as Guidance",
+      "tags": ["guide", "straight path", "good news"],
+      "genz_hook": "Al-Qur'an itu GPS kehidupan. Tinggal mau dibuka atau enggak.",
+      "translation_en": "This Quran guides to that which is most suitable and gives good tidings."
+    },
+    {
+      "surah": 17,
+      "ayah": 82,
+      "theme": "quran",
+      "theme_label": "Quran as Guidance",
+      "tags": ["healing", "mercy", "believers"],
+      "genz_hook": "Al-Qur'an itu obat. Bukan metafora — literally penyembuh.",
+      "translation_en": "We send down the Quran as a healing and mercy for the believers."
+    },
+    {
+      "surah": 57,
+      "ayah": 28,
+      "theme": "quran",
+      "theme_label": "Quran as Guidance",
+      "tags": ["light to walk", "forgive", "mercy"],
+      "genz_hook": "Orang yang beriman punya cahaya yang jalan sama mereka. Mau itu?",
+      "translation_en": "He will appoint for you a light by which you will walk and will forgive you."
+    },
+    {
+      "surah": 2,
+      "ayah": 2,
+      "theme": "quran",
+      "theme_label": "Quran as Guidance",
+      "tags": ["no doubt", "guidance", "muttaqin"],
+      "genz_hook": "Ga ada keraguan di dalamnya. Petunjuk buat yang mau bertaqwa.",
+      "translation_en": "This is the Book about which there is no doubt, a guidance for those conscious of Allah."
+    }
+  ]
+}
