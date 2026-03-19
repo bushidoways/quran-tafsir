@@ -7,6 +7,8 @@ Manhaj: Ibnu Katsir, Jalalayn, Kemenag RI saja.
 import random
 import time
 import re
+import json as _json
+from pathlib import Path
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
@@ -17,7 +19,7 @@ import httpx
 app = FastAPI(
     title="Quran Tafsir API",
     description="API untuk pencarian tafsir Al-Qur'an — Manhaj Salaf",
-    version="3.1.0",
+    version="3.2.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -57,12 +59,35 @@ TAFSIR_CACHE = {
 }
 IBNU_KATSIR_CACHE: dict = {}
 
+# ----------------------------------------------------------------
+# One Day One Verse — Verse Pool & Palette
+# ----------------------------------------------------------------
+VERSE_POOL: list = []
 
+PALETTES = [
+    {"name": "malam",     "from": "#1a1a2e", "via": "#16213e", "to": "#0f3460", "text": "#e0e0ff"},
+    {"name": "alam",      "from": "#1b4332", "via": "#2d6a4f", "to": "#74c69d", "text": "#d8f3dc"},
+    {"name": "senja",     "from": "#264653", "via": "#e76f51", "to": "#f4a261", "text": "#fff1e6"},
+    {"name": "spiritual", "from": "#10002b", "via": "#3a0ca3", "to": "#7209b7", "text": "#e0aaff"},
+    {"name": "langit",    "from": "#03045e", "via": "#0077b6", "to": "#48cae4", "text": "#caf0f8"},
+    {"name": "fajar",     "from": "#370617", "via": "#e85d04", "to": "#ffba08", "text": "#fff3b0"},
+    {"name": "hutan",     "from": "#081c15", "via": "#1b4332", "to": "#40916c", "text": "#b7e4c7"},
+]
+
+
+def get_palette(surah: int, ayah: int) -> dict:
+    idx = (surah * 17 + ayah * 13) % len(PALETTES)
+    return PALETTES[idx]
+
+
+# ----------------------------------------------------------------
+# STARTUP: Load semua data
+# ----------------------------------------------------------------
 async def load_tafsir_data():
     """Load Jalalayn & Kemenag data from CDN at startup."""
     urls = {
         "jalalayn": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ind-jalaladdinalmah.min.json",
-        "kemenag": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ind-indonesianislam.min.json",
+        "kemenag":  "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ind-indonesianislam.min.json",
     }
     async with httpx.AsyncClient(timeout=60.0) as client:
         for name, url in urls.items():
@@ -77,9 +102,22 @@ async def load_tafsir_data():
                 print(f"[STARTUP ERROR] Failed to load {name}: {e}")
 
 
+async def load_verse_pool():
+    """Load curated ODOV verse pool from JSON at startup."""
+    pool_path = Path(__file__).parent / "data" / "verse_pool.json"
+    if pool_path.exists():
+        with open(pool_path, encoding="utf-8") as f:
+            data = _json.load(f)
+            VERSE_POOL.extend(data.get("verses", []))
+        print(f"[STARTUP] Loaded verse pool: {len(VERSE_POOL)} ayat")
+    else:
+        print("[STARTUP WARNING] verse_pool.json not found — ODOV will fallback to daily quote")
+
+
 @app.on_event("startup")
 async def startup_event():
     await load_tafsir_data()
+    await load_verse_pool()
 
 
 # ----------------------------------------------------------------
@@ -100,7 +138,6 @@ async def fetch_ibnu_katsir(surah: int, ayah: int) -> str:
             if resp.status_code == 200:
                 data = resp.json()
                 raw_html = data.get("tafsir", {}).get("text", "")
-                # Strip HTML tags
                 text = strip_html_bs(raw_html)
                 IBNU_KATSIR_CACHE[cache_key] = text
                 return text
@@ -118,7 +155,6 @@ def strip_html_bs(html_text: str) -> str:
         soup = BeautifulSoup(html_text, "html.parser")
         return soup.get_text(separator=" ", strip=True)
     except ImportError:
-        # Fallback to regex if bs4 not installed
         return re.sub(r"<[^>]+>", "", html_text).strip()
 
 
@@ -158,7 +194,6 @@ async def build_tafsir_list(surah: int, ayah: int) -> list:
     key = f"{surah}:{ayah}"
     tafsir_list = []
 
-    # 1. Ibnu Katsir (English) — per-ayat API call
     ik_text = await fetch_ibnu_katsir(surah, ayah)
     if ik_text:
         tafsir_list.append({
@@ -167,7 +202,6 @@ async def build_tafsir_list(surah: int, ayah: int) -> list:
             "text": ik_text,
         })
 
-    # 2. Jalalayn (Indonesian) — from pre-loaded cache
     jal_text = TAFSIR_CACHE["jalalayn"].get(key, "")
     if jal_text:
         tafsir_list.append({
@@ -176,7 +210,6 @@ async def build_tafsir_list(surah: int, ayah: int) -> list:
             "text": jal_text,
         })
 
-    # 3. Kemenag RI (Indonesian) — from pre-loaded cache
     kem_text = TAFSIR_CACHE["kemenag"].get(key, "")
     if kem_text:
         tafsir_list.append({
@@ -192,7 +225,6 @@ async def build_tafsir_list(surah: int, ayah: int) -> list:
 # SYNONYM DICTIONARY — seluas-luasnya
 # ----------------------------------------------------------------
 SYNONYMS = {
-    # Variasi ejaan umum
     "shalat": ["salat", "sholat", "solat", "mendirikan salat", "tegakkan salat"],
     "tawakkal": ["tawakal", "bertawakal", "tawakul", "berserah diri", "berserah kepada allah"],
     "quran": ["qur'an", "alquran", "al-quran", "kitab", "kitabullah"],
@@ -202,19 +234,13 @@ SYNONYMS = {
     "jihad": ["jihad", "berjuang", "berjihad", "fisabilillah"],
     "syukur": ["bersyukur", "syukuri", "terima kasih kepada allah"],
     "istighfar": ["ampunan", "mohon ampun", "ampunilah", "pengampunan"],
-
-    # Tema akidah
-    "tauhid": ["esa", "menyekutukan", "keesaan allah", "tiada tuhan selain allah",
-               "la ilaha illallah", "tidak ada sekutu"],
+    "tauhid": ["esa", "menyekutukan", "keesaan allah", "tiada tuhan selain allah", "la ilaha illallah", "tidak ada sekutu"],
     "taubat": ["ampun", "istighfar", "kembali kepada allah", "bertaubat", "tobat"],
     "sabar": ["tabah", "teguh", "tidak berputus asa", "bersabarlah", "kesabaran"],
-    "akhirat": ["hari kiamat", "hari pembalasan", "surga", "neraka", "hari akhir",
-                "yaumul qiyamah", "kebangkitan"],
+    "akhirat": ["hari kiamat", "hari pembalasan", "surga", "neraka", "hari akhir", "yaumul qiyamah", "kebangkitan"],
     "doa": ["memohon", "berdoa", "seruan", "munajat", "permohonan"],
     "akhlak": ["budi pekerti", "perilaku", "adab", "sopan santun", "mulia"],
     "keluarga": ["orang tua", "ibu bapak", "istri", "suami", "anak", "birrul walidain"],
-
-    # Kisah para nabi
     "nabi ibrahim": ["ibrahim", "khalilullah", "bapak para nabi", "hanif"],
     "nabi musa": ["musa", "kalimullah", "bani israil", "firaun dan musa", "tongkat musa"],
     "nabi yusuf": ["yusuf", "putra yakub", "ibnu yaqub"],
@@ -232,8 +258,6 @@ SYNONYMS = {
     "nabi yakub": ["yakub", "israil", "bapak yusuf"],
     "nabi zakariya": ["zakariya", "ayah yahya"],
     "nabi yahya": ["yahya", "putra zakariya"],
-
-    # Kisah dalam Al-Qur'an
     "ashabul kahfi": ["penghuni gua", "pemuda gua", "tujuh pemuda"],
     "firaun": ["fir'aun", "firaun", "raja mesir", "penindas bani israil"],
     "qarun": ["qarun", "harta qarun", "kekayaan qarun", "sombong karena harta"],
@@ -244,23 +268,17 @@ SYNONYMS = {
 }
 
 
-def expand_keywords(keyword: str) -> list[str]:
-    """Perluas keyword menjadi daftar sinonim."""
+def expand_keywords(keyword: str) -> list:
     kw = keyword.lower().strip()
     keywords = [kw]
-
-    # Cek exact match dulu
     if kw in SYNONYMS:
         keywords.extend(SYNONYMS[kw])
     else:
-        # Cek partial match — kalau keyword ada di salah satu value
         for main_key, syns in SYNONYMS.items():
             if kw == main_key or kw in syns:
                 keywords.append(main_key)
                 keywords.extend(syns)
                 break
-
-    # Deduplicate sambil pertahankan urutan
     seen = set()
     unique = []
     for k in keywords:
@@ -289,6 +307,78 @@ FALLBACK_QUOTES = [
 QUOTE_SURAHS = [1, 2, 3, 13, 14, 17, 20, 31, 36, 39, 40, 55, 65, 67, 93, 94, 103, 112, 113, 114]
 
 
+# ================================================================
+# ENDPOINTS
+# ================================================================
+
+# ----------------------------------------------------------------
+# ENDPOINT: One Day One Verse (ODOV) ✨
+# ----------------------------------------------------------------
+@app.get("/api/v1/odov", tags=["One Day One Verse"])
+async def one_day_one_verse(
+    seed: int = Query(None, description="User seed dari localStorage (0-99999)"),
+    offset: int = Query(0, ge=0, le=20, description="Regenerate offset, max 20x per hari"),
+):
+    """
+    One Day One Verse — ayat harian tematik dengan 3 tafsir lengkap.
+    - Tanpa seed  : semua user dapat ayat yang sama hari ini
+    - Dengan seed : setiap user dapat jalur ayat yang unik selama 1 tahun
+    - offset      : user bisa regenerate hingga 20x, tetap deterministik
+    """
+    from datetime import date
+
+    today       = date.today()
+    day_of_year = today.timetuple().tm_yday
+
+    pool  = VERSE_POOL
+    total = len(pool)
+
+    if total == 0:
+        return await get_daily_quote()
+
+    if seed is not None:
+        index = (seed + day_of_year * 7 + offset * 37) % total
+    else:
+        date_seed = today.year * 10000 + today.month * 100 + today.day
+        index     = (date_seed + offset * 37) % total
+
+    verse     = pool[index]
+    surah_num = verse["surah"]
+    ayah_num  = verse["ayah"]
+
+    tafsir_list = await build_tafsir_list(surah_num, ayah_num)
+
+    surah_data = await fetch_equran(f"/surat/{surah_num}")
+    ayat_data  = None
+    if surah_data:
+        for a in surah_data.get("ayat", []):
+            if a.get("nomorAyat") == ayah_num:
+                ayat_data = a
+                break
+
+    palette = get_palette(surah_num, ayah_num)
+
+    return {
+        "date":        str(today),
+        "day_of_year": day_of_year,
+        "offset":      offset,
+        "verse": {
+            **verse,
+            "text_arab":     ayat_data.get("teksArab", "")      if ayat_data  else "",
+            "text_latin":    ayat_data.get("teksLatin", "")     if ayat_data  else "",
+            "terjemahan_id": ayat_data.get("teksIndonesia", "") if ayat_data  else "",
+            "surah_name":    surah_data.get("namaLatin", f"Surah {surah_num}") if surah_data else f"Surah {surah_num}",
+        },
+        "tafsir_list": tafsir_list,
+        "palette":     palette,
+        "meta": {
+            "total_pool":     total,
+            "can_regenerate": offset < 20,
+            "next_offset":    offset + 1 if offset < 20 else None,
+        },
+    }
+
+
 # ----------------------------------------------------------------
 # ENDPOINT: Pencarian (dengan Synonym Expansion + 3 Tafsir)
 # ----------------------------------------------------------------
@@ -300,31 +390,28 @@ async def search_tafsir(
     Cari ayat yang mengandung keyword (+ sinonim) di terjemahan Indonesia.
     Mengambil tafsir dari 3 sumber: Ibnu Katsir (English), Jalalayn, Kemenag RI.
     """
-    keyword = q.strip().lower()
-
-    # Cek cache
+    keyword   = q.strip().lower()
     cache_key = f"search:{keyword}"
-    cached = cache_get(cache_key)
+    cached    = cache_get(cache_key)
     if cached is not None:
         return cached
 
-    # Expand keywords dengan synonym
     all_keywords = expand_keywords(keyword)
 
-    # Ambil daftar surah untuk mapping nama
     surah_list = await fetch_equran("/surat")
-    surah_map = {}
+    surah_map  = {}
     if surah_list:
         for s in surah_list:
             surah_map[s["nomor"]] = s
 
     results = []
 
-    # Strategi: cari di surah-surah prioritas
-    priority_surahs = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
-                       21, 23, 24, 25, 29, 30, 31, 33, 35, 36, 39, 40, 41, 42, 46,
-                       49, 51, 55, 56, 57, 59, 65, 67, 71, 73, 76, 78, 87, 89, 90,
-                       91, 93, 94, 95, 96, 103, 109, 112, 113, 114]
+    priority_surahs = [
+        1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20,
+        21, 23, 24, 25, 29, 30, 31, 33, 35, 36, 39, 40, 41, 42, 46,
+        49, 51, 55, 56, 57, 59, 65, 67, 71, 73, 76, 78, 87, 89, 90,
+        91, 93, 94, 95, 96, 103, 109, 112, 113, 114,
+    ]
 
     for surah_num in priority_surahs:
         if len(results) >= 15:
@@ -337,45 +424,39 @@ async def search_tafsir(
         surah_info = surah_map.get(surah_num, {})
 
         for ayat in surah_data.get("ayat", []):
-            terjemahan = ayat.get("teksIndonesia", "")
+            terjemahan       = ayat.get("teksIndonesia", "")
             terjemahan_lower = terjemahan.lower()
 
-            # Cek apakah salah satu keyword cocok
-            matched = any(kw in terjemahan_lower for kw in all_keywords)
-            if not matched:
+            if not any(kw in terjemahan_lower for kw in all_keywords):
                 continue
 
-            ayah_num = ayat.get("nomorAyat")
-
-            # Build tafsir list from all 3 sources
+            ayah_num    = ayat.get("nomorAyat")
             tafsir_list = await build_tafsir_list(surah_num, ayah_num)
 
             results.append({
-                "surah": surah_num,
-                "ayah": ayah_num,
-                "surah_name": surah_info.get("namaLatin", f"Surah {surah_num}"),
-                "text_arab": ayat.get("teksArab", ""),
-                "terjemahan": terjemahan,
+                "surah":       surah_num,
+                "ayah":        ayah_num,
+                "surah_name":  surah_info.get("namaLatin", f"Surah {surah_num}"),
+                "text_arab":   ayat.get("teksArab", ""),
+                "terjemahan":  terjemahan,
                 "tafsir_list": tafsir_list,
             })
 
             if len(results) >= 15:
                 break
 
-    # Quote relevan
-    quote_text = ""
     if results:
-        pick = random.choice(results)
+        pick       = random.choice(results)
         quote_text = f"{pick['terjemahan']} (QS. {pick['surah_name']}: {pick['ayah']})"
     else:
-        fb = random.choice(FALLBACK_QUOTES)
+        fb         = random.choice(FALLBACK_QUOTES)
         quote_text = f"{fb['text']} (QS. {fb['surah']}: {fb['ayah']})"
 
     response = {
-        "query": q,
+        "query":         q,
         "total_results": len(results),
-        "results": results,
-        "quote": quote_text,
+        "results":       results,
+        "quote":         quote_text,
     }
 
     cache_set(cache_key, response)
@@ -392,7 +473,7 @@ async def get_tafsir(surah: int, ayah: int):
         return {"error": "Nomor surah harus antara 1 dan 114"}
 
     surah_data = await fetch_equran(f"/surat/{surah}")
-    ayat_data = None
+    ayat_data  = None
     if surah_data:
         for a in surah_data.get("ayat", []):
             if a.get("nomorAyat") == ayah:
@@ -402,11 +483,11 @@ async def get_tafsir(surah: int, ayah: int):
     tafsir_list = await build_tafsir_list(surah, ayah)
 
     return {
-        "surah": surah,
-        "ayah": ayah,
+        "surah":      surah,
+        "ayah":       ayah,
         "surah_name": surah_data.get("namaLatin", "") if surah_data else "",
-        "text_arab": ayat_data.get("teksArab", "") if ayat_data else "",
-        "text_latin": ayat_data.get("teksLatin", "") if ayat_data else "",
+        "text_arab":  ayat_data.get("teksArab", "")   if ayat_data  else "",
+        "text_latin": ayat_data.get("teksLatin", "")  if ayat_data  else "",
         "terjemahan": ayat_data.get("teksIndonesia", "") if ayat_data else "",
         "tafsir_list": tafsir_list,
     }
@@ -418,15 +499,15 @@ async def get_tafsir(surah: int, ayah: int):
 @app.get("/api/v1/quotes/random", tags=["Quotes"])
 async def get_random_quote():
     """Ambil satu ayat acak dari Al-Qur'an sebagai quote."""
-    surah_num = random.choice(QUOTE_SURAHS)
+    surah_num  = random.choice(QUOTE_SURAHS)
     surah_data = await fetch_equran(f"/surat/{surah_num}")
     if surah_data and surah_data.get("ayat"):
         ayat_list = surah_data["ayat"]
-        pick = random.choice(ayat_list)
+        pick      = random.choice(ayat_list)
         return {
-            "text": pick.get("teksIndonesia", ""),
+            "text":  pick.get("teksIndonesia", ""),
             "surah": surah_data.get("namaLatin", ""),
-            "ayah": pick.get("nomorAyat", 0),
+            "ayah":  pick.get("nomorAyat", 0),
         }
     return random.choice(FALLBACK_QUOTES)
 
@@ -439,22 +520,22 @@ async def get_daily_quote():
     """Ambil ayat harian (konsisten per hari)."""
     from datetime import date
     today = date.today()
-    seed = today.year * 10000 + today.month * 100 + today.day
-    rng = random.Random(seed)
+    seed  = today.year * 10000 + today.month * 100 + today.day
+    rng   = random.Random(seed)
 
-    surah_num = rng.choice(QUOTE_SURAHS)
+    surah_num  = rng.choice(QUOTE_SURAHS)
     surah_data = await fetch_equran(f"/surat/{surah_num}")
     if surah_data and surah_data.get("ayat"):
         ayat_list = surah_data["ayat"]
-        pick = rng.choice(ayat_list)
+        pick      = rng.choice(ayat_list)
         return {
-            "text": pick.get("teksIndonesia", ""),
+            "text":  pick.get("teksIndonesia", ""),
             "surah": surah_data.get("namaLatin", ""),
-            "ayah": pick.get("nomorAyat", 0),
-            "date": str(today),
+            "ayah":  pick.get("nomorAyat", 0),
+            "date":  str(today),
         }
 
-    fb = rng.choice(FALLBACK_QUOTES)
+    fb         = rng.choice(FALLBACK_QUOTES)
     fb["date"] = str(today)
     return fb
 
@@ -469,31 +550,31 @@ async def list_mufassireen():
         "total": 3,
         "mufassireen": [
             {
-                "id": "ibnu-katsir",
-                "name": "Imam Ibnu Katsir",
-                "kitab": "Tafsir Al-Qur'an Al-Azhim",
+                "id":          "ibnu-katsir",
+                "name":        "Imam Ibnu Katsir",
+                "kitab":       "Tafsir Al-Qur'an Al-Azhim",
                 "description": "Tafsir bil Ma'tsur — mengutamakan Al-Qur'an, Hadits Shahih, Atsar Sahabat",
-                "era": "700-774 H / 1300-1373 M",
-                "badge": "Rujukan Utama Ahlus Sunnah",
-                "language": "English (Abridged)",
+                "era":         "700-774 H / 1300-1373 M",
+                "badge":       "Rujukan Utama Ahlus Sunnah",
+                "language":    "English (Abridged)",
             },
             {
-                "id": "jalalayn",
-                "name": "Tafsir Jalalayn",
-                "kitab": "Tafsir al-Jalalayn",
+                "id":          "jalalayn",
+                "name":        "Tafsir Jalalayn",
+                "kitab":       "Tafsir al-Jalalayn",
                 "description": "Ringkas, padat, berbasis riwayat",
-                "era": "Jalaluddin Al-Mahalli & Jalaluddin As-Suyuthi",
-                "badge": "Tafsir Ringkas Mu'tamad",
-                "language": "Bahasa Indonesia",
+                "era":         "Jalaluddin Al-Mahalli & Jalaluddin As-Suyuthi",
+                "badge":       "Tafsir Ringkas Mu'tamad",
+                "language":    "Bahasa Indonesia",
             },
             {
-                "id": "kemenag",
-                "name": "Tafsir Kemenag RI",
-                "kitab": "Tafsir Kemenag",
+                "id":          "kemenag",
+                "name":        "Tafsir Kemenag RI",
+                "kitab":       "Tafsir Kemenag",
                 "description": "Tafsir resmi negara, pendekatan kontekstual Indonesia",
-                "era": "Kontemporer",
-                "badge": "Referensi Resmi Indonesia",
-                "language": "Bahasa Indonesia",
+                "era":         "Kontemporer",
+                "badge":       "Referensi Resmi Indonesia",
+                "language":    "Bahasa Indonesia",
             },
         ],
         "note": "Hanya tafsir yang terverifikasi sesuai manhaj salaf.",
@@ -506,19 +587,21 @@ async def list_mufassireen():
 @app.get("/health", tags=["System"])
 async def health_check():
     return {
-        "status": "Alhamdulillah, server berjalan normal",
-        "uptime": "OK",
+        "status":                 "Alhamdulillah, server berjalan normal",
+        "uptime":                 "OK",
         "tafsir_jalalayn_loaded": len(TAFSIR_CACHE["jalalayn"]),
-        "tafsir_kemenag_loaded": len(TAFSIR_CACHE["kemenag"]),
-        "ibnu_katsir_cached": len(IBNU_KATSIR_CACHE),
+        "tafsir_kemenag_loaded":  len(TAFSIR_CACHE["kemenag"]),
+        "ibnu_katsir_cached":     len(IBNU_KATSIR_CACHE),
+        "odov_verse_pool":        len(VERSE_POOL),
     }
 
 
 @app.get("/", tags=["System"])
 async def root():
     return {
-        "project": "Quran Tafsir API",
-        "version": "3.1.0",
-        "docs": "/docs",
-        "source": "Ibnu Katsir (quran.com) + Jalalayn & Kemenag (CDN) | Manhaj Salaf",
+        "project":  "Quran Tafsir API",
+        "version":  "3.2.0",
+        "docs":     "/docs",
+        "source":   "Ibnu Katsir (quran.com) + Jalalayn & Kemenag (CDN) | Manhaj Salaf",
+        "features": ["search", "tafsir", "quotes", "one-day-one-verse"],
     }
