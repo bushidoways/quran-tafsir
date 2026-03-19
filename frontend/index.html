@@ -22,7 +22,7 @@
   <meta name="description" content="Platform pencarian dan eksplorasi konteks dan tafsir ayat Al-Qur'an berdasarkan ulama ahlus sunnah wal jamaah.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
   <style>
     /* ============================================================
        CSS VARIABLES — LIGHT & DARK TOKENS
@@ -205,6 +205,25 @@
       background: var(--accent-light);
     }
 
+    /* ODOV Nav Button */
+    .nav-odov-btn {
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      border: none;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-odov-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
     /* ============================================================
        HERO
        ============================================================ */
@@ -228,8 +247,42 @@
       font-size: 16px;
       color: var(--text-secondary);
       max-width: 480px;
-      margin: 0 auto 36px;
+      margin: 0 auto 28px;
       line-height: 1.65;
+    }
+
+    /* ODOV Hero CTA */
+    .hero-odov-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #10002b, #3a0ca3, #7209b7);
+      color: #e0aaff;
+      border: 1px solid rgba(224, 170, 255, 0.2);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 24px rgba(114, 9, 183, 0.25);
+    }
+    .hero-odov-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(114, 9, 183, 0.35);
+    }
+    .hero-odov-cta .cta-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c77dff;
+      animation: cta-blink 2s ease-in-out infinite;
+    }
+    @keyframes cta-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     /* ============================================================
@@ -345,6 +398,21 @@
       color: var(--text-secondary);
       margin-top: 2px;
     }
+
+    /* ODOV Stat special */
+    .stat-item.stat-odov {
+      cursor: pointer;
+      border-color: rgba(114, 9, 183, 0.3);
+      background: linear-gradient(135deg, rgba(16,0,43,0.04), rgba(58,12,163,0.06));
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .stat-item.stat-odov:hover {
+      border-color: #7c3aed;
+      transform: translateY(-2px);
+    }
+    .stat-item.stat-odov .stat-value { color: #7c3aed; }
+    [data-theme="dark"] .stat-item.stat-odov { background: rgba(124,58,237,0.08); }
+    [data-theme="dark"] .stat-item.stat-odov .stat-value { color: #c77dff; }
 
     /* ============================================================
        DAILY QUOTE
@@ -611,7 +679,7 @@
       line-height: 1.8;
       color: var(--text-primary);
       margin-bottom: 12px;
-      font-family: 'Traditional Arabic', 'Scheherazade New', serif;
+      font-family: 'Amiri', 'Traditional Arabic', serif;
     }
     .ayat-terjemahan {
       font-size: 15px;
@@ -754,6 +822,115 @@
     }
 
     /* ============================================================
+       ONE DAY ONE VERSE — Popup Styles
+       ============================================================ */
+    .odov-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(4px);
+      z-index: 9998;
+      transition: opacity 0.3s ease;
+    }
+    .odov-popup {
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      width: min(520px, 94vw);
+      max-height: 88vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      z-index: 9999;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      background: linear-gradient(
+        135deg,
+        var(--odov-from, #1a1a2e),
+        var(--odov-via,  #16213e),
+        var(--odov-to,   #0f3460)
+      );
+      color: var(--odov-text, #e0e0ff);
+      transition: color 0.3s ease;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.2) transparent;
+      height: fit-content;
+      top: 0;
+      bottom: 0;
+    }
+    .odov-popup::-webkit-scrollbar { width: 5px; }
+    .odov-popup::-webkit-scrollbar-track { background: transparent; }
+    .odov-popup::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+    .odov-header { display: flex; justify-content: space-between; align-items: center; }
+    .odov-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; opacity: 0.7; text-transform: uppercase; }
+    .odov-close {
+      background: rgba(255,255,255,0.1); border: none; color: inherit;
+      width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .odov-close:hover { background: rgba(255,255,255,0.2); }
+    .odov-theme-badge {
+      display: inline-block; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 999px;
+      padding: 4px 14px; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.06em; width: fit-content;
+    }
+    .odov-hook { font-size: 0.92rem; opacity: 0.82; line-height: 1.6; font-style: italic; margin: 0; }
+    .odov-arab {
+      font-family: "Amiri", "KFGQPC Uthmanic Script HAFS", serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem); line-height: 2; text-align: right;
+      padding: 16px; background: rgba(255,255,255,0.06); border-radius: 12px;
+      border-right: 3px solid rgba(255,255,255,0.3);
+    }
+    .odov-latin { font-size: 0.82rem; opacity: 0.65; font-style: italic; line-height: 1.7; margin: 0; }
+    .odov-terjemahan { font-size: 1rem; line-height: 1.75; font-weight: 500; margin: 0; }
+    .odov-surah-info { font-size: 0.78rem; opacity: 0.6; font-weight: 600; letter-spacing: 0.04em; }
+    .odov-tafsir-section { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px; }
+    .odov-tafsir-toggle {
+      width: 100%; background: none; border: none; color: inherit;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 4px 0; opacity: 0.85; transition: opacity 0.2s;
+    }
+    .odov-tafsir-toggle:hover { opacity: 1; }
+    .odov-chevron { display: inline-block; transition: transform 0.3s ease; }
+    .odov-chevron.open { transform: rotate(180deg); }
+    .odov-tafsir-body { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+    .odov-tafsir-item { background: rgba(255,255,255,0.07); border-radius: 10px; padding: 12px 14px; }
+    .odov-tafsir-name { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.05em; opacity: 0.7; margin-bottom: 6px; text-transform: uppercase; }
+    .odov-tafsir-text {
+      font-size: 0.84rem; line-height: 1.7; opacity: 0.9;
+      display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .odov-tafsir-text.expanded { display: block; -webkit-line-clamp: unset; }
+    .odov-tafsir-readmore { font-size: 0.75rem; opacity: 0.6; cursor: pointer; margin-top: 4px; background: none; border: none; color: inherit; padding: 0; text-decoration: underline; }
+    .odov-actions { display: flex; gap: 10px; }
+    .odov-btn { flex: 1; padding: 10px 16px; border-radius: 10px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, opacity 0.2s; font-family: inherit; }
+    .odov-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+    .odov-btn:active { transform: translateY(0); }
+    .odov-btn-primary { background: rgba(255,255,255,0.9); color: #1a1a2e; }
+    .odov-btn-secondary { background: rgba(255,255,255,0.12); color: inherit; border: 1px solid rgba(255,255,255,0.2); }
+    .odov-meta { font-size: 0.68rem; opacity: 0.45; text-align: center; margin: 0; }
+    .odov-loader { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 32px 0; opacity: 0.7; font-size: 0.85rem; }
+    .odov-spinner { width: 32px; height: 32px; border: 3px solid rgba(255,255,255,0.2); border-top-color: rgba(255,255,255,0.8); border-radius: 50%; animation: odov-spin 0.8s linear infinite; }
+    @keyframes odov-spin { to { transform: rotate(360deg); } }
+    .odov-error { text-align: center; padding: 24px 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .hidden { display: none !important; }
+    @keyframes odov-slide-up {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .odov-popup:not(.hidden) {
+      animation: odov-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @media (max-width: 480px) {
+      .odov-popup { padding: 20px 16px 20px; border-radius: 16px 16px 0 0; bottom: 0; top: auto; max-height: 92vh; width: 100vw; }
+    }
+
+    /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 768px) {
@@ -777,6 +954,7 @@
       .hero h1 { font-size: 24px; }
       .search-wrap, .pills, .daily-quote, .section { padding: 0 16px; }
       .stats { padding: 0 16px; gap: 8px; }
+      .nav-odov-btn span.btn-label { display: none; }
     }
   </style>
 </head>
@@ -793,8 +971,11 @@
         </div>
         <div class="logo-text">Quran Tafsir</div>
       </a>
-      <div>
+      <div style="display:flex;align-items:center;gap:8px;">
         <span class="nav-link active">Beranda</span>
+        <button class="nav-odov-btn" data-odov-trigger aria-label="One Day One Verse">
+          ✦ <span class="btn-label">Ayat Hari Ini</span>
+        </button>
       </div>
     </div>
   </nav>
@@ -803,6 +984,10 @@
   <div class="hero">
     <h1>Jelajahi Tafsir Al-Qur'an</h1>
     <p class="subtitle">Pahami makna dan konteks ayat Al-Qur'an berdasarkan tafsir ulama ahlus sunnah wal jamaah.</p>
+    <button class="hero-odov-cta" data-odov-trigger>
+      <span class="cta-dot"></span>
+      ✦ One Day One Verse — Ayat Hari Ini
+    </button>
   </div>
 
   <!-- SEARCH BAR -->
@@ -840,9 +1025,9 @@
       <div class="stat-value">3</div>
       <div class="stat-label">Mufassir Terverifikasi</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-value">&#x2713;</div>
-      <div class="stat-label">Terverifikasi</div>
+    <div class="stat-item stat-odov" data-odov-trigger title="Buka One Day One Verse">
+      <div class="stat-value">✦</div>
+      <div class="stat-label">Ayat Hari Ini</div>
     </div>
   </div>
 
@@ -925,16 +1110,55 @@
     </p>
   </footer>
 
-  <!-- MODAL -->
+  <!-- MODAL PENCARIAN -->
   <div class="modal-overlay" id="searchModal" onclick="closeModalOverlay(event)">
     <div class="modal-container">
       <div class="modal-header">
         <span class="modal-title" id="modalTitle">Hasil Pencarian</span>
         <button class="modal-close" onclick="closeModal()" aria-label="Tutup">&times;</button>
       </div>
-      <div class="modal-body" id="modalBody">
-        <!-- Content injected by JS -->
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ONE DAY ONE VERSE — Popup HTML
+       ============================================================ -->
+  <div id="odov-backdrop" class="odov-backdrop hidden" aria-hidden="true"></div>
+
+  <div id="odov-popup" class="odov-popup hidden" role="dialog" aria-modal="true" aria-label="One Day One Verse">
+    <div class="odov-header">
+      <div class="odov-label">✦ ONE DAY ONE VERSE ✦</div>
+      <button id="odov-close" class="odov-close" aria-label="Tutup">&times;</button>
+    </div>
+    <div id="odov-loader" class="odov-loader">
+      <div class="odov-spinner"></div>
+      <p>Memuat ayat hari ini...</p>
+    </div>
+    <div id="odov-content" class="odov-content hidden">
+      <div id="odov-theme-badge" class="odov-theme-badge"></div>
+      <p id="odov-hook" class="odov-hook"></p>
+      <div id="odov-arab" class="odov-arab" dir="rtl" lang="ar"></div>
+      <p id="odov-latin" class="odov-latin"></p>
+      <p id="odov-terjemahan" class="odov-terjemahan"></p>
+      <div id="odov-surah-info" class="odov-surah-info"></div>
+      <div id="odov-tafsir-section" class="odov-tafsir-section">
+        <button class="odov-tafsir-toggle" id="odov-tafsir-toggle">
+          📖 Lihat Tafsir Ulama <span class="odov-chevron">▾</span>
+        </button>
+        <div id="odov-tafsir-body" class="odov-tafsir-body hidden">
+          <div id="odov-tafsir-list"></div>
+        </div>
       </div>
+      <div class="odov-actions">
+        <button id="odov-regenerate" class="odov-btn odov-btn-secondary">🔄 Ayat Lain</button>
+        <button id="odov-share" class="odov-btn odov-btn-primary">📤 Bagikan</button>
+      </div>
+      <p id="odov-meta" class="odov-meta"></p>
+    </div>
+    <div id="odov-error" class="odov-error hidden">
+      <p>😔 Gagal memuat ayat. Coba lagi.</p>
+      <button id="odov-retry" class="odov-btn odov-btn-primary">Coba Lagi</button>
     </div>
   </div>
 
@@ -948,26 +1172,21 @@
   <div class="toast" id="toast"></div>
 
 <script>
+  /* ============================================================
+     THEME & TOAST
+     ============================================================ */
   const API_BASE = '/api/v1';
 
-  function getTheme() {
-    return localStorage.getItem('qt-theme') || 'light';
-  }
+  function getTheme() { return localStorage.getItem('qt-theme') || 'light'; }
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    const icon = document.getElementById('toggleIcon');
+    const icon  = document.getElementById('toggleIcon');
     const label = document.getElementById('toggleLabel');
-    if (theme === 'dark') {
-      icon.textContent = '🌙';
-      label.textContent = 'Mode Terang';
-    } else {
-      icon.textContent = '☀️';
-      label.textContent = 'Mode Gelap';
-    }
+    if (theme === 'dark') { icon.textContent = '🌙'; label.textContent = 'Mode Terang'; }
+    else { icon.textContent = '☀️'; label.textContent = 'Mode Gelap'; }
   }
   function toggleTheme() {
-    const current = getTheme();
-    const next = current === 'dark' ? 'light' : 'dark';
+    const next = getTheme() === 'dark' ? 'light' : 'dark';
     localStorage.setItem('qt-theme', next);
     applyTheme(next);
   }
@@ -980,6 +1199,9 @@
     setTimeout(() => t.classList.remove('show'), 2500);
   }
 
+  /* ============================================================
+     SEARCH
+     ============================================================ */
   async function loadDailyQuote() {
     try {
       const res = await fetch(API_BASE + '/quotes/random');
@@ -988,9 +1210,7 @@
         document.getElementById('dailyQuote').textContent = '"' + data.text + '"';
         document.getElementById('dailySource').textContent = '— QS. ' + data.surah + ': ' + data.ayah;
       }
-    } catch(e) {
-      console.log('API belum aktif, menggunakan quote default.');
-    }
+    } catch(e) { console.log('API belum aktif, menggunakan quote default.'); }
   }
 
   function quickSearch(term) {
@@ -1001,23 +1221,15 @@
   async function doSearch() {
     const q = document.getElementById('searchInput').value.trim();
     if (!q) return;
-
     openModal();
     document.getElementById('modalTitle').textContent = 'Mencari: ' + q + '...';
     document.getElementById('modalBody').innerHTML =
       '<div class="modal-loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:13px;">Sedang mencari ayat...</p></div>';
-
     try {
       const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
-      if (res.ok) {
-        const data = await res.json();
-        renderModal(data);
-      } else {
-        renderOffline(q);
-      }
-    } catch(e) {
-      renderOffline(q);
-    }
+      if (res.ok) { renderModal(await res.json()); }
+      else { renderOffline(q); }
+    } catch(e) { renderOffline(q); }
   }
 
   function renderOffline(query) {
@@ -1029,39 +1241,25 @@
   function renderModal(data) {
     document.getElementById('modalTitle').textContent =
       'Hasil: ' + data.query + ' (' + (data.total_results || 0) + ' ayat)';
-
     let html = '';
-
     if (data.quote) {
       html += '<div class="modal-quote"><p class="modal-quote-text">"' + escapeHtml(data.quote) + '"</p></div>';
     }
-
     if (data.results && data.results.length > 0) {
       data.results.forEach(function(r, idx) {
         html += '<div class="ayat-card">';
         html += '<div class="ayat-label">QS. ' + escapeHtml(r.surah_name || String(r.surah)) + ': ' + r.ayah + '</div>';
-        if (r.text_arab) {
-          html += '<div class="ayat-arab">' + r.text_arab + '</div>';
-        }
-        if (r.terjemahan) {
-          html += '<p class="ayat-terjemahan">' + escapeHtml(r.terjemahan) + '</p>';
-        }
+        if (r.text_arab) html += '<div class="ayat-arab">' + r.text_arab + '</div>';
+        if (r.terjemahan) html += '<p class="ayat-terjemahan">' + escapeHtml(r.terjemahan) + '</p>';
         if (r.tafsir_list && r.tafsir_list.length > 0) {
           r.tafsir_list.forEach(function(t, tIdx) {
             if (!t.text) return;
             var accId = 'acc-' + idx + '-' + tIdx;
-            html += '<div class="accordion">';
-            html += '<button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
+            html += '<div class="accordion"><button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
             html += '<span>Tafsir ' + escapeHtml(t.name);
-            if (t.sub_label) {
-              html += ' <span style="font-weight:400;font-size:11px;opacity:0.7;">— ' + escapeHtml(t.sub_label) + '</span>';
-            }
-            html += '</span>';
-            html += '<span class="accordion-arrow">▼</span>';
-            html += '</button>';
-            html += '<div class="accordion-body" id="' + accId + '">';
-            html += escapeHtml(t.text);
-            html += '</div></div>';
+            if (t.sub_label) html += ' <span style="font-weight:400;font-size:11px;opacity:0.7;">— ' + escapeHtml(t.sub_label) + '</span>';
+            html += '</span><span class="accordion-arrow">▼</span></button>';
+            html += '<div class="accordion-body" id="' + accId + '">' + escapeHtml(t.text) + '</div></div>';
           });
         }
         html += '</div>';
@@ -1069,20 +1267,13 @@
     } else {
       html += '<div class="modal-empty">Tidak ditemukan ayat untuk kata kunci ini. Coba kata kunci lain.</div>';
     }
-
     document.getElementById('modalBody').innerHTML = html;
   }
 
   function toggleAccordion(id, btn) {
     var body = document.getElementById(id);
-    var isOpen = body.classList.contains('open');
-    if (isOpen) {
-      body.classList.remove('open');
-      btn.classList.remove('open');
-    } else {
-      body.classList.add('open');
-      btn.classList.add('open');
-    }
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
   }
 
   function openModal() {
@@ -1094,13 +1285,8 @@
     document.body.style.overflow = '';
   }
   function closeModalOverlay(e) {
-    if (e.target === document.getElementById('searchModal')) {
-      closeModal();
-    }
+    if (e.target === document.getElementById('searchModal')) closeModal();
   }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-  });
 
   function escapeHtml(str) {
     if (!str) return '';
@@ -1109,9 +1295,184 @@
     return div.innerHTML;
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    loadDailyQuote();
-  });
+  document.addEventListener('DOMContentLoaded', function() { loadDailyQuote(); });
+
+  /* ============================================================
+     ONE DAY ONE VERSE — Logic
+     ============================================================ */
+  (function () {
+    const ODOV_API   = '/api/v1/odov';
+    const SEED_KEY   = 'odov_user_seed';
+
+    const backdrop     = document.getElementById('odov-backdrop');
+    const popup        = document.getElementById('odov-popup');
+    const loader       = document.getElementById('odov-loader');
+    const content      = document.getElementById('odov-content');
+    const errorEl      = document.getElementById('odov-error');
+    const closeBtn     = document.getElementById('odov-close');
+    const retryBtn     = document.getElementById('odov-retry');
+    const regenBtn     = document.getElementById('odov-regenerate');
+    const shareBtn     = document.getElementById('odov-share');
+    const tafsirToggle = document.getElementById('odov-tafsir-toggle');
+    const tafsirBody   = document.getElementById('odov-tafsir-body');
+    const chevron      = tafsirToggle.querySelector('.odov-chevron');
+
+    let currentData = null;
+    let offset      = 0;
+
+    function getUserSeed() {
+      let seed = localStorage.getItem(SEED_KEY);
+      if (!seed) { seed = Math.floor(Math.random() * 99999); localStorage.setItem(SEED_KEY, seed); }
+      return parseInt(seed);
+    }
+
+    function getTodayKey() {
+      const d = new Date();
+      return 'odov_' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate();
+    }
+
+    function getCached(key) {
+      try { const r = sessionStorage.getItem(key); return r ? JSON.parse(r) : null; } catch { return null; }
+    }
+    function setCache(key, data) {
+      try { sessionStorage.setItem(key, JSON.stringify(data)); } catch {}
+    }
+
+    async function fetchVerse(off) {
+      const seed = getUserSeed();
+      const res  = await fetch(ODOV_API + '?seed=' + seed + '&offset=' + off);
+      if (!res.ok) throw new Error('Network error');
+      return res.json();
+    }
+
+    function applyPalette(p) {
+      if (!p) return;
+      popup.style.setProperty('--odov-from', p.from);
+      popup.style.setProperty('--odov-via',  p.via);
+      popup.style.setProperty('--odov-to',   p.to);
+      popup.style.setProperty('--odov-text', p.text);
+      popup.style.color = p.text;
+    }
+
+    function renderVerse(data) {
+      currentData = data;
+      const v = data.verse;
+      applyPalette(data.palette);
+      document.getElementById('odov-theme-badge').textContent = v.theme_label || '';
+      document.getElementById('odov-hook').textContent        = v.genz_hook   || '';
+      document.getElementById('odov-arab').textContent        = v.text_arab   || '';
+      document.getElementById('odov-latin').textContent       = v.text_latin  || '';
+      document.getElementById('odov-terjemahan').textContent  = v.terjemahan_id || v.translation_en || '';
+      document.getElementById('odov-surah-info').textContent  = 'QS. ' + (v.surah_name || 'Surah ' + v.surah) + ' : ' + v.ayah;
+
+      const tList = document.getElementById('odov-tafsir-list');
+      tList.innerHTML = '';
+      (data.tafsir_list || []).forEach(function(t) {
+        const tid  = 'ot-' + Math.random().toString(36).slice(2);
+        const item = document.createElement('div');
+        item.className = 'odov-tafsir-item';
+        item.innerHTML =
+          '<div class="odov-tafsir-name">' + t.name + (t.sub_label ? ' · ' + t.sub_label : '') + '</div>' +
+          '<div class="odov-tafsir-text" id="' + tid + '">' + escapeHtml(t.text || '') + '</div>' +
+          '<button class="odov-tafsir-readmore" data-target="' + tid + '">Baca selengkapnya ▾</button>';
+        tList.appendChild(item);
+      });
+      tList.querySelectorAll('.odov-tafsir-readmore').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const el = document.getElementById(btn.dataset.target);
+          el.classList.toggle('expanded');
+          btn.textContent = el.classList.contains('expanded') ? 'Sembunyikan ▴' : 'Baca selengkapnya ▾';
+        });
+      });
+
+      const meta    = data.meta || {};
+      const canRegen = meta.can_regenerate !== false;
+      document.getElementById('odov-meta').textContent = canRegen
+        ? 'Refresh ' + offset + '/20 kali hari ini · ' + (data.date || '')
+        : 'Batas refresh hari ini tercapai · ' + (data.date || '');
+      regenBtn.disabled     = !canRegen;
+      regenBtn.style.opacity = canRegen ? '1' : '0.4';
+    }
+
+    function showLoader()  { loader.classList.remove('hidden'); content.classList.add('hidden'); errorEl.classList.add('hidden'); }
+    function showContent() { loader.classList.add('hidden'); content.classList.remove('hidden'); errorEl.classList.add('hidden'); }
+    function showError()   { loader.classList.add('hidden'); content.classList.add('hidden'); errorEl.classList.remove('hidden'); }
+
+    function openPopup() {
+      backdrop.classList.remove('hidden');
+      popup.classList.remove('hidden');
+      backdrop.removeAttribute('aria-hidden');
+      document.body.style.overflow = 'hidden';
+      loadVerse(null);
+    }
+
+    function closePopup() {
+      backdrop.classList.add('hidden');
+      popup.classList.add('hidden');
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    async function loadVerse(forceOffset) {
+      const useOffset = forceOffset !== null && forceOffset !== undefined ? forceOffset : offset;
+      const todayKey  = getTodayKey();
+      if (useOffset === 0) {
+        const cached = getCached(todayKey);
+        if (cached) { renderVerse(cached); showContent(); return; }
+      }
+      showLoader();
+      try {
+        const data = await fetchVerse(useOffset);
+        if (useOffset === 0) setCache(todayKey, data);
+        renderVerse(data);
+        showContent();
+      } catch(e) {
+        console.error('[ODOV]', e);
+        showError();
+      }
+    }
+
+    closeBtn.addEventListener('click', closePopup);
+    backdrop.addEventListener('click', closePopup);
+    retryBtn.addEventListener('click', function() { loadVerse(offset); });
+
+    regenBtn.addEventListener('click', function() {
+      if (offset >= 20) return;
+      offset++;
+      loadVerse(offset);
+    });
+
+    shareBtn.addEventListener('click', async function() {
+      if (!currentData) return;
+      const v    = currentData.verse;
+      const text = '"' + (v.terjemahan_id || v.translation_en) + '"\n— QS. ' + (v.surah_name || v.surah) + ': ' + v.ayah + '\n\n#QuranHarian #TafseerApp';
+      if (navigator.share) {
+        await navigator.share({ title: 'Ayat Hari Ini', text: text });
+      } else {
+        await navigator.clipboard.writeText(text);
+        shareBtn.textContent = '✅ Disalin!';
+        setTimeout(function() { shareBtn.textContent = '📤 Bagikan'; }, 2000);
+      }
+    });
+
+    tafsirToggle.addEventListener('click', function() {
+      tafsirBody.classList.toggle('hidden');
+      chevron.classList.toggle('open');
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (!popup.classList.contains('hidden')) closePopup();
+        else closeModal();
+      }
+    });
+
+    window.ODOV = { open: openPopup, close: closePopup };
+
+    document.querySelectorAll('[data-odov-trigger]').forEach(function(el) {
+      el.addEventListener('click', openPopup);
+    });
+  })();
 </script>
 
 </body>
