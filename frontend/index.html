@@ -2,24 +2,86 @@
 <html lang="id">
 <head>
 <!--
+   _-=Created Without Love=- _                   
    _-=Created Without Love=- _
 | \ | ___ ._ _  ___  ___
 |   |<_> || ' |/ . |<_-<
 |_\_|<___||_|_|\_. |/__/
+               <___'    
                <___'
 -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quran Tafsir — Jelajahi Tafsir Al-Qur'an</title>
   <meta name="description" content="Platform pencarian dan eksplorasi konteks dan tafsir ayat Al-Qur'an berdasarkan ulama ahlus sunnah wal jamaah.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* ============================================================
+       CSS VARIABLES — LIGHT & DARK TOKENS
+       ============================================================ */
+    :root {
+      --bg: #FFFFFF;
+      --bg-card: #F9FAFB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --border: #E5E7EB;
+      --accent: #059669;
+      --accent-light: #D1FAE5;
+      --accent-hover: #047857;
+      --orb-color: rgba(5, 150, 105, 0.045);
+      --modal-overlay: rgba(0,0,0,0.55);
+      --search-bg: #F9FAFB;
+      --pill-bg: #F3F4F6;
+      --pill-text: #6B7280;
+      --pill-border: #E5E7EB;
+      --toggle-bg: rgba(255,255,255,0.85);
+      --toggle-text: #374151;
+      --toggle-icon: '☀️';
+      --stat-bg: #F9FAFB;
+      --quote-bg: #F9FAFB;
+      --quote-border: #D1FAE5;
+      --footer-text: #9CA3AF;
+      --accordion-border: #E5E7EB;
+      --mufassir-badge-bg: #D1FAE5;
+      --mufassir-badge-text: #065F46;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0F1117;
+      --bg-card: #111827;
+      --text-primary: #F9FAFB;
+      --text-secondary: #9CA3AF;
+      --border: #1F2937;
+      --accent: #34D399;
+      --accent-light: rgba(52,211,153,0.1);
+      --accent-hover: #6EE7B7;
+      --orb-color: rgba(52, 211, 153, 0.05);
+      --modal-overlay: rgba(0,0,0,0.7);
+      --search-bg: #1F2937;
+      --pill-bg: #1F2937;
+      --pill-text: #9CA3AF;
+      --pill-border: #374151;
+      --toggle-bg: rgba(17,24,39,0.85);
+      --toggle-text: #D1D5DB;
+      --toggle-icon: '🌙';
+      --stat-bg: #111827;
+      --quote-bg: #111827;
+      --quote-border: rgba(52,211,153,0.2);
+      --footer-text: #4B5563;
+      --accordion-border: #1F2937;
+      --mufassir-badge-bg: rgba(52,211,153,0.12);
+      --mufassir-badge-text: #6EE7B7;
+    }
+
     /* ============================================================
        RESET & BASE
        ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --gl: #52b788;
       --green: #2d6a4f;
@@ -50,16 +112,30 @@
       overflow-x: hidden;
       overflow-y: auto;
       font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      background: var(--bg);
       color: var(--text-primary);
       line-height: 1.75;
       font-size: 16px;
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
+    body::before {
+      content: '';
     /* ============================================================
        BACKGROUND — copas Web 1 (One Day One Verse)
        ============================================================ */
     .bg {
       position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: var(--orb-color);
+      filter: blur(100px);
+      pointer-events: none;
       inset: 0;
       z-index: 0;
       background: linear-gradient(-45deg,#060d18,#0b1e30,#091508,#0d1e2c,#0a1a0e,#060d18);
@@ -71,9 +147,17 @@
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    body::after {
+      content: '';
     .orb {
       position: fixed;
+      bottom: -300px;
+      left: -200px;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
+      background: var(--orb-color);
+      filter: blur(120px);
       filter: blur(90px);
       pointer-events: none;
       z-index: 0;
@@ -135,6 +219,9 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, border-color 0.3s ease;
       background: rgba(6,13,24,0.72);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -142,39 +229,75 @@
     }
     .navbar-inner {
       max-width: 960px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
+@@ -137,83 +149,48 @@
       justify-content: space-between;
     }
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
     }
     .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
       width: 36px; height: 36px;
       background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
       border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 0 rgba(5,150,105,0.5);
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 0 0 rgba(82,183,136,0.5);
       animation: logo-pulse 3s ease-in-out infinite;
       flex-shrink: 0;
     }
+    [data-theme="dark"] .logo-icon {
+      background: linear-gradient(135deg, #34D399 0%, #059669 100%);
+      box-shadow: 0 0 0 0 rgba(52,211,153,0.4);
+    }
     @keyframes logo-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(5,150,105,0.45); }
+      50%  { box-shadow: 0 0 0 6px rgba(5,150,105,0); }
+      100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
+    }
+    [data-theme="dark"] .logo-icon {
+      animation: logo-pulse-dark 3s ease-in-out infinite;
+    }
+    @keyframes logo-pulse-dark {
+      0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+      50%  { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+      100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+    }
+    .logo-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+      display: block;
       0%   { box-shadow: 0 0 0 0 rgba(82,183,136,0.45); }
       50%  { box-shadow: 0 0 0 6px rgba(82,183,136,0); }
       100% { box-shadow: 0 0 0 0 rgba(82,183,136,0); }
     }
     .logo-icon svg { width: 22px; height: 22px; fill: #ffffff; display: block; }
     .logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
       font-size: 17px; font-weight: 700;
       color: var(--text-primary); letter-spacing: -0.3px;
     }
     .nav-link {
+      font-size: 14px;
+      font-weight: 500;
       font-size: 14px; font-weight: 500;
       color: var(--text-secondary);
       text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
       padding: 6px 14px; border-radius: 8px;
       transition: color 0.2s, background 0.2s;
       cursor: pointer;
@@ -183,57 +306,98 @@
       color: var(--accent);
       background: var(--accent-light);
     }
+
+    /* ODOV Nav Button */
     .nav-odov-btn {
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #fff;
       font-size: 13px; font-weight: 600;
       font-family: inherit; color: #fff;
       background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      border: none;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
       border: none; padding: 7px 14px; border-radius: 8px;
       cursor: pointer; transition: opacity 0.2s, transform 0.15s;
       letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       display: flex; align-items: center; gap: 6px;
     }
     .nav-odov-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    /* ============================================================
-       HERO
-       ============================================================ */
-    .hero {
-      text-align: center;
+@@ -225,633 +202,285 @@
       padding: 64px 24px 0;
       max-width: 720px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     .hero h1 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
       font-size: 40px; font-weight: 700;
       letter-spacing: -0.8px; line-height: 1.15;
       margin-bottom: 12px;
       color: var(--text-primary);
     }
     .hero .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 28px;
       font-size: 16px; color: var(--text-secondary);
       max-width: 540px; margin: 0 auto 28px;
       line-height: 1.65;
     }
+
+    /* ODOV Hero CTA */
     .hero-odov-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(135deg, #10002b, #3a0ca3, #7209b7);
       color: #e0aaff;
+      border: 1px solid rgba(224, 170, 255, 0.2);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
       border: 1px solid rgba(224,170,255,0.2);
       border-radius: 100px; padding: 10px 22px;
       font-size: 14px; font-weight: 600;
       font-family: inherit; cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
       margin-bottom: 36px;
+      box-shadow: 0 4px 24px rgba(114, 9, 183, 0.25);
       box-shadow: 0 4px 24px rgba(114,9,183,0.25);
     }
     .hero-odov-cta:hover {
       transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(114, 9, 183, 0.35);
       box-shadow: 0 8px 32px rgba(114,9,183,0.35);
     }
     .hero-odov-cta .cta-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
       width: 7px; height: 7px; border-radius: 50%;
       background: #c77dff;
       animation: cta-blink 2s ease-in-out infinite;
+    }
+    @keyframes cta-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
     @keyframes cta-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
@@ -241,12 +405,20 @@
        SEARCH BAR
        ============================================================ */
     .search-wrap {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
       max-width: 680px; margin: 0 auto 32px;
       padding: 0 24px;
     }
     .search-bar {
+      display: flex;
+      gap: 0;
       display: flex; gap: 0;
       border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
       border-radius: 14px; overflow: hidden;
       background: var(--search-bg);
       backdrop-filter: blur(20px);
@@ -258,20 +430,69 @@
       box-shadow: 0 0 0 3px var(--accent-light);
     }
     .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
       flex: 1; border: none; outline: none;
       background: transparent;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text-primary);
       padding: 14px 18px; font-size: 15px;
       font-family: inherit; color: var(--text-primary);
     }
     .search-bar input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
       color: var(--text-secondary); opacity: 0.5;
     }
     .search-bar button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
       background: var(--accent); color: #fff;
       border: none; padding: 14px 28px;
       font-size: 14px; font-weight: 600;
       font-family: inherit; cursor: pointer;
       transition: background 0.2s;
+    }
+    .search-bar button:hover {
+      background: var(--accent-hover);
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .pill {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      border: 1px solid var(--pill-border);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
     }
     .search-bar button:hover { background: var(--accent-hover); }
 
@@ -279,31 +500,60 @@
        STATS BAR
        ============================================================ */
     .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
       display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 12px; max-width: 680px;
       margin: 0 auto 48px; padding: 0 24px;
     }
     .stat-item {
+      text-align: center;
+      padding: 16px 8px;
       text-align: center; padding: 16px 8px;
       background: var(--stat-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       border-radius: 12px;
+      transition: background 0.3s, border-color 0.3s;
     }
     .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.5px;
       font-size: 22px; font-weight: 700;
       color: var(--accent); letter-spacing: -0.5px;
     }
     .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
       font-size: 12px; color: var(--text-secondary); margin-top: 2px;
     }
+
+    /* ODOV Stat special */
     .stat-item.stat-odov {
       cursor: pointer;
+      border-color: rgba(114, 9, 183, 0.3);
+      background: linear-gradient(135deg, rgba(16,0,43,0.04), rgba(58,12,163,0.06));
       border-color: rgba(114,9,183,0.3);
       background: linear-gradient(135deg,rgba(16,0,43,0.5),rgba(58,12,163,0.3));
       transition: border-color 0.2s, transform 0.15s;
     }
+    .stat-item.stat-odov:hover {
+      border-color: #7c3aed;
+      transform: translateY(-2px);
+    }
+    .stat-item.stat-odov .stat-value { color: #7c3aed; }
+    [data-theme="dark"] .stat-item.stat-odov { background: rgba(124,58,237,0.08); }
+    [data-theme="dark"] .stat-item.stat-odov .stat-value { color: #c77dff; }
     .stat-item.stat-odov:hover { border-color: #7c3aed; transform: translateY(-2px); }
     .stat-item.stat-odov .stat-value { color: #c77dff; }
 
@@ -311,6 +561,11 @@
        DAILY QUOTE
        ============================================================ */
     .daily-quote {
+      max-width: 680px;
+      margin: 0 auto 56px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
       max-width: 680px; margin: 0 auto 56px; padding: 0 24px;
     }
     .quote-card {
@@ -318,20 +573,46 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--quote-border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: background 0.3s, border-color 0.3s;
       border-radius: 12px; padding: 24px;
     }
     .quote-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
       font-size: 11px; font-weight: 600;
       letter-spacing: 1px; text-transform: uppercase;
       color: var(--accent); margin-bottom: 12px;
     }
     .quote-text {
+      font-size: 16px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--text-primary);
       font-size: 16px; font-weight: 500;
       font-style: italic; color: var(--text-primary);
       line-height: 1.7;
     }
+    .quote-source {
+      font-size: 13px;
+      color: var(--accent);
+      margin-top: 8px;
+    }
     .quote-source { font-size: 13px; color: var(--accent); margin-top: 8px; }
     .quote-reload {
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      margin-top: 8px;
+      font-family: inherit;
+      transition: color 0.2s;
       background: none; border: none;
       font-size: 12px; color: var(--text-secondary);
       cursor: pointer; margin-top: 8px;
@@ -340,16 +621,79 @@
     .quote-reload:hover { color: var(--accent); }
 
     /* ============================================================
+       SECTIONS
        SECTIONS — Mufassir
        ============================================================ */
     .section {
+      max-width: 960px;
+      margin: 0 auto 56px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
       max-width: 960px; margin: 0 auto 56px; padding: 0 24px;
     }
     .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
       font-size: 24px; font-weight: 600;
       color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.3px;
     }
     .section-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .theme-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .theme-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .theme-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+    }
+    .theme-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .theme-group-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .theme-group-label:first-child { margin-top: 0; }
+
+    .mufassir-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
       font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;
     }
     .mufassir-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -358,14 +702,41 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s, background 0.3s;
       border-radius: 12px; padding: 24px;
       transition: border-color 0.2s;
     }
     .mufassir-card:hover { border-color: var(--accent); }
+    .mufassir-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .mufassir-era {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .mufassir-manhaj {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
     .mufassir-name { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
     .mufassir-era { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
     .mufassir-manhaj { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 14px; }
     .mufassir-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--mufassir-badge-bg);
+      color: var(--mufassir-badge-text);
       display: inline-block; padding: 4px 12px;
       border-radius: 100px; font-size: 12px; font-weight: 600;
       background: var(--mufassir-badge-bg); color: var(--mufassir-badge-text);
@@ -375,53 +746,128 @@
        MODAL
        ============================================================ */
     .modal-overlay {
+      position: fixed;
+      inset: 0;
       position: fixed; inset: 0;
       background: var(--modal-overlay);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       z-index: 1000;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
       display: flex; align-items: flex-start; justify-content: center;
       padding: 40px 16px;
+      opacity: 0;
+      pointer-events: none;
       opacity: 0; pointer-events: none;
       transition: opacity 0.15s ease;
     }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
     .modal-overlay.open { opacity: 1; pointer-events: auto; }
     .modal-container {
+      background: var(--bg);
       background: rgba(7,16,28,0.96);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 720px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
       border-radius: 20px; width: 100%; max-width: 720px;
       max-height: calc(100vh - 80px); overflow-y: auto;
       transform: translateY(20px);
+      transition: transform 0.15s ease, background 0.3s;
+      position: relative;
+    }
+    .modal-overlay.open .modal-container {
+      transform: translateY(0);
       transition: transform 0.15s ease;
     }
     .modal-overlay.open .modal-container { transform: translateY(0); }
     .modal-header {
+      position: sticky;
+      top: 0;
+      background: var(--bg);
       position: sticky; top: 0;
       background: rgba(7,16,28,0.98);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      border-radius: 20px 20px 0 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
       display: flex; align-items: center; justify-content: space-between;
       z-index: 10; border-radius: 20px 20px 0 0;
     }
     .modal-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
     .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       width: 32px; height: 32px; border-radius: 8px;
       border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: rgba(255,255,255,0.05);
       color: var(--text-secondary); font-size: 16px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: all 0.2s;
     }
+    .modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .modal-body {
+      padding: 24px;
+    }
     .modal-close:hover { border-color: var(--accent); color: var(--accent); }
     .modal-body { padding: 24px; }
     .modal-quote {
       background: var(--accent-light);
+      border: 1px solid var(--quote-border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .modal-quote-text {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.65;
+    }
+    .ayat-card {
       border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      background: var(--bg-card);
+      transition: background 0.3s, border-color 0.3s;
       border-radius: 10px; padding: 16px 20px; margin-bottom: 24px;
     }
+    .ayat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
     .modal-quote-text { font-size: 14px; font-style: italic; color: var(--accent); line-height: 1.65; }
     .ayat-card {
       border: 1px solid var(--border); border-radius: 12px;
@@ -430,26 +876,72 @@
     }
     .ayat-label { font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
     .ayat-arab {
+      text-align: right;
+      direction: rtl;
+      font-size: 24px;
+      line-height: 1.8;
+      color: var(--text-primary);
       text-align: right; direction: rtl;
       font-size: 24px; line-height: 1.8; color: #f2e8cc;
       margin-bottom: 12px;
       font-family: 'Amiri', 'Traditional Arabic', serif;
     }
+    .ayat-terjemahan {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .accordion {
+      border-top: 1px solid var(--accordion-border);
+      transition: border-color 0.3s;
+    }
     .ayat-terjemahan { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px; }
     .accordion { border-top: 1px solid var(--accordion-border); }
     .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color 0.2s;
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 0; cursor: pointer; background: none; border: none;
       width: 100%; font-family: inherit; font-size: 13px; font-weight: 600;
       color: var(--text-secondary); transition: color 0.2s;
     }
     .accordion-header:hover { color: var(--accent); }
+    .accordion-arrow {
+      font-size: 11px;
+      transition: transform 0.2s;
+    }
     .accordion-arrow { font-size: 11px; transition: transform 0.2s; }
     .accordion-header.open .accordion-arrow { transform: rotate(180deg); }
+    .accordion-body {
+      display: none;
+      padding: 0 0 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
     .accordion-body { display: none; padding: 0 0 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
     .accordion-body.open { display: block; }
+    .modal-loading {
+      text-align: center;
+      padding: 48px 0;
+    }
     .modal-loading { text-align: center; padding: 48px 0; }
     .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
       width: 28px; height: 28px;
       border: 3px solid rgba(82,183,136,0.15);
       border-top-color: var(--accent);
@@ -458,78 +950,152 @@
       margin: 0 auto 12px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .modal-empty {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ============================================================
+       FLOATING TOGGLE
+       ============================================================ */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 500;
+      background: var(--toggle-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--toggle-text);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .theme-toggle-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      max-width: 960px;
+      margin: 24px auto 0;
+      transition: border-color 0.3s;
+    }
+    .footer p, .footer a {
+      font-size: 13px;
+      color: var(--footer-text);
+    }
+    .footer a {
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--accent); }
+    .footer .divider { margin: 0 8px; }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 72px;
+      right: 24px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      z-index: 600;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: all 0.25s ease;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
     .modal-empty { text-align: center; padding: 48px 0; color: var(--text-secondary); font-size: 14px; }
 
     /* ============================================================
+       ONE DAY ONE VERSE — Popup Styles
        ONE DAY ONE VERSE — Popup
        ============================================================ */
     .odov-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.72);
       backdrop-filter: blur(4px);
+      z-index: 9998;
+      transition: opacity 0.3s ease;
       z-index: 9998; transition: opacity 0.3s ease;
     }
     .odov-popup {
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      width: min(520px, 94vw);
+      max-height: 88vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      z-index: 9999;
       position: fixed; inset: 0; margin: auto;
       width: min(520px, 94vw); max-height: 88vh; overflow-y: auto;
       border-radius: 20px; z-index: 9999;
       padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
       display: flex; flex-direction: column; gap: 16px;
       box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      background: linear-gradient(
+        135deg,
+        var(--odov-from, #1a1a2e),
+        var(--odov-via,  #16213e),
+        var(--odov-to,   #0f3460)
+      );
+      color: var(--odov-text, #e0e0ff);
       background: linear-gradient(135deg, var(--odov-from,#1a1a2e), var(--odov-via,#16213e), var(--odov-to,#0f3460));
       color: var(--odov-text,#e0e0ff);
       transition: color 0.3s ease;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.2) transparent;
+      height: fit-content;
+      top: 0;
+      bottom: 0;
       scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;
       height: fit-content; top: 0; bottom: 0;
     }
     .odov-popup::-webkit-scrollbar { width: 5px; }
     .odov-popup::-webkit-scrollbar-track { background: transparent; }
-    .odov-popup::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-    .odov-header { display: flex; justify-content: space-between; align-items: center; }
-    .odov-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; opacity: 0.7; text-transform: uppercase; }
-    .odov-close {
-      background: rgba(255,255,255,0.1); border: none; color: inherit;
-      width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-    }
-    .odov-close:hover { background: rgba(255,255,255,0.2); }
-    .odov-theme-badge {
-      display: inline-block; background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2); border-radius: 999px;
-      padding: 4px 14px; font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.06em; width: fit-content;
-    }
-    .odov-hook { font-size: 0.92rem; opacity: 0.82; line-height: 1.6; font-style: italic; margin: 0; }
-    .odov-arab {
-      font-family: "Amiri", "KFGQPC Uthmanic Script HAFS", serif;
-      font-size: clamp(1.6rem, 5vw, 2.2rem); line-height: 2; text-align: right;
-      padding: 16px; background: rgba(255,255,255,0.06); border-radius: 12px;
-      border-right: 3px solid rgba(255,255,255,0.3);
-    }
-    .odov-latin { font-size: 0.82rem; opacity: 0.65; font-style: italic; line-height: 1.7; margin: 0; }
-    .odov-terjemahan { font-size: 1rem; line-height: 1.75; font-weight: 500; margin: 0; }
-    .odov-surah-info { font-size: 0.78rem; opacity: 0.6; font-weight: 600; letter-spacing: 0.04em; }
-    .odov-tafsir-section { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px; }
-    .odov-tafsir-toggle {
-      width: 100%; background: none; border: none; color: inherit;
-      font-size: 0.85rem; font-weight: 600; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 4px 0; opacity: 0.85; transition: opacity 0.2s;
-    }
-    .odov-tafsir-toggle:hover { opacity: 1; }
-    .odov-chevron { display: inline-block; transition: transform 0.3s ease; }
-    .odov-chevron.open { transform: rotate(180deg); }
-    .odov-tafsir-body { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
-    .odov-tafsir-item { background: rgba(255,255,255,0.07); border-radius: 10px; padding: 12px 14px; }
-    .odov-tafsir-name { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.05em; opacity: 0.7; margin-bottom: 6px; text-transform: uppercase; }
-    .odov-tafsir-text {
-      font-size: 0.84rem; line-height: 1.7; opacity: 0.9;
-      display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
-    }
+@@ -901,7 +530,11 @@
     .odov-tafsir-text.expanded { display: block; -webkit-line-clamp: unset; }
     .odov-tafsir-readmore { font-size: 0.75rem; opacity: 0.6; cursor: pointer; margin-top: 4px; background: none; border: none; color: inherit; padding: 0; text-decoration: underline; }
     .odov-actions { display: flex; gap: 10px; }
+    .odov-btn { flex: 1; padding: 10px 16px; border-radius: 10px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, opacity 0.2s; font-family: inherit; }
     .odov-btn {
       flex: 1; padding: 10px 16px; border-radius: 10px; border: none;
       font-size: 0.85rem; font-weight: 600; cursor: pointer;
@@ -538,12 +1104,17 @@
     .odov-btn:hover { transform: translateY(-1px); opacity: 0.9; }
     .odov-btn:active { transform: translateY(0); }
     .odov-btn-primary { background: rgba(255,255,255,0.9); color: #1a1a2e; }
-    .odov-btn-secondary { background: rgba(255,255,255,0.12); color: inherit; border: 1px solid rgba(255,255,255,0.2); }
-    .odov-meta { font-size: 0.68rem; opacity: 0.45; text-align: center; margin: 0; }
-    .odov-loader { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 32px 0; opacity: 0.7; font-size: 0.85rem; }
+@@ -911,17 +544,34 @@
     .odov-spinner { width: 32px; height: 32px; border: 3px solid rgba(255,255,255,0.2); border-top-color: rgba(255,255,255,0.8); border-radius: 50%; animation: odov-spin 0.8s linear infinite; }
     @keyframes odov-spin { to { transform: rotate(360deg); } }
     .odov-error { text-align: center; padding: 24px 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .hidden { display: none !important; }
+    @keyframes odov-slide-up {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .odov-popup:not(.hidden) {
+      animation: odov-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 
     /* ============================================================
        TOAST
@@ -556,6 +1127,8 @@
       opacity: 0; transform: translateY(8px);
       pointer-events: none; transition: all 0.25s ease;
     }
+    @media (max-width: 480px) {
+      .odov-popup { padding: 20px 16px 20px; border-radius: 16px 16px 0 0; bottom: 0; top: auto; max-height: 92vh; width: 100vw; }
     .toast.show { opacity: 1; transform: translateY(0); }
 
     /* ============================================================
@@ -575,24 +1148,25 @@
 
     /* ============================================================
        RESPONSIVE
-       ============================================================ */
-    @media (max-width: 768px) {
+@@ -930,7 +580,6 @@
       .hero h1 { font-size: 28px; }
       .hero .subtitle { font-size: 14px; }
       .stats { grid-template-columns: repeat(2, 1fr); }
+      .theme-grid { grid-template-columns: repeat(2, 1fr); }
       .mufassir-grid { grid-template-columns: 1fr; }
       .modal-overlay { padding: 16px 8px; }
       .modal-container { border-radius: 16px; max-height: calc(100vh - 32px); }
-      .modal-header { border-radius: 16px 16px 0 0; padding: 16px; }
-      .modal-body { padding: 16px; }
+@@ -939,20 +588,27 @@
       .ayat-arab { font-size: 20px; }
       .stat-value { font-size: 18px; }
     }
+
     @media (max-width: 480px) {
       .navbar-inner { padding: 10px 16px; }
       .logo-text { font-size: 15px; }
       .hero { padding: 40px 16px 0; }
       .hero h1 { font-size: 24px; }
+      .search-wrap, .pills, .daily-quote, .section { padding: 0 16px; }
       .search-wrap, .daily-quote, .section { padding: 0 16px; }
       .stats { padding: 0 16px; gap: 8px; }
       .nav-odov-btn span.btn-label { display: none; }
@@ -612,38 +1186,23 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="navbar-inner">
-      <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M19 7.5C19 5.015 16.985 3 14.5 3S10 5.015 10 7.5c0 1.8 1.02 3.36 2.5 4.16V14a2.5 2.5 0 0 1-5 0v-1h-2v1a4.5 4.5 0 0 0 9 0v-2.34A4.502 4.502 0 0 0 19 7.5zm-4.5 2.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
-          </svg>
-        </div>
-        <div class="logo-text">Quran Tafsir</div>
-      </a>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span class="nav-link active">Beranda</span>
-        <button class="nav-odov-btn" data-odov-trigger aria-label="One Day One Verse">
-          ✦ <span class="btn-label">Ayat Hari Ini</span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
+@@ -976,7 +632,9 @@
   <!-- HERO -->
   <div class="hero">
     <h1>Jelajahi Tafsir Al-Qur'an</h1>
+    <p class="subtitle">Pahami makna dan konteks ayat Al-Qur'an berdasarkan tafsir ulama ahlus sunnah wal jamaah.</p>
     <p class="subtitle">
       Cari ayat dan tafsir berdasarkan tema, tokoh, akhlak, ibadah, ujian hidup, dan istilah yang paling dekat dengan yang kamu ingat.
     </p>
     <button class="hero-odov-cta" data-odov-trigger>
       <span class="cta-dot"></span>
       ✦ One Day One Verse — Ayat Hari Ini
-    </button>
-  </div>
-
+@@ -986,24 +644,17 @@
   <!-- SEARCH BAR -->
   <div class="search-wrap">
     <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Cari tafsir... (contoh: sabar, tawakkal, nabi musa)"
+        onkeydown="if(event.key==='Enter') doSearch()">
       <input
         type="text"
         id="searchInput"
@@ -655,32 +1214,56 @@
     </div>
   </div>
 
+  <!-- QUICK TOPIC PILLS -->
+  <div class="pills">
+    <span class="pill" onclick="quickSearch('tauhid')">Tauhid</span>
+    <span class="pill" onclick="quickSearch('sabar')">Sabar</span>
+    <span class="pill" onclick="quickSearch('rezeki')">Rezeki</span>
+    <span class="pill" onclick="quickSearch('tawakkal')">Tawakkal</span>
+    <span class="pill" onclick="quickSearch('shalat')">Shalat</span>
+    <span class="pill" onclick="quickSearch('taubat')">Taubat</span>
+    <span class="pill" onclick="quickSearch('doa')">Doa</span>
+    <span class="pill" onclick="quickSearch('akhirat')">Akhirat</span>
+  </div>
+
   <!-- STATS BAR -->
   <div class="stats">
     <div class="stat-item">
-      <div class="stat-value">114</div>
-      <div class="stat-label">Surah</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">6.236</div>
-      <div class="stat-label">Ayat</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">3</div>
-      <div class="stat-label">Mufassir Terverifikasi</div>
-    </div>
-    <div class="stat-item stat-odov" data-odov-trigger title="Buka One Day One Verse">
-      <div class="stat-value">✦</div>
-      <div class="stat-label">Ayat Hari Ini</div>
-    </div>
-  </div>
-
-  <!-- DAILY QUOTE -->
-  <div class="daily-quote">
-    <div class="quote-card">
+@@ -1030,45 +681,14 @@
       <div class="quote-label">Quote Hari Ini</div>
       <p class="quote-text" id="dailyQuote">"Sesungguhnya bersama kesulitan ada kemudahan."</p>
       <p class="quote-source" id="dailySource">— QS. Al-Insyirah: 6</p>
+      <button class="quote-reload" onclick="loadDailyQuote()">Muat ulang</button>
+    </div>
+  </div>
+
+  <!-- JELAJAHI TEMA -->
+  <div class="section">
+    <h2 class="section-title">Jelajahi Tema</h2>
+    <p class="section-desc">Klik tema untuk langsung mencari ayat dan tafsir terkait.</p>
+
+    <div class="theme-group-label">Tema Akidah &amp; Amal</div>
+    <div class="theme-grid" style="margin-bottom:16px;">
+      <div class="theme-card" onclick="quickSearch('tauhid')"><span class="theme-icon">☝️</span><span class="theme-label">Tauhid</span></div>
+      <div class="theme-card" onclick="quickSearch('taubat')"><span class="theme-icon">🤲</span><span class="theme-label">Taubat</span></div>
+      <div class="theme-card" onclick="quickSearch('sabar')"><span class="theme-icon">🌿</span><span class="theme-label">Sabar</span></div>
+      <div class="theme-card" onclick="quickSearch('doa')"><span class="theme-icon">🕌</span><span class="theme-label">Doa</span></div>
+      <div class="theme-card" onclick="quickSearch('rezeki')"><span class="theme-icon">🌾</span><span class="theme-label">Rezeki</span></div>
+      <div class="theme-card" onclick="quickSearch('akhlak')"><span class="theme-icon">💎</span><span class="theme-label">Akhlak</span></div>
+      <div class="theme-card" onclick="quickSearch('keluarga')"><span class="theme-icon">👨‍👩‍👧</span><span class="theme-label">Keluarga</span></div>
+      <div class="theme-card" onclick="quickSearch('akhirat')"><span class="theme-icon">⚖️</span><span class="theme-label">Akhirat</span></div>
+    </div>
+
+    <div class="theme-group-label">Kisah dalam Al-Qur'an</div>
+    <div class="theme-grid">
+      <div class="theme-card" onclick="quickSearch('nabi ibrahim')"><span class="theme-icon">🕋</span><span class="theme-label">Nabi Ibrahim</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi musa')"><span class="theme-icon">🌊</span><span class="theme-label">Nabi Musa</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi yusuf')"><span class="theme-icon">⭐</span><span class="theme-label">Nabi Yusuf</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi isa')"><span class="theme-icon">📖</span><span class="theme-label">Nabi Isa</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi nuh')"><span class="theme-icon">⛵</span><span class="theme-label">Nabi Nuh</span></div>
+      <div class="theme-card" onclick="quickSearch('nabi sulaiman')"><span class="theme-icon">👑</span><span class="theme-label">Nabi Sulaiman</span></div>
+      <div class="theme-card" onclick="quickSearch('ashabul kahfi')"><span class="theme-icon">🏔️</span><span class="theme-label">Ashabul Kahfi</span></div>
+      <div class="theme-card" onclick="quickSearch('maryam')"><span class="theme-icon">🌹</span><span class="theme-label">Maryam</span></div>
       <button class="quote-reload" onclick="loadDailyQuote()">↺ Muat ulang</button>
     </div>
   </div>
@@ -689,64 +1272,39 @@
   <div class="section">
     <h2 class="section-title">Mufassir Terverifikasi</h2>
     <p class="section-desc">Sumber tafsir yang digunakan, sesuai manhaj ahlus sunnah wal jamaah.</p>
+
     <div class="mufassir-grid">
       <div class="mufassir-card">
         <div class="mufassir-name">Imam Ibnu Katsir</div>
-        <div class="mufassir-era">700–774 H / 1300–1373 M</div>
-        <p class="mufassir-manhaj">Tafsir bil Ma'tsur — mengutamakan Al-Qur'an, Hadits Shahih, Atsar Sahabat.</p>
-        <span class="mufassir-badge">Rujukan Utama Ahlus Sunnah</span>
-      </div>
-      <div class="mufassir-card">
-        <div class="mufassir-name">Tafsir Jalalayn</div>
-        <div class="mufassir-era">Jalaluddin Al-Mahalli &amp; Jalaluddin As-Suyuthi</div>
-        <p class="mufassir-manhaj">Ringkas, padat, berbasis riwayat.</p>
-        <span class="mufassir-badge">Tafsir Ringkas Mu'tamad</span>
-      </div>
-      <div class="mufassir-card">
-        <div class="mufassir-name">Tafsir Kemenag RI</div>
-        <div class="mufassir-era">Kementerian Agama Republik Indonesia</div>
-        <p class="mufassir-manhaj">Tafsir resmi negara, pendekatan kontekstual Indonesia.</p>
-        <span class="mufassir-badge">Referensi Resmi Indonesia</span>
-      </div>
-    </div>
-  </div>
+@@ -1093,9 +713,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
+    <p>
+      Quran Tafsir — Open Source untuk Umat
+    </p>
     <p>Quran Tafsir — Open Source untuk Umat</p>
   </footer>
 
   <!-- MODAL PENCARIAN -->
-  <div class="modal-overlay" id="searchModal" onclick="closeModalOverlay(event)">
-    <div class="modal-container">
-      <div class="modal-header">
-        <span class="modal-title" id="modalTitle">Hasil Pencarian</span>
-        <button class="modal-close" onclick="closeModal()" aria-label="Tutup">&times;</button>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
+@@ -1109,11 +727,8 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       ONE DAY ONE VERSE — Popup HTML
+       ============================================================ -->
   <!-- ONE DAY ONE VERSE Popup -->
   <div id="odov-backdrop" class="odov-backdrop hidden" aria-hidden="true"></div>
+
   <div id="odov-popup" class="odov-popup hidden" role="dialog" aria-modal="true" aria-label="One Day One Verse">
     <div class="odov-header">
       <div class="odov-label">✦ ONE DAY ONE VERSE ✦</div>
-      <button id="odov-close" class="odov-close" aria-label="Tutup">&times;</button>
-    </div>
-    <div id="odov-loader" class="odov-loader">
-      <div class="odov-spinner"></div>
-      <p>Memuat ayat hari ini...</p>
-    </div>
-    <div id="odov-content" class="odov-content hidden">
-      <div id="odov-theme-badge" class="odov-theme-badge"></div>
-      <p id="odov-hook" class="odov-hook"></p>
-      <div id="odov-arab" class="odov-arab" dir="rtl" lang="ar"></div>
-      <p id="odov-latin" class="odov-latin"></p>
-      <p id="odov-terjemahan" class="odov-terjemahan"></p>
+@@ -1132,54 +747,36 @@
       <div id="odov-surah-info" class="odov-surah-info"></div>
       <div id="odov-tafsir-section" class="odov-tafsir-section">
         <button class="odov-tafsir-toggle" id="odov-tafsir-toggle">
+          📖 Lihat Tafsir Ulama <span class="odov-chevron">▾</span>
           Lihat Tafsir Ulama <span class="odov-chevron">▾</span>
         </button>
         <div id="odov-tafsir-body" class="odov-tafsir-body hidden">
@@ -754,25 +1312,50 @@
         </div>
       </div>
       <div class="odov-actions">
+        <button id="odov-regenerate" class="odov-btn odov-btn-secondary">🔄 Ayat Lain</button>
+        <button id="odov-share" class="odov-btn odov-btn-primary">📤 Bagikan</button>
         <button id="odov-regenerate" class="odov-btn odov-btn-secondary">Ayat Lain</button>
         <button id="odov-share" class="odov-btn odov-btn-primary">Bagikan</button>
       </div>
       <p id="odov-meta" class="odov-meta"></p>
     </div>
     <div id="odov-error" class="odov-error hidden">
+      <p>😔 Gagal memuat ayat. Coba lagi.</p>
       <p>Gagal memuat ayat. Coba lagi.</p>
       <button id="odov-retry" class="odov-btn odov-btn-primary">Coba Lagi</button>
     </div>
   </div>
+
+  <!-- FLOATING THEME TOGGLE -->
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle tema">
+    <span class="theme-toggle-icon" id="toggleIcon">☀️</span>
+    <span id="toggleLabel">Mode Gelap</span>
+  </button>
 
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
 <script>
   /* ============================================================
+     THEME & TOAST
      CONFIG
      ============================================================ */
   const API_BASE = '/api/v1';
+
+  function getTheme() { return localStorage.getItem('qt-theme') || 'light'; }
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const icon  = document.getElementById('toggleIcon');
+    const label = document.getElementById('toggleLabel');
+    if (theme === 'dark') { icon.textContent = '🌙'; label.textContent = 'Mode Terang'; }
+    else { icon.textContent = '☀️'; label.textContent = 'Mode Gelap'; }
+  }
+  function toggleTheme() {
+    const next = getTheme() === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('qt-theme', next);
+    applyTheme(next);
+  }
+  applyTheme(getTheme());
 
   /* ============================================================
      TOAST
@@ -780,289 +1363,565 @@
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+@@ -1188,7 +785,7 @@
   }
 
   /* ============================================================
+     SEARCH
      DAILY QUOTE
      ============================================================ */
   async function loadDailyQuote() {
     try {
-      const res = await fetch(API_BASE + '/quotes/random');
-      if (res.ok) {
-        const data = await res.json();
+@@ -1198,28 +795,159 @@
         document.getElementById('dailyQuote').textContent = '"' + data.text + '"';
         document.getElementById('dailySource').textContent = '— QS. ' + data.surah + ': ' + data.ayah;
       }
+    } catch(e) { console.log('API belum aktif, menggunakan quote default.'); }
     } catch(e) { /* gunakan quote default */ }
   }
 
+  function quickSearch(term) {
+    document.getElementById('searchInput').value = term;
+    doSearch();
   /* ============================================================
      SEARCH — MULTI-PASS KEYWORD EXPANSION
      ============================================================ */
   const SEARCH_ALIASES = {
-    // KEHIDUPAN SEHARI-HARI & EMOSI
-    'jodoh':['pasangan','nikah','zawaj','azwaj','pernikahan','menikah','suami','istri','kawin','mawaddah','sakinah','warahmah'],
-    'cinta':['mahabbah','hubb','kasih','sayang','mawaddah','rahmah','rindu','asmara'],
-    'sedih':['huzn','kesedihan','duka','galau','murung','gundah','pilu','sendu'],
-    'bahagia':['farh','surur','suka','gembira','riang','senang','nikmat','bahagia'],
-    'marah':['ghadab','amarah','murka','berang','nafsu','emosi','kebencian'],
-    'takut':['khawf','khasyah','wajal','ketakutan','gentar','gemetar','cemas','khawatir'],
-    'harap':['raja','amal','harapan','asa','impian','optimis','pengharapan'],
-    'galau':['huzn','kesedihan','gelisah','gundah','bimbang','ragu','khawatir'],
-    'rindu':['syauq','kerinduan','kangen','hasrat','damba'],
-    'malu':['haya','khajal','segan','sungkan','aib'],
-    'bangga':['fakhr','kibr','sombong','ujub','riya'],
-    'iri':['hasad','dengki','cemburu','ghirah','iri hati'],
-    'sabar':['sabr','kesabaran','tabah','tahan','ikhlas','tawakkal','bersabar'],
-    'syukur':['shukr','bersyukur','terima kasih','alhamdulillah','nikmat'],
-    'ikhlas':['ikhlash','tulus','murni','lillahi taala','rela','keikhlasan'],
-    'tawakkal':['tawakkul','berserah','pasrah','tawakal','trust Allah','berserah diri'],
-    'tobat':['tawbah','taubat','ampun','istighfar','kembali kepada Allah','bertaubat'],
-    'taubat':['tawbah','tobat','ampun','istighfar','kembali kepada','bertaubat'],
-    'zuhud':['zahid','wara','sederhana','tidak cinta dunia','berpaling dari dunia'],
-    // IBADAH & RITUAL
-    'shalat':['sholat','salah','solat','sembahyang','prayer','ibadah harian','salat'],
-    'salat':['salat','shalat','sembahyang','solat','sholat'],
-    'solat':['solat','shalat','salat','sembahyang'],
-    'puasa':['shaum','shiyam','shoum','ramadan','berpuasa','sahur','buka puasa','siyam'],
-    'zakat':['zakah','zakat fitrah','zakat mal','sedekah wajib','infak','nizhab','haul'],
-    'haji':['hajj','baitullah','makkah','ihram','mabrur','wukuf','thawaf'],
-    'umrah':['umroh','umra','ibadah ringan','umrah mandiri'],
-    'doa':["du'a","doa","munajat","mohon","istighfar","permohonan","berdoa","memohon"],
-    "do'a":["do'a","doa","berdoa","permohonan","memohon"],
-    'dzikir':['zikir','dhikr','tasbih','tahmid','takbir','tahlil'],
-    'tilawah':['baca quran','tartil','tadarus','tilawatil quran','murattal'],
-    'wudhu':['wudlu','wudu','bersuci','thaharah'],
-    'sedekah':['shadaqah','infak','infaq','donasi','amal jariyah','wakaf','zakat','derma','sodakoh'],
-    'wakaf':['waqf','wakaf produktif','amal abadi','endowment'],
-    'qurban':['kurban','udhhiyah','idul adha','menyembelih'],
-    'jihad':['perang','qital','berjuang','berjihad','mujahid','perjuangan','jalan allah'],
-    // ASMAUL HUSNA (99 nama)
-    'ar-rahman':['maha pengasih','rahmat','kasih sayang Allah','rahman'],
-    'ar-rahim':['maha penyayang','rahmah','penyayang','rahim'],
-    'al-malik':['raja','penguasa','pemilik kerajaan','malik'],
-    'al-quddus':['maha suci','suci','kudus','quddus'],
-    'as-salam':['maha damai','pemberi kedamaian','salam'],
-    'al-mumin':['maha pemberi keamanan','aman','terpercaya','mumin'],
-    'al-aziz':['maha perkasa','kuat','mulia','aziz'],
-    'al-jabbar':['maha kuasa','pemaksa','berkuasa','jabbar'],
-    'al-mutakabbir':['maha besar','takabur','agung','mutakabbir'],
-    'al-khaliq':['maha pencipta','pencipta','creator','khaliq'],
-    'al-ghaffar':['maha pengampun','ampun','maghfirah','ghaffar'],
-    'ar-razzaq':['maha pemberi rezeki','rezeki','rizki','razzaq'],
-    'al-fattah':['maha pembuka','membuka','kemenangan','fattah'],
-    'al-alim':['maha mengetahui','ilmu','mengetahui','alim'],
-    'al-hayy':['maha hidup','hidup','kehidupan kekal','hayy'],
-    'al-qayyum':['maha berdiri sendiri','berdiri sendiri','qayyum'],
-    'al-ahad':['maha esa','esa','tauhid','satu','ahad'],
-    'as-shamad':['maha dibutuhkan','tempat bergantung','shamad'],
-    'al-qadir':['maha kuasa','kuasa','mampu','qadir'],
-    'al-awwal':['maha awal','awal','pertama','awwal'],
-    'al-akhir':['maha akhir','akhir','terakhir'],
-    'az-zhahir':['maha nyata','nyata','tampak','zhahir'],
-    'al-bathin':['maha tersembunyi','tersembunyi','gaib','bathin'],
-    'al-wadud':['maha mencintai','cinta Allah','kasih','wadud'],
-    'ar-rauf':['maha pengasih','lembut','rauf'],
-    'al-afuww':['maha pemaaf','pemaaf','maaf','afuww'],
-    'at-tawwab':['maha penerima tobat','tobat','taubat','tawwab'],
-    'al-muntaqim':['maha pemberi balasan','pembalas','muntaqim'],
-    'an-nur':['maha bercahaya','cahaya','sinar','nur'],
-    'al-hadi':['maha pemberi petunjuk','petunjuk','hidayah','hadi'],
-    'al-baqi':['maha kekal','kekal','abadi','baqi'],
-    'ar-rasyid':['maha pandai','cerdas','bijak','rasyid'],
-    'ash-shabur':['maha sabar','sabar','shabur'],
-    // AKHIRAT & ESKATOLOGI
-    'mati':['wafat','maut','ajal','kematian','meninggal','mati syahid','nafas terakhir'],
-    'surga':['jannah','firdaus','naim','paradise','syurga','ma'wa','adn'],
-    'jannah':['jannah','surga','firdaus','syurga','paradise'],
-    'neraka':['jahannam','naar','api neraka','azab','hellfire','siksa'],
-    'jahannam':['jahannam','neraka','siksa','azab'],
-    'hari kiamat':['yaumul qiyamah','hari akhir','akhirat','yaumuddin','kiamat','qiyamah'],
-    'kiamat':['kiamat','akhirat','hari akhir','yaumul qiyamah','kebangkitan'],
-    'akhirat':['akhirat','hari akhir','kiamat','kebangkitan','yaumul','yaumuddin'],
-    'malaikat':['malak','jibril','mikail','israfil','izrail','munkar','nakir'],
-    'jin':['jinn','iblis','setan','syaitan','ajinni','makhluk gaib'],
-    'setan':['syaitan','iblis','syaithan','waswas','godaan','was-was'],
-    'iblis':['iblis','setan','syaitan','laknat','was-was'],
-    'kubur':['qabr','barzakh','alam kubur','siksa kubur','nikmat kubur'],
-    'syafaat':['syafaah','pertolongan','intercessor','pemberi syafaat'],
-    'kebangkitan':['ba'ath','nusyur','bangkit dari kubur','yaumul ba'ath','resurrection'],
-    'mizan':['neraca','timbangan amal','hisab','perhitungan amal'],
-    // SOSIAL & HUBUNGAN
-    'keluarga':['usrah','ahlul bait','famili','sanak saudara','ahl'],
-    'orang tua':['walid','walidain','ibu bapak','ayah ibu','abawain','wali','birrul walidain'],
-    'ibu':['umm','ummi','mother','bunda','mama','mak','walidain','orang tua'],
-    'ayah':['abb','abbi','bapak','papa','abba','walid','walidain','orang tua'],
-    'anak':['ibn','walad','abna','putra','putri','anak cucu'],
-    'saudara':['akh','ukhti','ikhwan','akhwat','kakak','adik'],
-    'teman':['shadiq','khalil','sahabat','rekan','sobat','kawan'],
-    'tetangga':['jar','jiwar','jiran','neighbor'],
-    'yatim':['anak yatim','orphan','piatu','tanpa ayah'],
-    'fakir':['miskin','fuqara','masakin','dhuafa','kaum lemah'],
-    'pemimpin':['imam','khalifah','amir','pemimpin umat','ulil amri'],
-    'ulama':['alim','ustadz','kyai','habib','syaikh','mufti'],
-    // AKHLAK & MORAL
-    'jujur':['shidq','amanah','benar','truthful','sidik','shiddiq'],
-    'dusta':['kidzb','bohong','munafik','palsu'],
-    'munafik':['nifaq','hipokrit','pura-pura','bermuka dua'],
-    'fasik':['fasiq','durhaka','jahat','melanggar'],
-    'kafir':['kufr','ingkar','tidak percaya','musyrik'],
-    'syirik':['musyrik','penyekutuan','berhala','penyembahan berhala'],
-    'haram':['dilarang','terlarang','tidak halal','larangan'],
-    'halal':['diizinkan','dibolehkan','sah','boleh'],
-    'adil':['adl','qisth','justice','fairness','insaf','keadilan'],
-    'zalim':['zulm','oppression','aniaya','sewenang-wenang'],
-    'amanah':['trust','dipercaya','tanggung jawab','kepercayaan'],
-    'dermawan':['karim','murah hati','sakhiy','generous'],
-    'kikir':['bakhil','pelit','tamak','taqtir'],
-    'rendah hati':['tawadhu','humble','tidak sombong','khusyu'],
-    'sombong':['kibr','takabbur','arogan','congkak'],
-    'pemaaf':['afwu','maaf','ghufran','toleran'],
-    'sabar ujian':['ujian','cobaan','musibah','kesulitan','kesusahan'],
-    'ujian':['ujian','cobaan','musibah','kesulitan','fitnah'],
-    'musibah':['musibah','ujian','cobaan','bencana','kesulitan'],
-    // EKONOMI & KEUANGAN
-    'kerja':['amal','kasab','usaha','pekerjaan','profesi'],
-    'rezeki':['rizqi','rizki','nafkah','pemberian','karunia','nikmat'],
-    'rizki':['rizki','rezeki','karunia','nikmat','nafkah'],
-    'kaya':['ghani','tsarwah','tajir','hartawan','makmur'],
-    'miskin':['faqir','masakin','fuqara','kaum miskin','dhuafa'],
-    'hutang':['dayn','utang','qardh','kewajiban bayar','pinjaman'],
-    'riba':['bunga','renten','interest','usury','haram','muamalah batil'],
-    'jual beli':['bay','tijarah','perdagangan','bisnis','dagang'],
-    'harta':['mal','amwal','kekayaan','property','aset'],
-    'warisan':['mirath','tirkah','faraidh','harta waris','wasiat'],
-    'maysir':['judi','gambling','qimar','lotere','haram'],
-    // ALAM SEMESTA
-    'langit':['sama','samawat','heavens','falak','cakrawala'],
-    'bumi':['ardh','earth','globe','dunia fisik'],
-    'air':['ma','maa','hujan','sungai','laut','rain'],
-    'matahari':['shams','syamsu','sun','surya','sinar matahari'],
-    'bulan':['qamar','bulan sabit','hilal','moon'],
-    'bintang':['najm','nujum','star','komet','meteor'],
-    'laut':['bahr','yam','ocean','sea','samudra'],
-    'gunung':['jabal','jibal','mountain','pegunungan','bukit'],
-    'cahaya':['nur','dhiya','light','sinar','terang'],
-    'kegelapan':['dhulumah','zulam','darkness','gelap','gulita'],
-    'waktu':['waqt','zaman','masa','time','hari','jam'],
-    'manusia':['insan','basyar','nas','human','khalifah fi ardh'],
-    // KISAH PARA NABI
-    'adam':['nabi adam','manusia pertama','adam dan hawa','surga adam'],
-    'nabi adam':['nabi adam','adam','manusia pertama','hawa'],
-    'nuh':['nabi nuh','banjir besar','bahtera nuh','kapal nuh','taufan'],
-    'nabi nuh':['nabi nuh','nuh','banjir besar','bahtera'],
-    'ibrahim':["nabi ibrahim","abram","khalilullah","bapak nabi","api ibrahim","ka'bah"],
-    'nabi ibrahim':["nabi ibrahim","ibrahim","khalilullah","ka'bah"],
-    'ismail':['nabi ismail','ishmael','anak ibrahim','qurban ismail'],
-    'ishak':['nabi ishak','isaac','anak ibrahim kedua'],
-    'yusuf':['nabi yusuf','joseph','kisah yusuf','mimpi yusuf','mesir'],
-    'nabi yusuf':['nabi yusuf','yusuf','kisah yusuf'],
-    'musa':['nabi musa','moses','bani israel','tongkat musa','firaun',"fir'aun",'bani israil'],
-    'nabi musa':['nabi musa','musa','moses',"fir'aun",'firaun','bani israil'],
-    'harun':['nabi harun','aaron','saudara musa'],
-    'daud':['nabi daud','david','zabur','goliat'],
-    'sulaiman':['nabi sulaiman','solomon','raja sulaiman','jin sulaiman','ratu bilqis'],
+    'shalat':       ['shalat','salat','sembahyang','solat'],
+    'salat':        ['salat','shalat','sembahyang','solat'],
+    'solat':        ['solat','shalat','salat'],
+    'tawakkal':     ['tawakkal','tawakal','berserah diri','pasrah'],
+    'tawakal':      ['tawakal','tawakkal','berserah diri'],
+    'rezeki':       ['rezeki','rizki','karunia','nikmat','pemberian'],
+    'rizki':        ['rizki','rezeki','karunia','nikmat'],
+    'sabar':        ['sabar','kesabaran','tabah','tahan','bersabar'],
+    'taubat':       ['taubat','tobat','istighfar','bertaubat','kembali kepada'],
+    'tobat':        ['tobat','taubat','istighfar'],
+    'istighfar':    ['istighfar','taubat','tobat','ampun'],
+    'ikhlas':       ['ikhlas','keikhlasan','murni','tulus'],
+    'syukur':       ['syukur','bersyukur','nikmat','terima kasih'],
+    'doa':          ["doa","do'a","berdoa","permohonan","memohon"],
+    "do'a":         ["do'a","doa","berdoa","permohonan"],
+    'surga':        ['surga','jannah','firdaus','syurga'],
+    'jannah':       ['jannah','surga','firdaus','syurga'],
+    'neraka':       ['neraka','jahannam','siksa','azab'],
+    'jahannam':     ['jahannam','neraka','siksa'],
+    'akhirat':      ['akhirat','hari akhir','kiamat','kebangkitan','yaumul'],
+    'kiamat':       ['kiamat','akhirat','hari akhir','yaumul qiyamah'],
+    'riba':         ['riba','bunga','muamalah batil','haram'],
+    'zakat':        ['zakat','sedekah','infak','sodakoh'],
+    'sedekah':      ['sedekah','zakat','infak','derma'],
+    'puasa':        ['puasa','shaum','siyam','ramadan'],
+    'takdir':       ['takdir','qadar','ketetapan','qada','qadha'],
+    'qadar':        ['qadar','takdir','ketetapan','qada'],
+    'tauhid':       ['tauhid','tawhid','keesaan','esaan','menyekutukan'],
+    'akhlak':       ['akhlak','budi pekerti','moral','etika','karakter'],
+    'keluarga':     ['keluarga','orang tua','ibu','ayah','anak','istri','suami'],
+    'orang tua':    ['orang tua','ibu','ayah','walidain','birrul walidain'],
+    'ibu':          ['ibu','ummu','walidain','orang tua'],
+    'ayah':         ['ayah','bapak','walidain','orang tua'],
+    'jihad':        ['jihad','berjihad','perjuangan','jalan allah'],
+    'ilmu':         ['ilmu','pengetahuan','belajar','mengajar'],
+    'adil':         ['adil','keadilan','insaf'],
+    'amanah':       ['amanah','kepercayaan','jujur'],
+    'jujur':        ['jujur','amanah','shiddiq','benar'],
+    'sabar ujian':  ['ujian','cobaan','musibah','kesulitan','kesusahan'],
+    'ujian':        ['ujian','cobaan','musibah','kesulitan','fitnah'],
+    'musibah':      ['musibah','ujian','cobaan','bencana','kesulitan'],
+    'cinta':        ['cinta','kasih sayang','rahmah','mahabbah','kecintaan'],
+    'kasih sayang': ['kasih sayang','cinta','rahmah','rahmat','mahabbah'],
+    'rahmat':       ['rahmat','rahmah','kasih sayang','ampunan'],
+    'takut':        ['takut','khauf','rasa takut','khasy-yah'],
+    'khauf':        ['khauf','takut','rasa takut','takwa'],
+    'harap':        ['harap','raja','harapan','pengharapan','berharap'],
+    'taqwa':        ['taqwa','takwa','bertakwa','patuh','waspada'],
+    'takwa':        ['takwa','taqwa','bertakwa','patuh'],
+    'nabi musa':    ['nabi musa','musa','musa as',"fir'aun",'firaun','bani israil'],
+    'musa':         ['musa','nabi musa',"fir'aun",'firaun'],
+    'nabi yusuf':   ['nabi yusuf','yusuf','kisah yusuf'],
+    'yusuf':        ['yusuf','nabi yusuf','kisah yusuf'],
+    'nabi ibrahim': ['nabi ibrahim','ibrahim','khalilullah','ka\'bah'],
+    'ibrahim':      ['ibrahim','nabi ibrahim','ka\'bah','khalilullah'],
+    'nabi isa':     ['nabi isa','isa','isa al masih','maryam'],
+    'isa':          ['isa','nabi isa','maryam','isa al masih'],
+    'nabi nuh':     ['nabi nuh','nuh','banjir besar','bahtera'],
+    'nuh':          ['nuh','nabi nuh','banjir besar'],
     'nabi sulaiman':['nabi sulaiman','sulaiman','ratu bilqis'],
-    'ayub':['nabi ayub','job','kesabaran ayub','sakit'],
-    'yunus':['nabi yunus','jonah','perut ikan','ikan paus'],
-    'zakariya':['nabi zakariya','zacharia','bapak yahya'],
-    'yahya':['nabi yahya','john the baptist','putra zakariya'],
-    'isa':['nabi isa','jesus','al-masih','maryam','injil','isa al masih'],
-    'nabi isa':['nabi isa','isa','al-masih','maryam'],
-    'muhammad':['nabi muhammad','rasulullah','habibullah','penutup nabi','khatamun nabiyyin'],
-    'idris':['nabi idris','enoch'],
-    'hud':['nabi hud','kaum ad','angin topan'],
-    'shaleh':['nabi shaleh','kaum tsamud','unta shaleh'],
-    'luth':['nabi luth','lot','kaum sodom'],
-    'syuaib':['nabi syuaib','jethro','kaum madyan'],
-    'ilyas':['nabi ilyas','elijah'],
-    // SAKIT & KESEHATAN
-    'sakit':['maradh','waja','penyakit','pain','illness','derita'],
-    'sembuh':['syifa','afiyah','healing','sehat','pulih','recovery'],
-    'sehat':['shihhah','afiyah','health','segar','bugar'],
-    'wabah':["tha'un",'balak','pandemi','epidemic','penyakit menular'],
-    // PENDIDIKAN & ILMU
-    'ilmu':['ilm','knowledge','science','pengetahuan','pemahaman'],
-    'belajar':["ta'allam",'tahashul','study','pelajari','menuntut ilmu'],
-    'hikmah':['wisdom','kebijaksanaan','husn','hukm'],
-    'akal':['aql','pikiran','reason','nalar','logika'],
-    'membaca':['iqra','qiraah','baca','bacaan','recite'],
-    // HUKUM & KEADILAN
-    'hukum':['syariah','fiqh','aturan','law','peraturan'],
-    'dosa':['dzanb','itsm',"sayyi'ah",'sin','kesalahan','pelanggaran'],
-    'pahala':['tsawab','ajr','reward','ganjaran','balasan baik'],
-    'cerai':['talak','perceraian','thalaq','fasakh',"khul'"],
-    'nikah':['zawaj','nikah','pernikahan','kawin','aqad'],
-    'takdir':['takdir','qadar','ketetapan','qada','qadha'],
-    'qadar':['qadar','takdir','ketetapan','qada'],
-    'tauhid':['tauhid','tawhid','keesaan','esaan','menyekutukan'],
-    'akhlak':['akhlak','budi pekerti','moral','etika','karakter'],
-    'taqwa':['taqwa','takwa','bertakwa','patuh','waspada'],
-    'takwa':['takwa','taqwa','bertakwa','patuh'],
-    // QURAN & TAFSIR
-    'quran':["al-qur'an",'mushaf','kitab suci','kalam Allah','furqan'],
-    'surah':['surat','chapter','bab quran'],
-    'ayat':['verse','firman','kalam'],
-    'tafsir':['terjemahan','penjelasan','interpretation',"ta'wil"],
-    // PERANG & KONFLIK
-    'perang':['harb','qital','ghazwah','battle','pertempuran'],
-    'damai':['silm','salam','sulh','peace','perdamaian'],
-    'musuh':['aduww','enemy','kafir harbi','lawan'],
-    'kemenangan':['fath','nashr','victory','nusrah','menang'],
-    'perjanjian':['ahd','mitsaq','covenant','treaty','kontrak'],
-    // TOKOH AL-QURAN
-    "firaun":["fir'aun","pharaoh","thaghut","penguasa zalim","kisah mesir","musa"],
-    "fir'aun":["fir'aun","firaun","pharaoh","thaghut","musa"],
-    'qarun':['karun','orang kaya sombong','kekayaan yang hilang'],
-    'maryam':['maria','bunda isa','wanita suci','perawan','ibu isa','wanita pilihan'],
-    'bilqis':['ratu saba','queen of sheba','ratu yaman','sulaiman'],
-    // ASHABUL KAHFI & KISAH KHUSUS
+    'sulaiman':     ['sulaiman','nabi sulaiman','ratu bilqis'],
+    'maryam':       ['maryam','ibu isa','wanita pilihan'],
     'ashabul kahfi':['ashabul kahfi','penghuni gua','kahfi'],
-    'kahfi':['kahfi','ashabul kahfi','penghuni gua'],
-    // NAMA SURAH POPULER
-    'al-fatihah':['surah pembuka','ummul quran',"sab'ul matsani",'fatihah'],
-    'al-baqarah':['surah sapi betina','terpanjang','ayat kursi','baqarah'],
-    'ali imran':['keluarga imran','surah 3','isa dan maryam'],
-    'an-nisa':['surah wanita','hak wanita','waris','nisa'],
-    'al-maidah':['jamuan makan','perjanjian','hukum makanan'],
-    'al-kahfi':['penghuni gua','ashabul kahfi','dajjal','kahfi'],
-    'maryam surah':['surah maryam','kelahiran isa','maryam'],
-    'yasin':['jantung quran','yasin','hari kiamat'],
-    'ar-rahman':['yang maha pengasih','nikmat Allah','rahman'],
-    'al-waqiah':['hari kiamat','golongan manusia','waqiah'],
-    'al-mulk':['kerajaan','azab kubur','mulk'],
-    'al-ikhlas':['ikhlas','tauhid','qul huwallah'],
-    'al-falaq':['waktu subuh','perlindungan','falaq'],
-    'an-nas':['manusia','waswas','nas'],
-    'al-alaq':['segumpal darah','iqra','wahyu pertama','alaq'],
-    'al-qadr':['malam kemuliaan','lailatul qadr','qadr'],
-    'al-ashr':['masa','waktu','ashr'],
-    'al-fajr':['fajar','fajr'],
-    'adh-dhuha':['waktu duha','dhuha'],
-    'al-insyirah':['melapangkan dada','insyirah','kemudahan'],
-    'al-hujurat':['kamar-kamar','adab','ukuwah','hujurat'],
-    'al-isra':['perjalanan malam','isra miraj','bani israel','isra'],
-    'al-anfal':['rampasan perang','badar','perang','anfal'],
-    'at-taubah':['pengampunan','berlepas diri','jihad','taubah'],
-    'al-fath':['kemenangan','perjanjian hudaibiyah','fath'],
-    'an-nahl':['lebah','nikmat Allah','madu','nahl'],
-    'luqman':['nasihat luqman','luqman'],
-    'yusuf surah':['surah yusuf','kisah yusuf','mesir'],
-    'hud surah':['surah hud','nabi hud','kaum ad'],
-    // TOPIK KONTEMPORER ISLAMIK
-    'sufisme':['tasawuf','mistik islam','wali','tariqah','zuhud'],
-    'tasawuf':['tasawuf','sufisme','wali','tariqah','zikir'],
-    'moderasi':['wasathiyah','moderasi beragama','islam moderat'],
-    'toleransi':['toleransi','pluralisme','keberagaman','dialog antaragama'],
-    'radikalisme':['ekstremisme','terorisme','ghuluw'],
-    'ekonomi islam':['ekonomi syariah','muamalah','perbankan islam'],
-    'kasih sayang':['kasih sayang','cinta','rahmah','rahmat','mahabbah'],
-    'rahmat':['rahmat','rahmah','kasih sayang','ampunan'],
-    'khauf':['khauf','takut','rasa takut','takwa','khasy-yah'],
-    'taqwa':['taqwa','takwa','bertakwa','patuh','waspada'],
-  }
+    'firaun':       ["fir'aun",'firaun','musa','laknat'],
+    'setan':        ['setan','syaitan','iblis','bisikan','godaan'],
+    'iblis':        ['iblis','setan','syaitan','laknat'],
+    'malaikat':     ['malaikat','jibril','israfil','mikail'],
+    'hari kiamat':  ['hari kiamat','yaumul qiyamah','kebangkitan','akhirat'],
+  // ============================================================
+  // KEHIDUPAN SEHARI-HARI & EMOSI
+  // ============================================================
+  "jodoh": ["pasangan", "nikah", "zawaj", "azwaj", "pernikahan", "menikah", "suami", "istri", "kawin", "mawaddah", "sakinah", "warahmah"],
+  "cinta": ["mahabbah", "hubb", "kasih", "sayang", "mawaddah", "rahmah", "rindu", "asmara"],
+  "sedih": ["huzn", "kesedihan", "duka", "galau", "murung", "gundah", "pilu", "sendu"],
+  "bahagia": ["farh", "surur", "suka", "gembira", "riang", "senang", "nikmat", "felicitas"],
+  "marah": ["ghadab", "amarah", "murka", "berang", "nafsu", "emosi", "kebencian"],
+  "takut": ["khawf", "khasyah", "wajal", "khasyyah", "ketakutan", "gentar", "gemetar", "cemas", "khawatir"],
+  "harap": ["raja", "amal", "harapan", "asa", "impian", "optimis", "pengharapan"],
+  "galau": ["huzn", "kesedihan", "gelisah", "gundah", "bimbang", "ragu", "khawatir"],
+  "rindu": ["syauq", "kerinduan", "kangen", "hasrat", "damba"],
+  "malu": ["haya", "khajal", "segan", "sungkan", "aib"],
+  "bangga": ["fakhr", "kibr", "sombong", "ujub", "riya"],
+  "iri": ["hasad", "dengki", "cemburu", "ghirah", "iri hati"],
+  "sabar": ["sabr", "kesabaran", "tabah", "tahan", "ikhlas", "tawakkal"],
+  "syukur": ["shukr", "gratitude", "bersyukur", "terima kasih", "alhamdulillah"],
+  "ikhlas": ["ikhlash", "tulus", "murni", "lillahi taala", "rela"],
+  "tawakkal": ["tawakkul", "berserah", "pasrah", "tawakal", "trust Allah"],
+  "tobat": ["tawbah", "taubat", "ampun", "istighfar", "kembali kepada Allah"],
+  "zuhud": ["zahid", "wara", "sederhana", "tidak cinta dunia", "berpaling dari dunia"],
+
+  // ============================================================
+  // IBADAH & RITUAL
+  // ============================================================
+  "shalat": ["sholat", "salah", "solat", "sembahyang", "prayer", "ibadah harian"],
+  "puasa": ["shaum", "shiyam", "shoum", "ramadan", "berpuasa", "sahur", "buka puasa"],
+  "zakat": ["zakah", "zakat fitrah", "zakat mal", "sedekah wajib", "infak"],
+  "haji": ["hajj", "baitullah", "makkah", "ihrам", "mabrur", "wukuf", "thawaf", "ihram"],
+  "umrah": ["umroh", "umra", "ibadah ringan", "umrah mandiri"],
+  "doa": ["du'a", "dua", "munajat", "mohon", "istighfar", "permohonan"],
+  "dzikir": ["zikir", "dhikr", "tasbih", "tahmid", "takbir", "tahlil"],
+  "tilawah": ["baca quran", "tartil", "tadarus", "tilawatil quran", "murattal"],
+  "wudhu": ["wudlu", "wudu", "bersuci", "thaharah", "bersuci sebelum sholat"],
+  "mandi wajib": ["junub", "janabah", "hadats besar", "ghusl", "mandi junub"],
+  "sedekah": ["shadaqah", "infak", "infaq", "donasi", "amal jariyah", "wakaf"],
+  "wakaf": ["waqf", "wakaf produktif", "wakaf tanah", "amal abadi"],
+  "qurban": ["kurban", "udhhiyah", "udhiyah", "idul adha", "menyembelih"],
+  "aqiqah": ["aqeqah", "aqiqoh", "kelahiran", "cukur rambut", "bayi baru lahir"],
+  "jihad": ["perang", "qital", "berjuang", "berjihad", "mujahid", "perjuangan"],
+
+  // ============================================================
+  // NAMA & SIFAT ALLAH
+  // ============================================================
+  "allah": ["tuhan", "ilah", "rabb", "rabbul alamin", "al haqq"],
+  "rahman": ["ar-rahman", "maha pengasih", "rahmat", "kasih sayang Allah"],
+  "rahim": ["ar-rahim", "maha penyayang", "rahmah", "penyayang"],
+  "malik": ["al-malik", "raja", "penguasa", "pemilik kerajaan"],
+  "quddus": ["al-quddus", "maha suci", "suci", "kudus"],
+  "salam": ["as-salam", "maha damai", "pemberi kedamaian", "selamat"],
+  "mumin": ["al-mumin", "maha pemberi keamanan", "aman", "terpercaya"],
+  "muhaymin": ["al-muhaymin", "maha memelihara", "pengawas", "menjaga"],
+  "aziz": ["al-aziz", "maha perkasa", "kuat", "mulia"],
+  "jabbar": ["al-jabbar", "maha kuasa", "pemaksa", "berkuasa"],
+  "mutakabbir": ["al-mutakabbir", "maha besar", "takabur", "agung"],
+  "khaliq": ["al-khaliq", "maha pencipta", "pencipta", "creator"],
+  "bari": ["al-bari", "maha mengadakan", "mengadakan"],
+  "mushawwir": ["al-mushawwir", "maha pembentuk rupa", "pembentuk"],
+  "ghaffar": ["al-ghaffar", "maha pengampun", "ampun", "maghfirah"],
+  "qahhar": ["al-qahhar", "maha perkasa", "menundukkan"],
+  "wahhab": ["al-wahhab", "maha pemberi", "pemberi", "anugerah"],
+  "razzaq": ["ar-razzaq", "maha pemberi rezeki", "rezeki", "rizki"],
+  "fattah": ["al-fattah", "maha pembuka", "membuka", "kemenangan"],
+  "alim": ["al-alim", "maha mengetahui", "ilmu", "mengetahui"],
+  "qabidh": ["al-qabidh", "maha menyempitkan", "menyempitkan"],
+  "basith": ["al-basith", "maha melapangkan", "melapangkan"],
+  "hafidh": ["al-hafidh", "maha memelihara", "menjaga", "memelihara"],
+  "raqib": ["ar-raqib", "maha mengawasi", "mengawasi", "pengawas"],
+  "mujib": ["al-mujib", "maha mengabulkan", "mengabulkan doa", "istijabah"],
+  "wasi": ["al-wasi", "maha luas", "luas", "meliputi"],
+  "hakim": ["al-hakim", "maha bijaksana", "hikmat", "bijak"],
+  "wadud": ["al-wadud", "maha mencintai", "cinta Allah", "kasih"],
+  "majid": ["al-majid", "maha mulia", "kemuliaan"],
+  "baith": ["al-ba'ith", "maha membangkitkan", "membangkitkan"],
+  "shahid": ["asy-syahid", "maha menyaksikan", "saksi", "menyaksikan"],
+  "haqq": ["al-haqq", "maha benar", "kebenaran", "hak"],
+  "wakil": ["al-wakil", "maha pemelihara", "penolong", "penjamin"],
+  "qawiy": ["al-qawiy", "maha kuat", "kekuatan"],
+  "matin": ["al-matin", "maha kokoh", "teguh", "kokoh"],
+  "waliy": ["al-waliy", "maha melindungi", "wali", "pelindung"],
+  "hamid": ["al-hamid", "maha terpuji", "terpuji", "puji"],
+  "muhshi": ["al-muhshi", "maha menghitung", "menghitung", "mendata"],
+  "mubdi": ["al-mubdi", "maha memulai", "memulai", "awal"],
+  "muid": ["al-mu'id", "maha mengembalikan", "mengembalikan"],
+  "muhyi": ["al-muhyi", "maha menghidupkan", "menghidupkan"],
+  "mumit": ["al-mumit", "maha mematikan", "mematikan"],
+  "hayy": ["al-hayy", "maha hidup", "hidup", "kehidupan kekal"],
+  "qayyum": ["al-qayyum", "maha berdiri sendiri", "berdiri sendiri"],
+  "wajid": ["al-wajid", "maha menemukan", "menemukan"],
+  "majid2": ["al-majid", "maha agung", "agung"],
+  "ahad": ["al-ahad", "maha esa", "esa", "tauhid", "satu"],
+  "shamad": ["as-shamad", "maha dibutuhkan", "tempat bergantung"],
+  "qadir": ["al-qadir", "maha kuasa", "kuasa", "mampu"],
+  "muqtadir": ["al-muqtadir", "maha berkuasa", "berkuasa"],
+  "muqaddim": ["al-muqaddim", "maha mendahulukan", "mendahulukan"],
+  "muakhkhir": ["al-muakhkhir", "maha mengakhirkan", "mengakhirkan"],
+  "awwal": ["al-awwal", "maha awal", "awal", "pertama"],
+  "akhir": ["al-akhir", "maha akhir", "akhir", "terakhir"],
+  "zhahir": ["az-zhahir", "maha nyata", "nyata", "tampak"],
+  "bathin": ["al-bathin", "maha tersembunyi", "tersembunyi", "gaib"],
+  "waliy2": ["al-waliy", "maha memerintah", "memerintah"],
+  "muta'ali": ["al-muta'ali", "maha tinggi", "tinggi", "luhur"],
+  "barr": ["al-barr", "maha baik", "kebaikan"],
+  "tawwab": ["at-tawwab", "maha penerima tobat", "tobat", "taubat"],
+  "muntaqim": ["al-muntaqim", "maha pemberi balasan", "pembalas"],
+  "afuww": ["al-afuww", "maha pemaaf", "pemaaf", "maaf"],
+  "rauf": ["ar-rauf", "maha pengasih", "lembut"],
+  "malikul mulk": ["maha penguasa", "penguasa segala kerajaan"],
+  "dhul jalal": ["dzul jalal", "maha agung", "agung dan mulia"],
+  "muqsith": ["al-muqsith", "maha adil", "adil"],
+  "jami": ["al-jami", "maha menghimpun", "menghimpun"],
+  "ghaniy": ["al-ghaniy", "maha kaya", "kaya", "tidak butuh"],
+  "mughni": ["al-mughni", "maha pemberi kekayaan", "mencukupi"],
+  "mani": ["al-mani", "maha mencegah", "mencegah"],
+  "dharr": ["adh-dharr", "maha menimpakan mudarat", "mudarat"],
+  "nafi": ["an-nafi", "maha pemberi manfaat", "manfaat"],
+  "nur": ["an-nur", "maha bercahaya", "cahaya", "sinar"],
+  "hadi": ["al-hadi", "maha pemberi petunjuk", "petunjuk", "hidayah"],
+  "badi": ["al-badi", "maha pencipta", "pencipta tanpa contoh"],
+  "baqi": ["al-baqi", "maha kekal", "kekal", "abadi"],
+  "warith": ["al-warith", "maha pewaris", "pewaris", "warisan"],
+  "rasyid": ["ar-rasyid", "maha pandai", "cerdas", "bijak"],
+  "shabur": ["ash-shabur", "maha sabar", "sabar"],
+
+  // ============================================================
+  // AKHIRAT & ESKATOLOGI
+  // ============================================================
+  "mati": ["wafat", "maut", "ajal", "kematian", "meninggal", "wafat", "mati syahid", "nafas terakhir"],
+  "surga": ["jannah", "firdaus", "naim", "ma'wa", "adn", "khuld", "paradise", "syurga"],
+  "neraka": ["jahannam", "naar", "nار", "api neraka", "azab", "hellfire", "siksa"],
+  "hari kiamat": ["yaumul qiyamah", "hari akhir", "akhirat", "yaumuddin", "kiamat", "qiyamah"],
+  "hari pembalasan": ["yaumuddin", "hari hisab", "hari penghakiman", "hari perhitungan"],
+  "malaikat": ["malak", "jibril", "mikail", "israfil", "izrail", "munkar", "nakir", "ridwan", "malik"],
+  "jin": ["jinn", "iblis", "setan", "syaitan", "ajinni", "hantu", "makhluk tak kasat mata"],
+  "setan": ["syaitan", "iblis", "syaithan", "azazil", "waswas", "was-was", "godaan"],
+  "mizan": ["neraca", "timbangan amal", "hisab", "perhitungan amal"],
+  "shirath": ["sirat", "jembatan", "jembatan neraka", "shirathal mustaqim"],
+  "syafaat": ["syafaah", "pertolongan", "intercessor", "pemberi syafaat"],
+  "kubur": ["qabr", "barzakh", "alam kubur", "siksa kubur", "nikmat kubur"],
+  "kebangkitan": ["ba'ath", "nusyur", "bangkit dari kubur", "yaumul ba'ath"],
+  "padang mahsyar": ["mahsyar", "yaumul hasyr", "tempat berkumpul"],
+  "hari kebangkitan": ["resurrection", "ba'ath", "yaumul ba'ath"],
+
+  // ============================================================
+  // SOSIAL & HUBUNGAN
+  // ============================================================
+  "keluarga": ["usrah", "ahlul bait", "famili", "sanak saudara", "ahl", "kins"],
+  "orang tua": ["walid", "walidain", "ibu bapak", "ayah ibu", "abawain", "wali"],
+  "ibu": ["umm", "ummi", "mother", "bunda", "mama", "mak"],
+  "ayah": ["abb", "abbi", "bapak", "papa", "abba", "walid"],
+  "anak": ["ibn", "walad", "abna", "putra", "putri", "anak cucu"],
+  "saudara": ["akh", "ukhti", "ikhwan", "akhwat", "kakak", "adik"],
+  "teman": ["shadiq", "khalil", "sahabat", "rekan", "sobat", "kawan"],
+  "tetangga": ["jar", "jiwar", "jiran", "neighbor"],
+  "yatim": ["anak yatim", "orphan", "piatu", "tanpa ayah"],
+  "fakir": ["miskin", "fuqara", "masakin", "dhuafa", "kaum lemah"],
+  "pemimpin": ["imam", "khalifah", "amir", "ra'is", "pemimpin umat", "ulil amri"],
+  "ulama": ["alim", "ustadz", "kyai", "habib", "syaikh", "mufti"],
+  "raja": ["malik", "sultan", "penguasa", "sovereign"],
+  "pengikut": ["ummat", "umat", "kaum", "jamaah"],
+
+  // ============================================================
+  // AKHLAK & MORAL
+  // ============================================================
+  "jujur": ["shidq", "amanah", "benar", "truthful", "sidik"],
+  "dusta": ["kidzb", "bohong", "munafik", "palsu", "dajjal"],
+  "munafik": ["nifaq", "hipokrit", "pura-pura", "bermuka dua"],
+  "fasik": ["fasiq", "durhaka", "jahat", "melanggar"],
+  "kafir": ["kufr", "ingkar", "tidak percaya", "musyrik"],
+  "syirik": ["musyrik", "penyekutuan", "berhala", "penyembahan berhala"],
+  "bid'ah": ["inovasi agama", "sesat", "menyimpang"],
+  "haram": ["dilarang", "terlarang", "tidak halal", "larangan"],
+  "halal": ["diizinkan", "dibolehkan", "sah", "boleh"],
+  "adil": ["adl", "qisth", "justice", "fairness", "insaf"],
+  "zalim": ["zulm", "oppression", "aniaya", "sewenang-wenang"],
+  "amanah": ["trust", "dipercaya", "tanggung jawab", "kepercayaan"],
+  "khianat": ["pengkhianatan", "tradisi", "tidak amanah", "curang"],
+  "dermawan": ["karim", "murah hati", "sakhiy", "generous"],
+  "kikir": ["bakhil", "pelit", "tamak", "taqtir"],
+  "rendah hati": ["tawadhu", "humble", "tidak sombong", "khusyu"],
+  "sombong": ["kibr", "takabbur", "arogan", "congkak"],
+  "sabar": ["sabr", "tabah", "tahan uji", "tahamul"],
+  "pemaaf": ["afwu", "maaf", "ghufran", "toleran"],
+
+  // ============================================================
+  // EKONOMI & KEUANGAN
+  // ============================================================
+  "kerja": ["amal", "kasab", "usaha", "pekerjaan", "profesi"],
+  "rezeki": ["rizqi", "rizki", "nafkah", "pemberian", "karunia"],
+  "kaya": ["ghani", "tsarwah", "tajir", "hartawan", "makmur"],
+  "miskin": ["faqir", "masakin", "fuqara", "kaum miskin", "dhuafa"],
+  "hutang": ["dayn", "utang", "qardh", "kewajiban bayar", "pinjaman"],
+  "riba": ["bunga", "renten", "interest", "usury", "rente"],
+  "jual beli": ["bay", "tijarah", "perdagangan", "bisnis", "dagang"],
+  "harta": ["mal", "amwal", "kekayaan", "property", "aset"],
+  "warisan": ["mirath", "tirkah", "faraidh", "harta waris", "wasiat"],
+  "zakat": ["zakah", "zakat fitrah", "zakat mal", "nizhab", "haul"],
+  "sedekah": ["shadaqah", "infaq", "charity", "donasi"],
+  "wakaf": ["waqf", "endowment", "amal abadi", "wakaf produktif"],
+  "gharar": ["spekulasi", "ketidakpastian", "jual beli yang tidak jelas"],
+  "maysir": ["judi", "gambling", "qimar", "lotere", "haram"],
+
+  // ============================================================
+  // ALAM SEMESTA & SAINS
+  // ============================================================
+  "langit": ["sama", "samawat", "heavens", "falak", "cakrawala"],
+  "bumi": ["ardh", "earth", "globe", "dunia fisik"],
+  "air": ["ma", "maa", "rain", "hujan", "sungai", "laut"],
+  "api": ["naar", "نار", "flame", "bara", "kobaran"],
+  "angin": ["rih", "riih", "wind", "badai", "topan"],
+  "matahari": ["shams", "syamsu", "sun", "surya", "sinar matahari"],
+  "bulan": ["qamar", "bulan sabit", "hilal", "moon"],
+  "bintang": ["najm", "nujum", "star", "komet", "meteor"],
+  "laut": ["bahr", "yam", "ocean", "sea", "samudra"],
+  "sungai": ["nahr", "nahrun", "river", "anak sungai"],
+  "gunung": ["jabal", "jibal", "mountain", "pegunungan", "bukit"],
+  "pohon": ["syajar", "syajarah", "tree", "tanaman", "tumbuhan"],
+  "hewan": ["dabbah", "hayawan", "animal", "binatang"],
+  "manusia": ["insan", "basyar", "nas", "human", "khalifah fi ardh"],
+  "tanah": ["turab", "ardh", "tanah liat", "debu", "dust"],
+  "cahaya": ["nur", "dhiya", "light", "sinar", "terang"],
+  "kegelapan": ["dhulumah", "zulam", "darkness", "gelap", "gulita"],
+  "waktu": ["waqt", "zaman", "masa", "time", "hari", "jam"],
+  "hari": ["yawm", "ayyam", "day", "siang", "malam"],
+
+  // ============================================================
+  // KISAH PARA NABI
+  // ============================================================
+  "adam": ["nabi adam", "manusia pertama", "adam dan hawa", "surga adam"],
+  "nuh": ["nabi nuh", "banjir besar", "bahtera nuh", "kapal nuh", "taufan"],
+  "ibrahim": ["nabi ibrahim", "abram", "khalilullah", "bapak nabi", "api ibrahim"],
+  "ismail": ["nabi ismail", "ishmael", "anak ibrahim", "qurban ismail"],
+  "ishak": ["nabi ishak", "isaac", "anak ibrahim kedua"],
+  "yusuf": ["nabi yusuf", "joseph", "kisah yusuf", "mimpi yusuf", "mesir"],
+  "musa": ["nabi musa", "moses", "bani israel", "tongkat musa", "firaun"],
+  "harun": ["nabi harun", "aaron", "saudara musa"],
+  "daud": ["nabi daud", "david", "zabur", "goliat"],
+  "sulaiman": ["nabi sulaiman", "solomon", "raja sulaiman", "jin sulaiman"],
+  "ayub": ["nabi ayub", "job", "kesabaran ayub", "sakit"],
+  "yunus": ["nabi yunus", "jonah", "perut ikan", "ikan paus"],
+  "zakariya": ["nabi zakariya", "zacharia", "bapak yahya"],
+  "yahya": ["nabi yahya", "john the baptist", "putra zakariya"],
+  "isa": ["nabi isa", "jesus", "al-masih", "maryam", "injil"],
+  "muhammad": ["nabi muhammad", "rasulullah", "habibullah", "penutup nabi", "khatamun nabiyyin"],
+  "idris": ["nabi idris", "enoch"],
+  "hud": ["nabi hud", "kaum ad", "angin topan"],
+  "shaleh": ["nabi shaleh", "kaum tsamud", "unta shaleh"],
+  "luth": ["nabi luth", "lot", "kaum sodom"],
+  "syuaib": ["nabi syuaib", "jethro", "kaum madyan"],
+  "dzulkifli": ["nabi dzulkifli", "ezekiel"],
+  "ilyas": ["nabi ilyas", "elijah"],
+  "ilyasa": ["nabi ilyasa", "elisha"],
+
+  // ============================================================
+  // SAKIT & KESEHATAN
+  // ============================================================
+  "sakit": ["maradh", "waja", "penyakit", "pain", "illness", "derita"],
+  "sembuh": ["syifa", "afiyah", "healing", "sehat", "pulih", "recovery"],
+  "buta": ["a'ma", "blind", "tidak bisa melihat", "tuna netra"],
+  "tuli": ["shamam", "deaf", "tuna rungu", "tidak bisa dengar"],
+  "lumpuh": ["masyghul", "paralyzed", "tuna daksa"],
+  "gila": ["junun", "majnun", "gangguan jiwa", "sakit jiwa"],
+  "sehat": ["shihhah", "afiyah", "health", "segar", "bugar"],
+  "wabah": ["tha'un", "balak", "pandemi", "epidemic", "penyakit menular"],
+
+  // ============================================================
+  // PENDIDIKAN & ILMU
+  // ============================================================
+  "ilmu": ["ilm", "knowledge", "science", "pengetahuan", "pemahaman"],
+  "belajar": ["ta'allam", "tahashul", "study", "pelajari", "menuntut ilmu"],
+  "mengajar": ["ta'lim", "tarbiyah", "pendidikan", "didik", "ajar"],
+  "hikmah": ["wisdom", "kebijaksanaan", "husn", "hukm"],
+  "akal": ["aql", "pikiran", "reason", "nalar", "logika"],
+  "bodoh": ["jahil", "ignorant", "tidak tahu", "jahiliyah"],
+  "membaca": ["iqra", "qiraah", "baca", "bacaan", "recite"],
+  "menulis": ["kitabah", "write", "tulis", "pena", "qalam"],
+  "buku": ["kitab", "qur'an", "injil", "taurat", "zabur", "suhuf"],
+
+  // ============================================================
+  // HUKUM & KEADILAN
+  // ============================================================
+  "hukum": ["syariah", "fiqh", "aturan", "law", "peraturan"],
+  "pengadilan": ["mahkamah", "qadha", "qadhi", "hakim", "pengadilan"],
+  "hukuman": ["iqab", "uqubah", "azab", "punishment", "sanksi"],
+  "dosa": ["dzanb", "itsm", "sayyi'ah", "sin", "kesalahan", "pelanggaran"],
+  "pahala": ["tsawab", "ajr", "reward", "ganjaran", "balasan baik"],
+  "cerai": ["talak", "perceraian", "thalaq", "fasakh", "khul'"],
+  "nikah": ["zawaj", "nikah", "pernikahan", "kawin", "aqad"],
+  "mas kawin": ["mahar", "shadaqah nikah", "mahr", "mas kawin"],
+  "waris": ["mirath", "faraidh", "tirkah", "inheritance"],
+  "hadd": ["hukuman batas", "qishash", "hudud", "ta'zir"],
+  "qisas": ["balas setimpal", "pembalasan", "equal punishment"],
+  "saksi": ["syahid", "witness", "bukti", "keterangan"],
+
+  // ============================================================
+  // PERANG & KONFLIK
+  // ============================================================
+  "perang": ["harb", "qital", "ghazwah", "battle", "pertempuran"],
+  "damai": ["silm", "salam", "sulh", "peace", "perdamaian"],
+  "musuh": ["aduww", "enemy", "kafir harbi", "lawan"],
+  "kemenangan": ["fath", "nashr", "victory", "nusrah", "menang"],
+  "kekalahan": ["hazimah", "kalah", "hancur"],
+  "perjanjian": ["ahd", "mitsaq", "covenant", "treaty", "kontrak"],
+  "pahlawan": ["syahid", "mujahid", "warrior", "pejuang"],
+
+  // ============================================================
+  // KARAKTER TOKOH AL-QURAN
+  // ============================================================
+  "firaun": ["pharaoh", "thaghut", "penguasa zalim", "kisah mesir"],
+  "haman": ["menteri firaun", "pembantu firaun"],
+  "qarun": ["karun", "orang kaya sombong", "kekayaan yang hilang"],
+  "maryam": ["maria", "bunda isa", "wanita suci", "perawan"],
+  "asiyah": ["istri firaun", "wanita beriman di tengah kezaliman"],
+  "bilqis": ["ratu saba", "queen of sheba", "ratu yaman"],
+  "khadijah": ["istri nabi", "ummul mukminin pertama"],
+  "aisyah": ["istri nabi", "ummul mukminin", "ilmu hadis"],
+  "fatimah": ["putri nabi", "az-zahra", "penghulu wanita"],
+  "ali": ["ali bin abi thalib", "khalifah keempat", "babul ilm"],
+
+  // ============================================================
+  // QURAN & TAFSIR
+  // ============================================================
+  "quran": ["al-qur'an", "mushaf", "kitab suci", "kalam Allah", "furqan"],
+  "surah": ["surat", "chapter", "bab quran"],
+  "ayat": ["verse", "firman", "kalam"],
+  "tafsir": ["terjemahan", "penjelasan", "interpretation", "ta'wil"],
+  "asbabun nuzul": ["sebab turun", "konteks ayat", "turunnya wahyu"],
+  "makki": ["surat mekkah", "makkiyah", "diturunkan di mekkah"],
+  "madani": ["surat madinah", "madaniyah", "diturunkan di madinah"],
+  "nasikh mansukh": ["penghapusan ayat", "abrogation"],
+  "mutasyabihat": ["ayat samar", "ayat yang tidak jelas"],
+  "muhkamat": ["ayat jelas", "ayat yang pasti"],
+  "ijaz": ["mukjizat quran", "keajaiban quran"],
+
+  // ============================================================
+  // TOPIK KONTEMPORER ISLAMIK
+  // ============================================================
+  "ekonomi islam": ["ekonomi syariah", "muamalah", "perbankan islam"],
+  "politik islam": ["khilafah", "daulah islamiyah", "pemerintahan islam"],
+  "keluarga berencana": ["kb", "kontrasepsi", "birth control"],
+  "feminisme islam": ["wanita dalam islam", "hak wanita", "musawah"],
+  "pluralisme": ["toleransi", "keberagaman", "dialog antaragama"],
+  "radikalisme": ["ekstremisme", "terorisme", "ghuluw"],
+  "moderasi": ["wasathiyah", "moderasi beragama", "islam moderat"],
+  "sufisme": ["tasawuf", "mistik islam", "wali", "tariqah", "zuhud"],
+  "salafi": ["salafiyah", "manhaj salaf", "atsar"],
+  "ahlus sunnah": ["sunni", "aswaja", "ahl al-sunnah"],
+
+  // ============================================================
+  // DAFTAR SURAH (80 surah populer)
+  // ============================================================
+  "al-fatihah": ["surah pembuka", "ummul quran", "sab'ul matsani"],
+  "al-baqarah": ["surah sapi betina", "terpanjang", "ayat kursi"],
+  "ali imran": ["keluarga imran", "surah 3", "isa dan maryam"],
+  "an-nisa": ["surah wanita", "hak wanita", "waris"],
+  "al-maidah": ["jamuan makan", "perjanjian", "hukum makanan"],
+  "al-anam": ["binatang ternak", "tauhid", "kisah ibrahim"],
+  "al-araf": ["ketinggian", "kisah nabi", "bani israel"],
+  "al-anfal": ["rampasan perang", "badar", "perang"],
+  "at-taubah": ["pengampunan", "berlepas diri", "jihad"],
+  "yunus": ["surah yunus", "nabi yunus"],
+  "hud": ["surah hud", "nabi hud", "kaum ad"],
+  "yusuf": ["surah yusuf", "kisah yusuf", "mesir"],
+  "ar-rad": ["guruh", "petir", "tanda kekuasaan Allah"],
+  "ibrahim": ["surah ibrahim", "doa ibrahim"],
+  "al-hijr": ["batu", "kaum tsamud"],
+  "an-nahl": ["lebah", "nikmat Allah", "madu"],
+  "al-isra": ["perjalanan malam", "isra miraj", "bani israel"],
+  "al-kahfi": ["penghuni gua", "ashabul kahfi", "dajjal"],
+  "maryam": ["surah maryam", "kelahiran isa"],
+  "taha": ["surah taha", "musa di padang pasir"],
+  "al-anbiya": ["para nabi"],
+  "al-hajj": ["ibadah haji"],
+  "al-mukminun": ["orang-orang beriman"],
+  "an-nur": ["cahaya", "adab", "hijab"],
+  "al-furqan": ["pembeda"],
+  "asy-syuara": ["para penyair", "kisah nabi"],
+  "an-naml": ["semut", "sulaiman dan burung hud-hud"],
+  "al-qashash": ["cerita", "kisah musa"],
+  "al-ankabut": ["laba-laba", "ujian beriman"],
+  "ar-rum": ["bangsa romawi", "kemenangan rum"],
+  "luqman": ["nasihat luqman"],
+  "as-sajdah": ["sujud"],
+  "al-ahzab": ["golongan bersekutu", "perang khandak", "hijab"],
+  "saba": ["kaum saba", "nikmat yang disyukuri"],
+  "fathir": ["pencipta", "malaikat"],
+  "yasin": ["jantung quran", "yasin", "hari kiamat"],
+  "ash-shaffat": ["yang bershaf"],
+  "shad": ["surah shad", "nabi daud"],
+  "az-zumar": ["rombongan", "hari kiamat"],
+  "ghafir": ["pengampun", "mukmin beriman"],
+  "fushshilat": ["yang dijelaskan"],
+  "asy-syura": ["musyawarah"],
+  "az-zukhruf": ["perhiasan"],
+  "ad-dukhan": ["asap"],
+  "al-jasiyah": ["berlutut"],
+  "al-ahqaf": ["bukit-bukit pasir"],
+  "muhammad": ["surah muhammad"],
+  "al-fath": ["kemenangan", "perjanjian hudaibiyah"],
+  "al-hujurat": ["kamar-kamar", "adab", "ukuwah"],
+  "qaf": ["surah qaf"],
+  "adz-dzariyat": ["angin yang menerbangkan"],
+  "ath-thur": ["bukit"],
+  "an-najm": ["bintang"],
+  "al-qamar": ["bulan", "terbelahnya bulan"],
+  "ar-rahman": ["yang maha pengasih", "nikmat Allah"],
+  "al-waqiah": ["hari kiamat", "golongan manusia"],
+  "al-hadid": ["besi"],
+  "al-mujadilah": ["wanita yang mengajukan gugatan"],
+  "al-hasyr": ["pengusiran"],
+  "al-mumtahanah": ["wanita yang diuji"],
+  "ash-shaff": ["satu barisan", "jihad"],
+  "al-jumuah": ["shalat jumat"],
+  "al-munafiqun": ["orang munafik"],
+  "at-taghabun": ["hari ditampakkan kesalahan"],
+  "ath-thalaq": ["perceraian"],
+  "at-tahrim": ["mengharamkan"],
+  "al-mulk": ["kerajaan", "azab kubur"],
+  "al-qalam": ["pena"],
+  "al-haqqah": ["hari kiamat"],
+  "al-maarij": ["tempat naik"],
+  "nuh": ["nabi nuh"],
+  "al-jinn": ["jin"],
+  "al-muzzammil": ["orang yang berselimut"],
+  "al-muddatstsir": ["orang yang berkemul"],
+  "al-qiyamah": ["kiamat"],
+  "al-insan": ["manusia"],
+  "al-mursalat": ["yang diutus"],
+  "an-naba": ["berita besar"],
+  "an-naziat": ["yang mencabut"],
+  "abasa": ["ia bermuka masam"],
+  "at-takwir": ["penggulungan"],
+  "al-infithar": ["terbelah"],
+  "al-muthaffifin": ["yang curang dalam timbangan"],
+  "al-insyiqaq": ["terbelah"],
+  "al-buruj": ["gugusan bintang"],
+  "ath-thariq": ["yang datang malam"],
+  "al-ala": ["yang paling tinggi"],
+  "al-ghasyiyah": ["hari pembalasan"],
+  "al-fajr": ["fajar"],
+  "al-balad": ["negeri"],
+  "asy-syams": ["matahari"],
+  "al-lail": ["malam"],
+  "adh-dhuha": ["waktu duha"],
+  "al-insyirah": ["melapangkan dada"],
+  "at-tin": ["buah tin"],
+  "al-alaq": ["segumpal darah", "iqra", "wahyu pertama"],
+  "al-qadr": ["malam kemuliaan", "lailatul qadr"],
+  "al-bayyinah": ["bukti yang nyata"],
+  "az-zalzalah": ["guncangan"],
+  "al-adiyat": ["kuda perang"],
+  "al-qariah": ["hari kiamat"],
+  "at-takatsur": ["bermegah-megahan"],
+  "al-ashr": ["masa", "waktu"],
+  "al-humazah": ["pengumpat"],
+  "al-fil": ["gajah"],
+  "al-quraisy": ["suku quraisy"],
+  "al-maun": ["barang berguna"],
+  "al-kautsar": ["nikmat berlimpah"],
+  "al-kafirun": ["orang-orang kafir"],
+  "an-nashr": ["pertolongan"],
+  "al-lahab": ["gejolak api", "abu lahab"],
+  "al-ikhlas": ["ikhlas", "tauhid", "qul huwallah"],
+  "al-falaq": ["waktu subuh", "perlindungan"],
+  "an-nas": ["manusia", "waswas"],
+};
+
 
   function normalizeQuery(q) {
     return q.toLowerCase().replace(/\s+/g, ' ').trim();
@@ -1097,11 +1956,15 @@
   }
 
   async function doSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    if (!q) return;
     const raw = document.getElementById('searchInput').value.trim();
     if (!raw) return;
     openModal();
+    document.getElementById('modalTitle').textContent = 'Mencari: ' + q + '...';
     document.getElementById('modalTitle').textContent = 'Mencari: ' + raw + '...';
     document.getElementById('modalBody').innerHTML =
+      '<div class="modal-loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:13px;">Sedang mencari ayat...</p></div>';
       '<div class="modal-loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:13px;">Memperluas kata kunci dan mencari ayat...</p></div>';
 
     const queries = expandQuery(raw);
@@ -1109,6 +1972,10 @@
     let quote = '';
 
     try {
+      const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
+      if (res.ok) { renderModal(await res.json()); }
+      else { renderOffline(q); }
+    } catch(e) { renderOffline(q); }
       for (const term of queries) {
         try {
           const data = await fetchSearchTerm(term);
@@ -1143,57 +2010,37 @@
   function renderOffline(query) {
     document.getElementById('modalTitle').textContent = 'Hasil: ' + query;
     document.getElementById('modalBody').innerHTML =
-      '<div class="modal-empty">Tidak dapat terhubung ke server. Pastikan API aktif.</div>';
-  }
+@@ -1228,7 +956,7 @@
 
   function renderModal(data) {
     document.getElementById('modalTitle').textContent =
+      'Hasil: ' + data.query + ' (' + (data.total_results || 0) + ' ayat)';
       'Hasil: ' + data.query + ' (' + (data.total_results || 0) + ' ayat ditemukan)';
     let html = '';
     if (data.quote) {
       html += '<div class="modal-quote"><p class="modal-quote-text">"' + escapeHtml(data.quote) + '"</p></div>';
-    }
-    if (data.results && data.results.length > 0) {
-      data.results.forEach(function(r, idx) {
-        html += '<div class="ayat-card">';
-        html += '<div class="ayat-label">QS. ' + escapeHtml(r.surah_name || String(r.surah)) + ': ' + r.ayah + '</div>';
-        if (r.text_arab) html += '<div class="ayat-arab">' + r.text_arab + '</div>';
-        if (r.terjemahan) html += '<p class="ayat-terjemahan">' + escapeHtml(r.terjemahan) + '</p>';
-        if (r.tafsir_list && r.tafsir_list.length > 0) {
-          r.tafsir_list.forEach(function(t, tIdx) {
-            if (!t.text) return;
-            var accId = 'acc-' + idx + '-' + tIdx;
-            html += '<div class="accordion"><button class="accordion-header" onclick="toggleAccordion(\'' + accId + '\', this)">';
-            html += '<span>Tafsir ' + escapeHtml(t.name);
-            if (t.sub_label) html += ' <span style="font-weight:400;font-size:11px;opacity:0.7;">— ' + escapeHtml(t.sub_label) + '</span>';
-            html += '</span><span class="accordion-arrow">▼</span></button>';
-            html += '<div class="accordion-body" id="' + accId + '">' + escapeHtml(t.text) + '</div></div>';
-          });
-        }
+@@ -1253,7 +981,7 @@
         html += '</div>';
       });
     } else {
+      html += '<div class="modal-empty">Tidak ditemukan ayat untuk kata kunci ini. Coba kata kunci lain.</div>';
       html += '<div class="modal-empty">Tidak ditemukan ayat untuk kata kunci ini. Coba variasi kata lain.</div>';
     }
     document.getElementById('modalBody').innerHTML = html;
   }
-
-  function toggleAccordion(id, btn) {
-    var body = document.getElementById(id);
+@@ -1263,7 +991,6 @@
     body.classList.toggle('open');
     btn.classList.toggle('open');
   }
+
   function openModal() {
     document.getElementById('searchModal').classList.add('open');
     document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    document.getElementById('searchModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+@@ -1275,23 +1002,19 @@
   function closeModalOverlay(e) {
     if (e.target === document.getElementById('searchModal')) closeModal();
   }
+
   function escapeHtml(str) {
     if (!str) return '';
     var div = document.createElement('div');
@@ -1201,24 +2048,28 @@
     return div.innerHTML;
   }
 
+  document.addEventListener('DOMContentLoaded', function() { loadDailyQuote(); });
+
   /* ============================================================
+     ONE DAY ONE VERSE — Logic
      ONE DAY ONE VERSE
      ============================================================ */
   (function () {
+    const ODOV_API   = '/api/v1/odov';
+    const SEED_KEY   = 'odov_user_seed';
+
     const ODOV_API = '/api/v1/odov';
     const SEED_KEY = 'odov_user_seed';
     const backdrop     = document.getElementById('odov-backdrop');
     const popup        = document.getElementById('odov-popup');
     const loader       = document.getElementById('odov-loader');
-    const content      = document.getElementById('odov-content');
-    const errorEl      = document.getElementById('odov-error');
-    const closeBtn     = document.getElementById('odov-close');
-    const retryBtn     = document.getElementById('odov-retry');
-    const regenBtn     = document.getElementById('odov-regenerate');
-    const shareBtn     = document.getElementById('odov-share');
+@@ -1304,35 +1027,29 @@
     const tafsirToggle = document.getElementById('odov-tafsir-toggle');
     const tafsirBody   = document.getElementById('odov-tafsir-body');
     const chevron      = tafsirToggle.querySelector('.odov-chevron');
+
+    let currentData = null;
+    let offset      = 0;
     let currentData = null, offset = 0;
 
     function getUserSeed() {
@@ -1226,130 +2077,150 @@
       if (!seed) { seed = Math.floor(Math.random() * 99999); localStorage.setItem(SEED_KEY, seed); }
       return parseInt(seed);
     }
+
     function getTodayKey() {
       const d = new Date();
       return 'odov_' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate();
     }
+
     function getCached(key) {
       try { const r = sessionStorage.getItem(key); return r ? JSON.parse(r) : null; } catch { return null; }
     }
     function setCache(key, data) {
       try { sessionStorage.setItem(key, JSON.stringify(data)); } catch {}
     }
+
     async function fetchVerse(off) {
       const seed = getUserSeed();
+      const res  = await fetch(ODOV_API + '?seed=' + seed + '&offset=' + off);
       const res = await fetch(ODOV_API + '?seed=' + seed + '&offset=' + off);
       if (!res.ok) throw new Error('Network error');
       return res.json();
     }
+
     function applyPalette(p) {
       if (!p) return;
       popup.style.setProperty('--odov-from', p.from);
-      popup.style.setProperty('--odov-via',  p.via);
-      popup.style.setProperty('--odov-to',   p.to);
+@@ -1341,7 +1058,6 @@
       popup.style.setProperty('--odov-text', p.text);
       popup.style.color = p.text;
     }
+
     function renderVerse(data) {
       currentData = data;
       const v = data.verse;
-      applyPalette(data.palette);
-      document.getElementById('odov-theme-badge').textContent = v.theme_label || '';
-      document.getElementById('odov-hook').textContent        = v.genz_hook   || '';
-      document.getElementById('odov-arab').textContent        = v.text_arab   || '';
+@@ -1352,7 +1068,6 @@
       document.getElementById('odov-latin').textContent       = v.text_latin  || '';
       document.getElementById('odov-terjemahan').textContent  = v.terjemahan_id || v.translation_en || '';
       document.getElementById('odov-surah-info').textContent  = 'QS. ' + (v.surah_name || 'Surah ' + v.surah) + ' : ' + v.ayah;
+
       const tList = document.getElementById('odov-tafsir-list');
       tList.innerHTML = '';
       (data.tafsir_list || []).forEach(function(t) {
-        const tid  = 'ot-' + Math.random().toString(36).slice(2);
-        const item = document.createElement('div');
-        item.className = 'odov-tafsir-item';
-        item.innerHTML =
-          '<div class="odov-tafsir-name">' + t.name + (t.sub_label ? ' · ' + t.sub_label : '') + '</div>' +
-          '<div class="odov-tafsir-text" id="' + tid + '">' + escapeHtml(t.text || '') + '</div>' +
-          '<button class="odov-tafsir-readmore" data-target="' + tid + '">Baca selengkapnya ▾</button>';
-        tList.appendChild(item);
-      });
-      tList.querySelectorAll('.odov-tafsir-readmore').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          const el = document.getElementById(btn.dataset.target);
-          el.classList.toggle('expanded');
+@@ -1372,37 +1087,30 @@
           btn.textContent = el.classList.contains('expanded') ? 'Sembunyikan ▴' : 'Baca selengkapnya ▾';
         });
       });
+
+      const meta    = data.meta || {};
       const meta = data.meta || {};
       const canRegen = meta.can_regenerate !== false;
       document.getElementById('odov-meta').textContent = canRegen
         ? 'Refresh ' + offset + '/20 kali hari ini · ' + (data.date || '')
         : 'Batas refresh hari ini tercapai · ' + (data.date || '');
+      regenBtn.disabled     = !canRegen;
       regenBtn.disabled = !canRegen;
       regenBtn.style.opacity = canRegen ? '1' : '0.4';
     }
+
     function showLoader()  { loader.classList.remove('hidden'); content.classList.add('hidden'); errorEl.classList.add('hidden'); }
     function showContent() { loader.classList.add('hidden'); content.classList.remove('hidden'); errorEl.classList.add('hidden'); }
     function showError()   { loader.classList.add('hidden'); content.classList.add('hidden'); errorEl.classList.remove('hidden'); }
+
     function openPopup() {
+      backdrop.classList.remove('hidden');
+      popup.classList.remove('hidden');
       backdrop.classList.remove('hidden'); popup.classList.remove('hidden');
       backdrop.removeAttribute('aria-hidden');
       document.body.style.overflow = 'hidden';
       loadVerse(null);
     }
+
     function closePopup() {
+      backdrop.classList.add('hidden');
+      popup.classList.add('hidden');
+      backdrop.setAttribute('aria-hidden', 'true');
       backdrop.classList.add('hidden'); popup.classList.add('hidden');
       backdrop.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
     }
+
     async function loadVerse(forceOffset) {
+      const useOffset = forceOffset !== null && forceOffset !== undefined ? forceOffset : offset;
       const useOffset = (forceOffset !== null && forceOffset !== undefined) ? forceOffset : offset;
       const todayKey  = getTodayKey();
       if (useOffset === 0) {
         const cached = getCached(todayKey);
-        if (cached) { renderVerse(cached); showContent(); return; }
-      }
-      showLoader();
+@@ -1412,56 +1120,84 @@
       try {
         const data = await fetchVerse(useOffset);
         if (useOffset === 0) setCache(todayKey, data);
+        renderVerse(data);
+        showContent();
+      } catch(e) {
+        console.error('[ODOV]', e);
+        showError();
+      }
         renderVerse(data); showContent();
       } catch(e) { console.error('[ODOV]', e); showError(); }
     }
+
     closeBtn.addEventListener('click', closePopup);
     backdrop.addEventListener('click', closePopup);
     retryBtn.addEventListener('click', function() { loadVerse(offset); });
+
     regenBtn.addEventListener('click', function() {
       if (offset >= 20) return;
       offset++;
       loadVerse(offset);
     });
+
     shareBtn.addEventListener('click', async function() {
       if (!currentData) return;
+      const v    = currentData.verse;
       const v = currentData.verse;
       const text = '"' + (v.terjemahan_id || v.translation_en) + '"\n— QS. ' + (v.surah_name || v.surah) + ': ' + v.ayah + '\n\n#QuranHarian #TafseerApp';
       if (navigator.share) {
+        await navigator.share({ title: 'Ayat Hari Ini', text: text });
         await navigator.share({ title: 'Ayat Hari Ini', text });
       } else {
         await navigator.clipboard.writeText(text);
+        shareBtn.textContent = '✅ Disalin!';
+        setTimeout(function() { shareBtn.textContent = '📤 Bagikan'; }, 2000);
         shareBtn.textContent = 'Disalin!';
         setTimeout(function() { shareBtn.textContent = ' Bagikan'; }, 2000);
       }
     });
+
     tafsirToggle.addEventListener('click', function() {
       tafsirBody.classList.toggle('hidden');
       chevron.classList.toggle('open');
     });
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         if (!popup.classList.contains('hidden')) closePopup();
         else closeModal();
       }
     });
+
     window.ODOV = { open: openPopup, close: closePopup };
+
     document.querySelectorAll('[data-odov-trigger]').forEach(function(el) {
       el.addEventListener('click', openPopup);
     });
   })();
+</script>
 
   /* ============================================================
      PARTICLE / STAR GENERATOR — lebih banyak & lebih terang
