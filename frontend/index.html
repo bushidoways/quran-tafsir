@@ -2,120 +2,131 @@
 <html lang="id">
 <head>
 <!--
-   _-=Created Without Love=- _                   
+   _-=Created Without Love=- _
 | \ | ___ ._ _  ___  ___
 |   |<_> || ' |/ . |<_-<
 |_\_|<___||_|_|\_. |/__/
-               <___'    
+               <___'
 -->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quran Tafsir — Jelajahi Tafsir Al-Qur'an</title>
   <meta name="description" content="Platform pencarian dan eksplorasi konteks dan tafsir ayat Al-Qur'an berdasarkan ulama ahlus sunnah wal jamaah.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ============================================================
-       CSS VARIABLES — LIGHT & DARK TOKENS
-       ============================================================ */
-    :root {
-      --bg: #FFFFFF;
-      --bg-card: #F9FAFB;
-      --text-primary: #111827;
-      --text-secondary: #6B7280;
-      --border: #E5E7EB;
-      --accent: #059669;
-      --accent-light: #D1FAE5;
-      --accent-hover: #047857;
-      --orb-color: rgba(5, 150, 105, 0.045);
-      --modal-overlay: rgba(0,0,0,0.55);
-      --search-bg: #F9FAFB;
-      --pill-bg: #F3F4F6;
-      --pill-text: #6B7280;
-      --pill-border: #E5E7EB;
-      --toggle-bg: rgba(255,255,255,0.85);
-      --toggle-text: #374151;
-      --toggle-icon: '☀️';
-      --stat-bg: #F9FAFB;
-      --quote-bg: #F9FAFB;
-      --quote-border: #D1FAE5;
-      --footer-text: #9CA3AF;
-      --accordion-border: #E5E7EB;
-      --mufassir-badge-bg: #D1FAE5;
-      --mufassir-badge-text: #065F46;
-    }
-
-    [data-theme="dark"] {
-      --bg: #0F1117;
-      --bg-card: #111827;
-      --text-primary: #F9FAFB;
-      --text-secondary: #9CA3AF;
-      --border: #1F2937;
-      --accent: #34D399;
-      --accent-light: rgba(52,211,153,0.1);
-      --accent-hover: #6EE7B7;
-      --orb-color: rgba(52, 211, 153, 0.05);
-      --modal-overlay: rgba(0,0,0,0.7);
-      --search-bg: #1F2937;
-      --pill-bg: #1F2937;
-      --pill-text: #9CA3AF;
-      --pill-border: #374151;
-      --toggle-bg: rgba(17,24,39,0.85);
-      --toggle-text: #D1D5DB;
-      --toggle-icon: '🌙';
-      --stat-bg: #111827;
-      --quote-bg: #111827;
-      --quote-border: rgba(52,211,153,0.2);
-      --footer-text: #4B5563;
-      --accordion-border: #1F2937;
-      --mufassir-badge-bg: rgba(52,211,153,0.12);
-      --mufassir-badge-text: #6EE7B7;
-    }
-
     /* ============================================================
        RESET & BASE
        ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    :root {
+      --gl: #52b788;
+      --green: #2d6a4f;
+      --gold: #c9a84c;
+      --text: #e8e0d5;
+      --muted: #7a8fa8;
+      --card: rgba(7,16,28,0.88);
+      --border: rgba(82,183,136,0.15);
+      --accent: #52b788;
+      --accent-light: rgba(82,183,136,0.10);
+      --accent-hover: #74c69d;
+      --text-primary: #e8e0d5;
+      --text-secondary: #9fb0c5;
+      --bg-card: rgba(7,16,28,0.88);
+      --modal-overlay: rgba(0,0,0,0.75);
+      --search-bg: rgba(7,16,28,0.72);
+      --stat-bg: rgba(7,16,28,0.72);
+      --quote-bg: rgba(7,16,28,0.80);
+      --quote-border: rgba(201,168,76,0.20);
+      --footer-text: #5a6a7a;
+      --accordion-border: rgba(255,255,255,0.07);
+      --mufassir-badge-bg: rgba(82,183,136,0.12);
+      --mufassir-badge-text: #8ce3b7;
+    }
+    html { height: 100%; -webkit-text-size-adjust: 100%; }
     body {
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
       font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-      background: var(--bg);
       color: var(--text-primary);
       line-height: 1.75;
       font-size: 16px;
-      transition: background 0.3s ease, color 0.3s ease;
-      min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    body::before {
-      content: '';
+    /* ============================================================
+       BACKGROUND — copas Web 1 (One Day One Verse)
+       ============================================================ */
+    .bg {
       position: fixed;
-      top: -200px;
-      right: -200px;
-      width: 600px;
-      height: 600px;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(-45deg,#060d18,#0b1e30,#091508,#0d1e2c,#0a1a0e,#060d18);
+      background-size: 600% 600%;
+      animation: bgS 22s ease infinite;
+    }
+    @keyframes bgS {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .orb {
+      position: fixed;
       border-radius: 50%;
-      background: var(--orb-color);
-      filter: blur(100px);
+      filter: blur(90px);
       pointer-events: none;
       z-index: 0;
+      animation: oP 9s ease-in-out infinite alternate;
     }
-    body::after {
-      content: '';
+    .o1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle,#1a4a32,transparent);
+      top: -130px; left: -130px; opacity: .15;
+    }
+    .o2 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle,#0e3254,transparent);
+      bottom: -130px; right: -130px; opacity: .14; animation-delay: 5s;
+    }
+    .o3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle,#6b4c11,transparent);
+      top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: .08; animation-delay: 2s;
+    }
+    @keyframes oP { from { opacity: .06; } to { opacity: .20; } }
+    .pts {
       position: fixed;
-      bottom: -300px;
-      left: -200px;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: var(--orb-color);
-      filter: blur(120px);
-      pointer-events: none;
+      inset: 0;
       z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
     }
+    .pt {
+      position: absolute;
+      border-radius: 50%;
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: .5; }
+      100% { transform: translateY(-5vh) translateX(var(--d)) scale(1); opacity: 0; }
+    }
+
+    /* ============================================================
+       Z-INDEX LAYERS — semua konten di atas background
+       ============================================================ */
+    .navbar,
+    .hero,
+    .search-wrap,
+    .stats,
+    .daily-quote,
+    .section,
+    .footer,
+    .modal-overlay,
+    .theme-toggle,
+    .toast { position: relative; z-index: 2; }
 
     /* ============================================================
        NAVBAR
@@ -124,9 +135,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s ease, border-color 0.3s ease;
+      background: rgba(6,13,24,0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .navbar-inner {
       max-width: 960px;
@@ -137,59 +149,33 @@
       justify-content: space-between;
     }
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       text-decoration: none;
     }
     .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 0 rgba(5,150,105,0.5);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 0 rgba(82,183,136,0.5);
       animation: logo-pulse 3s ease-in-out infinite;
       flex-shrink: 0;
     }
-    [data-theme="dark"] .logo-icon {
-      background: linear-gradient(135deg, #34D399 0%, #059669 100%);
-      box-shadow: 0 0 0 0 rgba(52,211,153,0.4);
-    }
     @keyframes logo-pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(5,150,105,0.45); }
-      50%  { box-shadow: 0 0 0 6px rgba(5,150,105,0); }
-      100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
+      0%   { box-shadow: 0 0 0 0 rgba(82,183,136,0.45); }
+      50%  { box-shadow: 0 0 0 6px rgba(82,183,136,0); }
+      100% { box-shadow: 0 0 0 0 rgba(82,183,136,0); }
     }
-    [data-theme="dark"] .logo-icon {
-      animation: logo-pulse-dark 3s ease-in-out infinite;
-    }
-    @keyframes logo-pulse-dark {
-      0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
-      50%  { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
-      100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
-    }
-    .logo-icon svg {
-      width: 22px;
-      height: 22px;
-      fill: #ffffff;
-      display: block;
-    }
+    .logo-icon svg { width: 22px; height: 22px; fill: #ffffff; display: block; }
     .logo-text {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.3px;
+      font-size: 17px; font-weight: 700;
+      color: var(--text-primary); letter-spacing: -0.3px;
     }
     .nav-link {
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 14px; font-weight: 500;
       color: var(--text-secondary);
       text-decoration: none;
-      padding: 6px 14px;
-      border-radius: 8px;
+      padding: 6px 14px; border-radius: 8px;
       transition: color 0.2s, background 0.2s;
       cursor: pointer;
     }
@@ -197,23 +183,14 @@
       color: var(--accent);
       background: var(--accent-light);
     }
-
-    /* ODOV Nav Button */
     .nav-odov-btn {
-      font-size: 13px;
-      font-weight: 600;
-      font-family: inherit;
-      color: #fff;
+      font-size: 13px; font-weight: 600;
+      font-family: inherit; color: #fff;
       background: linear-gradient(135deg, #7c3aed, #4f46e5);
-      border: none;
-      padding: 7px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
+      border: none; padding: 7px 14px; border-radius: 8px;
+      cursor: pointer; transition: opacity 0.2s, transform 0.15s;
       letter-spacing: 0.02em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      display: flex; align-items: center; gap: 6px;
     }
     .nav-odov-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
@@ -225,76 +202,55 @@
       padding: 64px 24px 0;
       max-width: 720px;
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
     }
     .hero h1 {
-      font-size: 40px;
-      font-weight: 700;
-      letter-spacing: -0.8px;
-      line-height: 1.15;
+      font-size: 40px; font-weight: 700;
+      letter-spacing: -0.8px; line-height: 1.15;
       margin-bottom: 12px;
       color: var(--text-primary);
     }
     .hero .subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-      max-width: 480px;
-      margin: 0 auto 28px;
+      font-size: 16px; color: var(--text-secondary);
+      max-width: 540px; margin: 0 auto 28px;
       line-height: 1.65;
     }
-
-    /* ODOV Hero CTA */
     .hero-odov-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(135deg, #10002b, #3a0ca3, #7209b7);
       color: #e0aaff;
-      border: 1px solid rgba(224, 170, 255, 0.2);
-      border-radius: 100px;
-      padding: 10px 22px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
+      border: 1px solid rgba(224,170,255,0.2);
+      border-radius: 100px; padding: 10px 22px;
+      font-size: 14px; font-weight: 600;
+      font-family: inherit; cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
       margin-bottom: 36px;
-      box-shadow: 0 4px 24px rgba(114, 9, 183, 0.25);
+      box-shadow: 0 4px 24px rgba(114,9,183,0.25);
     }
     .hero-odov-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(114, 9, 183, 0.35);
+      box-shadow: 0 8px 32px rgba(114,9,183,0.35);
     }
     .hero-odov-cta .cta-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: #c77dff;
       animation: cta-blink 2s ease-in-out infinite;
     }
-    @keyframes cta-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    @keyframes cta-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
     /* ============================================================
        SEARCH BAR
        ============================================================ */
     .search-wrap {
-      max-width: 680px;
-      margin: 0 auto 20px;
-      position: relative;
-      z-index: 1;
+      max-width: 680px; margin: 0 auto 32px;
       padding: 0 24px;
     }
     .search-bar {
-      display: flex;
-      gap: 0;
+      display: flex; gap: 0;
       border: 1.5px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
+      border-radius: 14px; overflow: hidden;
       background: var(--search-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .search-bar:focus-within {
@@ -302,556 +258,229 @@
       box-shadow: 0 0 0 3px var(--accent-light);
     }
     .search-bar input {
-      flex: 1;
-      border: none;
-      outline: none;
+      flex: 1; border: none; outline: none;
       background: transparent;
-      padding: 14px 18px;
-      font-size: 15px;
-      font-family: inherit;
-      color: var(--text-primary);
+      padding: 14px 18px; font-size: 15px;
+      font-family: inherit; color: var(--text-primary);
     }
     .search-bar input::placeholder {
-      color: var(--text-secondary);
-      opacity: 0.6;
+      color: var(--text-secondary); opacity: 0.5;
     }
     .search-bar button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
+      background: var(--accent); color: #fff;
+      border: none; padding: 14px 28px;
+      font-size: 14px; font-weight: 600;
+      font-family: inherit; cursor: pointer;
       transition: background 0.2s;
     }
-    .search-bar button:hover {
-      background: var(--accent-hover);
-    }
-
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      max-width: 680px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
-    .pill {
-      padding: 6px 14px;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 500;
-      background: var(--pill-bg);
-      color: var(--pill-text);
-      border: 1px solid var(--pill-border);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    .pill:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-light);
-    }
+    .search-bar button:hover { background: var(--accent-hover); }
 
     /* ============================================================
        STATS BAR
        ============================================================ */
     .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      max-width: 680px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px; max-width: 680px;
+      margin: 0 auto 48px; padding: 0 24px;
     }
     .stat-item {
-      text-align: center;
-      padding: 16px 8px;
+      text-align: center; padding: 16px 8px;
       background: var(--stat-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       border-radius: 12px;
-      transition: background 0.3s, border-color 0.3s;
     }
     .stat-value {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: -0.5px;
+      font-size: 22px; font-weight: 700;
+      color: var(--accent); letter-spacing: -0.5px;
     }
     .stat-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-top: 2px;
+      font-size: 12px; color: var(--text-secondary); margin-top: 2px;
     }
-
-    /* ODOV Stat special */
     .stat-item.stat-odov {
       cursor: pointer;
-      border-color: rgba(114, 9, 183, 0.3);
-      background: linear-gradient(135deg, rgba(16,0,43,0.04), rgba(58,12,163,0.06));
+      border-color: rgba(114,9,183,0.3);
+      background: linear-gradient(135deg,rgba(16,0,43,0.5),rgba(58,12,163,0.3));
       transition: border-color 0.2s, transform 0.15s;
     }
-    .stat-item.stat-odov:hover {
-      border-color: #7c3aed;
-      transform: translateY(-2px);
-    }
-    .stat-item.stat-odov .stat-value { color: #7c3aed; }
-    [data-theme="dark"] .stat-item.stat-odov { background: rgba(124,58,237,0.08); }
-    [data-theme="dark"] .stat-item.stat-odov .stat-value { color: #c77dff; }
+    .stat-item.stat-odov:hover { border-color: #7c3aed; transform: translateY(-2px); }
+    .stat-item.stat-odov .stat-value { color: #c77dff; }
 
     /* ============================================================
        DAILY QUOTE
        ============================================================ */
     .daily-quote {
-      max-width: 680px;
-      margin: 0 auto 56px;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
+      max-width: 680px; margin: 0 auto 56px; padding: 0 24px;
     }
     .quote-card {
       background: var(--quote-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--quote-border);
-      border-radius: 12px;
-      padding: 24px;
-      transition: background 0.3s, border-color 0.3s;
+      border-radius: 12px; padding: 24px;
     }
     .quote-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
     }
     .quote-text {
-      font-size: 16px;
-      font-weight: 500;
-      font-style: italic;
-      color: var(--text-primary);
+      font-size: 16px; font-weight: 500;
+      font-style: italic; color: var(--text-primary);
       line-height: 1.7;
     }
-    .quote-source {
-      font-size: 13px;
-      color: var(--accent);
-      margin-top: 8px;
-    }
+    .quote-source { font-size: 13px; color: var(--accent); margin-top: 8px; }
     .quote-reload {
-      background: none;
-      border: none;
-      font-size: 12px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      margin-top: 8px;
-      font-family: inherit;
-      transition: color 0.2s;
+      background: none; border: none;
+      font-size: 12px; color: var(--text-secondary);
+      cursor: pointer; margin-top: 8px;
+      font-family: inherit; transition: color 0.2s;
     }
     .quote-reload:hover { color: var(--accent); }
 
     /* ============================================================
-       SECTIONS
+       SECTIONS — Mufassir
        ============================================================ */
     .section {
-      max-width: 960px;
-      margin: 0 auto 56px;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
+      max-width: 960px; margin: 0 auto 56px; padding: 0 24px;
     }
     .section-title {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-      letter-spacing: -0.3px;
+      font-size: 24px; font-weight: 600;
+      color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.3px;
     }
     .section-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
+      font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;
     }
-
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    .theme-card {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      text-decoration: none;
-    }
-    .theme-card:hover {
-      border-color: var(--accent);
-      background: var(--accent-light);
-    }
-    .theme-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-      width: 28px;
-      text-align: center;
-    }
-    .theme-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-    .theme-group-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 12px;
-      margin-top: 24px;
-    }
-    .theme-group-label:first-child { margin-top: 0; }
-
-    .mufassir-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
+    .mufassir-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .mufassir-card {
       background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      transition: border-color 0.2s, background 0.3s;
+      border-radius: 12px; padding: 24px;
+      transition: border-color 0.2s;
     }
     .mufassir-card:hover { border-color: var(--accent); }
-    .mufassir-name {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-    .mufassir-era {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 10px;
-    }
-    .mufassir-manhaj {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      margin-bottom: 14px;
-    }
+    .mufassir-name { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .mufassir-era { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+    .mufassir-manhaj { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 14px; }
     .mufassir-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 600;
-      background: var(--mufassir-badge-bg);
-      color: var(--mufassir-badge-text);
+      display: inline-block; padding: 4px 12px;
+      border-radius: 100px; font-size: 12px; font-weight: 600;
+      background: var(--mufassir-badge-bg); color: var(--mufassir-badge-text);
     }
 
     /* ============================================================
        MODAL
        ============================================================ */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: var(--modal-overlay);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       z-index: 1000;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      display: flex; align-items: flex-start; justify-content: center;
       padding: 40px 16px;
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0; pointer-events: none;
       transition: opacity 0.15s ease;
     }
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
     .modal-container {
-      background: var(--bg);
+      background: rgba(7,16,28,0.96);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      width: 100%;
-      max-width: 720px;
-      max-height: calc(100vh - 80px);
-      overflow-y: auto;
+      border-radius: 20px; width: 100%; max-width: 720px;
+      max-height: calc(100vh - 80px); overflow-y: auto;
       transform: translateY(20px);
-      transition: transform 0.15s ease, background 0.3s;
-      position: relative;
+      transition: transform 0.15s ease;
     }
-    .modal-overlay.open .modal-container {
-      transform: translateY(0);
-    }
+    .modal-overlay.open .modal-container { transform: translateY(0); }
     .modal-header {
-      position: sticky;
-      top: 0;
-      background: var(--bg);
+      position: sticky; top: 0;
+      background: rgba(7,16,28,0.98);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 10;
-      border-radius: 20px 20px 0 0;
-      transition: background 0.3s, border-color 0.3s;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 10; border-radius: 20px 20px 0 0;
     }
-    .modal-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
+    .modal-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
     .modal-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 32px; height: 32px; border-radius: 8px;
       border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      color: var(--text-secondary); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
       transition: all 0.2s;
     }
-    .modal-close:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .modal-body {
-      padding: 24px;
-    }
+    .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+    .modal-body { padding: 24px; }
     .modal-quote {
       background: var(--accent-light);
-      border: 1px solid var(--quote-border);
-      border-radius: 10px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-    }
-    .modal-quote-text {
-      font-size: 14px;
-      font-style: italic;
-      color: var(--accent);
-      line-height: 1.65;
-    }
-    .ayat-card {
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
-      background: var(--bg-card);
-      transition: background 0.3s, border-color 0.3s;
+      border-radius: 10px; padding: 16px 20px; margin-bottom: 24px;
     }
-    .ayat-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 12px;
+    .modal-quote-text { font-size: 14px; font-style: italic; color: var(--accent); line-height: 1.65; }
+    .ayat-card {
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px; margin-bottom: 16px;
+      background: rgba(255,255,255,0.03);
     }
+    .ayat-label { font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
     .ayat-arab {
-      text-align: right;
-      direction: rtl;
-      font-size: 24px;
-      line-height: 1.8;
-      color: var(--text-primary);
+      text-align: right; direction: rtl;
+      font-size: 24px; line-height: 1.8; color: #f2e8cc;
       margin-bottom: 12px;
       font-family: 'Amiri', 'Traditional Arabic', serif;
     }
-    .ayat-terjemahan {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      margin-bottom: 16px;
-    }
-    .accordion {
-      border-top: 1px solid var(--accordion-border);
-      transition: border-color 0.3s;
-    }
+    .ayat-terjemahan { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 16px; }
+    .accordion { border-top: 1px solid var(--accordion-border); }
     .accordion-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      cursor: pointer;
-      background: none;
-      border: none;
-      width: 100%;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      transition: color 0.2s;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; cursor: pointer; background: none; border: none;
+      width: 100%; font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--text-secondary); transition: color 0.2s;
     }
     .accordion-header:hover { color: var(--accent); }
-    .accordion-arrow {
-      font-size: 11px;
-      transition: transform 0.2s;
-    }
+    .accordion-arrow { font-size: 11px; transition: transform 0.2s; }
     .accordion-header.open .accordion-arrow { transform: rotate(180deg); }
-    .accordion-body {
-      display: none;
-      padding: 0 0 16px;
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.75;
-    }
+    .accordion-body { display: none; padding: 0 0 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
     .accordion-body.open { display: block; }
-    .modal-loading {
-      text-align: center;
-      padding: 48px 0;
-    }
+    .modal-loading { text-align: center; padding: 48px 0; }
     .spinner {
-      width: 28px;
-      height: 28px;
-      border: 3px solid var(--border);
+      width: 28px; height: 28px;
+      border: 3px solid rgba(82,183,136,0.15);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto 12px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .modal-empty {
-      text-align: center;
-      padding: 48px 0;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
+    .modal-empty { text-align: center; padding: 48px 0; color: var(--text-secondary); font-size: 14px; }
 
     /* ============================================================
-       FLOATING TOGGLE
-       ============================================================ */
-    .theme-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 500;
-      background: var(--toggle-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 7px 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 500;
-      font-family: inherit;
-      color: var(--toggle-text);
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    }
-    .theme-toggle-icon {
-      font-size: 16px;
-      line-height: 1;
-    }
-
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 24px;
-      text-align: center;
-      max-width: 960px;
-      margin: 24px auto 0;
-      transition: border-color 0.3s;
-    }
-    .footer p, .footer a {
-      font-size: 13px;
-      color: var(--footer-text);
-    }
-    .footer a {
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer a:hover { color: var(--accent); }
-    .footer .divider { margin: 0 8px; }
-
-    /* ============================================================
-       TOAST
-       ============================================================ */
-    .toast {
-      position: fixed;
-      bottom: 72px;
-      right: 24px;
-      background: var(--accent);
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      z-index: 600;
-      opacity: 0;
-      transform: translateY(8px);
-      pointer-events: none;
-      transition: all 0.25s ease;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ============================================================
-       ONE DAY ONE VERSE — Popup Styles
+       ONE DAY ONE VERSE — Popup
        ============================================================ */
     .odov-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.72);
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72);
       backdrop-filter: blur(4px);
-      z-index: 9998;
-      transition: opacity 0.3s ease;
+      z-index: 9998; transition: opacity 0.3s ease;
     }
     .odov-popup {
-      position: fixed;
-      inset: 0;
-      margin: auto;
-      width: min(520px, 94vw);
-      max-height: 88vh;
-      overflow-y: auto;
-      border-radius: 20px;
-      z-index: 9999;
+      position: fixed; inset: 0; margin: auto;
+      width: min(520px, 94vw); max-height: 88vh; overflow-y: auto;
+      border-radius: 20px; z-index: 9999;
       padding: 28px 24px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      display: flex; flex-direction: column; gap: 16px;
       box-shadow: 0 24px 64px rgba(0,0,0,0.6);
-      background: linear-gradient(
-        135deg,
-        var(--odov-from, #1a1a2e),
-        var(--odov-via,  #16213e),
-        var(--odov-to,   #0f3460)
-      );
-      color: var(--odov-text, #e0e0ff);
+      background: linear-gradient(135deg, var(--odov-from,#1a1a2e), var(--odov-via,#16213e), var(--odov-to,#0f3460));
+      color: var(--odov-text,#e0e0ff);
       transition: color 0.3s ease;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,0.2) transparent;
-      height: fit-content;
-      top: 0;
-      bottom: 0;
+      scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;
+      height: fit-content; top: 0; bottom: 0;
     }
     .odov-popup::-webkit-scrollbar { width: 5px; }
     .odov-popup::-webkit-scrollbar-track { background: transparent; }
@@ -901,7 +530,11 @@
     .odov-tafsir-text.expanded { display: block; -webkit-line-clamp: unset; }
     .odov-tafsir-readmore { font-size: 0.75rem; opacity: 0.6; cursor: pointer; margin-top: 4px; background: none; border: none; color: inherit; padding: 0; text-decoration: underline; }
     .odov-actions { display: flex; gap: 10px; }
-    .odov-btn { flex: 1; padding: 10px 16px; border-radius: 10px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, opacity 0.2s; font-family: inherit; }
+    .odov-btn {
+      flex: 1; padding: 10px 16px; border-radius: 10px; border: none;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s; font-family: inherit;
+    }
     .odov-btn:hover { transform: translateY(-1px); opacity: 0.9; }
     .odov-btn:active { transform: translateY(0); }
     .odov-btn-primary { background: rgba(255,255,255,0.9); color: #1a1a2e; }
@@ -911,17 +544,34 @@
     .odov-spinner { width: 32px; height: 32px; border: 3px solid rgba(255,255,255,0.2); border-top-color: rgba(255,255,255,0.8); border-radius: 50%; animation: odov-spin 0.8s linear infinite; }
     @keyframes odov-spin { to { transform: rotate(360deg); } }
     .odov-error { text-align: center; padding: 24px 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed; bottom: 32px; right: 24px;
+      background: var(--accent); color: #fff;
+      padding: 10px 20px; border-radius: 10px;
+      font-size: 13px; font-weight: 500; z-index: 600;
+      opacity: 0; transform: translateY(8px);
+      pointer-events: none; transition: all 0.25s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px; text-align: center;
+      max-width: 960px; margin: 24px auto 0;
+    }
+    .footer p, .footer a { font-size: 13px; color: var(--footer-text); }
+    .footer a { text-decoration: none; transition: color 0.2s; }
+    .footer a:hover { color: var(--accent); }
+
+    /* utility */
     .hidden { display: none !important; }
-    @keyframes odov-slide-up {
-      from { opacity: 0; transform: translateY(24px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .odov-popup:not(.hidden) {
-      animation: odov-slide-up 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-    @media (max-width: 480px) {
-      .odov-popup { padding: 20px 16px 20px; border-radius: 16px 16px 0 0; bottom: 0; top: auto; max-height: 92vh; width: 100vw; }
-    }
 
     /* ============================================================
        RESPONSIVE
@@ -930,7 +580,6 @@
       .hero h1 { font-size: 28px; }
       .hero .subtitle { font-size: 14px; }
       .stats { grid-template-columns: repeat(2, 1fr); }
-      .theme-grid { grid-template-columns: repeat(2, 1fr); }
       .mufassir-grid { grid-template-columns: 1fr; }
       .modal-overlay { padding: 16px 8px; }
       .modal-container { border-radius: 16px; max-height: calc(100vh - 32px); }
@@ -939,19 +588,26 @@
       .ayat-arab { font-size: 20px; }
       .stat-value { font-size: 18px; }
     }
-
     @media (max-width: 480px) {
       .navbar-inner { padding: 10px 16px; }
       .logo-text { font-size: 15px; }
       .hero { padding: 40px 16px 0; }
       .hero h1 { font-size: 24px; }
-      .search-wrap, .pills, .daily-quote, .section { padding: 0 16px; }
+      .search-wrap, .daily-quote, .section { padding: 0 16px; }
       .stats { padding: 0 16px; gap: 8px; }
       .nav-odov-btn span.btn-label { display: none; }
+      .odov-popup { padding: 20px 16px 20px; border-radius: 16px 16px 0 0; bottom: 0; top: auto; max-height: 92vh; width: 100vw; }
     }
   </style>
 </head>
 <body>
+
+  <!-- BACKGROUND — Web 1 style -->
+  <div class="bg"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="pts" id="pts"></div>
 
   <!-- NAVBAR -->
   <nav class="navbar">
@@ -976,7 +632,9 @@
   <!-- HERO -->
   <div class="hero">
     <h1>Jelajahi Tafsir Al-Qur'an</h1>
-    <p class="subtitle">Pahami makna dan konteks ayat Al-Qur'an berdasarkan tafsir ulama ahlus sunnah wal jamaah.</p>
+    <p class="subtitle">
+      Cari ayat dan tafsir berdasarkan tema, tokoh, akhlak, ibadah, ujian hidup, dan istilah yang paling dekat dengan yang kamu ingat.
+    </p>
     <button class="hero-odov-cta" data-odov-trigger>
       <span class="cta-dot"></span>
       ✦ One Day One Verse — Ayat Hari Ini
@@ -986,22 +644,15 @@
   <!-- SEARCH BAR -->
   <div class="search-wrap">
     <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Cari tafsir... (contoh: sabar, tawakkal, nabi musa)"
-        onkeydown="if(event.key==='Enter') doSearch()">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari... shalat, sabar, rezeki, tawakkal, nabi musa, surga, riba, orang tua, ikhlas"
+        onkeydown="if(event.key==='Enter') doSearch()"
+        autocomplete="off"
+      >
       <button onclick="doSearch()">Cari</button>
     </div>
-  </div>
-
-  <!-- QUICK TOPIC PILLS -->
-  <div class="pills">
-    <span class="pill" onclick="quickSearch('tauhid')">Tauhid</span>
-    <span class="pill" onclick="quickSearch('sabar')">Sabar</span>
-    <span class="pill" onclick="quickSearch('rezeki')">Rezeki</span>
-    <span class="pill" onclick="quickSearch('tawakkal')">Tawakkal</span>
-    <span class="pill" onclick="quickSearch('shalat')">Shalat</span>
-    <span class="pill" onclick="quickSearch('taubat')">Taubat</span>
-    <span class="pill" onclick="quickSearch('doa')">Doa</span>
-    <span class="pill" onclick="quickSearch('akhirat')">Akhirat</span>
   </div>
 
   <!-- STATS BAR -->
@@ -1030,37 +681,7 @@
       <div class="quote-label">Quote Hari Ini</div>
       <p class="quote-text" id="dailyQuote">"Sesungguhnya bersama kesulitan ada kemudahan."</p>
       <p class="quote-source" id="dailySource">— QS. Al-Insyirah: 6</p>
-      <button class="quote-reload" onclick="loadDailyQuote()">Muat ulang</button>
-    </div>
-  </div>
-
-  <!-- JELAJAHI TEMA -->
-  <div class="section">
-    <h2 class="section-title">Jelajahi Tema</h2>
-    <p class="section-desc">Klik tema untuk langsung mencari ayat dan tafsir terkait.</p>
-
-    <div class="theme-group-label">Tema Akidah &amp; Amal</div>
-    <div class="theme-grid" style="margin-bottom:16px;">
-      <div class="theme-card" onclick="quickSearch('tauhid')"><span class="theme-icon">☝️</span><span class="theme-label">Tauhid</span></div>
-      <div class="theme-card" onclick="quickSearch('taubat')"><span class="theme-icon">🤲</span><span class="theme-label">Taubat</span></div>
-      <div class="theme-card" onclick="quickSearch('sabar')"><span class="theme-icon">🌿</span><span class="theme-label">Sabar</span></div>
-      <div class="theme-card" onclick="quickSearch('doa')"><span class="theme-icon">🕌</span><span class="theme-label">Doa</span></div>
-      <div class="theme-card" onclick="quickSearch('rezeki')"><span class="theme-icon">🌾</span><span class="theme-label">Rezeki</span></div>
-      <div class="theme-card" onclick="quickSearch('akhlak')"><span class="theme-icon">💎</span><span class="theme-label">Akhlak</span></div>
-      <div class="theme-card" onclick="quickSearch('keluarga')"><span class="theme-icon">👨‍👩‍👧</span><span class="theme-label">Keluarga</span></div>
-      <div class="theme-card" onclick="quickSearch('akhirat')"><span class="theme-icon">⚖️</span><span class="theme-label">Akhirat</span></div>
-    </div>
-
-    <div class="theme-group-label">Kisah dalam Al-Qur'an</div>
-    <div class="theme-grid">
-      <div class="theme-card" onclick="quickSearch('nabi ibrahim')"><span class="theme-icon">🕋</span><span class="theme-label">Nabi Ibrahim</span></div>
-      <div class="theme-card" onclick="quickSearch('nabi musa')"><span class="theme-icon">🌊</span><span class="theme-label">Nabi Musa</span></div>
-      <div class="theme-card" onclick="quickSearch('nabi yusuf')"><span class="theme-icon">⭐</span><span class="theme-label">Nabi Yusuf</span></div>
-      <div class="theme-card" onclick="quickSearch('nabi isa')"><span class="theme-icon">📖</span><span class="theme-label">Nabi Isa</span></div>
-      <div class="theme-card" onclick="quickSearch('nabi nuh')"><span class="theme-icon">⛵</span><span class="theme-label">Nabi Nuh</span></div>
-      <div class="theme-card" onclick="quickSearch('nabi sulaiman')"><span class="theme-icon">👑</span><span class="theme-label">Nabi Sulaiman</span></div>
-      <div class="theme-card" onclick="quickSearch('ashabul kahfi')"><span class="theme-icon">🏔️</span><span class="theme-label">Ashabul Kahfi</span></div>
-      <div class="theme-card" onclick="quickSearch('maryam')"><span class="theme-icon">🌹</span><span class="theme-label">Maryam</span></div>
+      <button class="quote-reload" onclick="loadDailyQuote()">↺ Muat ulang</button>
     </div>
   </div>
 
@@ -1068,7 +689,6 @@
   <div class="section">
     <h2 class="section-title">Mufassir Terverifikasi</h2>
     <p class="section-desc">Sumber tafsir yang digunakan, sesuai manhaj ahlus sunnah wal jamaah.</p>
-
     <div class="mufassir-grid">
       <div class="mufassir-card">
         <div class="mufassir-name">Imam Ibnu Katsir</div>
@@ -1093,9 +713,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>
-      Quran Tafsir — Open Source untuk Umat
-    </p>
+    <p>Quran Tafsir — Open Source untuk Umat</p>
   </footer>
 
   <!-- MODAL PENCARIAN -->
@@ -1109,11 +727,8 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       ONE DAY ONE VERSE — Popup HTML
-       ============================================================ -->
+  <!-- ONE DAY ONE VERSE Popup -->
   <div id="odov-backdrop" class="odov-backdrop hidden" aria-hidden="true"></div>
-
   <div id="odov-popup" class="odov-popup hidden" role="dialog" aria-modal="true" aria-label="One Day One Verse">
     <div class="odov-header">
       <div class="odov-label">✦ ONE DAY ONE VERSE ✦</div>
@@ -1132,54 +747,36 @@
       <div id="odov-surah-info" class="odov-surah-info"></div>
       <div id="odov-tafsir-section" class="odov-tafsir-section">
         <button class="odov-tafsir-toggle" id="odov-tafsir-toggle">
-          📖 Lihat Tafsir Ulama <span class="odov-chevron">▾</span>
+          Lihat Tafsir Ulama <span class="odov-chevron">▾</span>
         </button>
         <div id="odov-tafsir-body" class="odov-tafsir-body hidden">
           <div id="odov-tafsir-list"></div>
         </div>
       </div>
       <div class="odov-actions">
-        <button id="odov-regenerate" class="odov-btn odov-btn-secondary">🔄 Ayat Lain</button>
-        <button id="odov-share" class="odov-btn odov-btn-primary">📤 Bagikan</button>
+        <button id="odov-regenerate" class="odov-btn odov-btn-secondary">Ayat Lain</button>
+        <button id="odov-share" class="odov-btn odov-btn-primary">Bagikan</button>
       </div>
       <p id="odov-meta" class="odov-meta"></p>
     </div>
     <div id="odov-error" class="odov-error hidden">
-      <p>😔 Gagal memuat ayat. Coba lagi.</p>
+      <p>Gagal memuat ayat. Coba lagi.</p>
       <button id="odov-retry" class="odov-btn odov-btn-primary">Coba Lagi</button>
     </div>
   </div>
-
-  <!-- FLOATING THEME TOGGLE -->
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle tema">
-    <span class="theme-toggle-icon" id="toggleIcon">☀️</span>
-    <span id="toggleLabel">Mode Gelap</span>
-  </button>
 
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
 <script>
   /* ============================================================
-     THEME & TOAST
+     CONFIG
      ============================================================ */
   const API_BASE = '/api/v1';
 
-  function getTheme() { return localStorage.getItem('qt-theme') || 'light'; }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    const icon  = document.getElementById('toggleIcon');
-    const label = document.getElementById('toggleLabel');
-    if (theme === 'dark') { icon.textContent = '🌙'; label.textContent = 'Mode Terang'; }
-    else { icon.textContent = '☀️'; label.textContent = 'Mode Gelap'; }
-  }
-  function toggleTheme() {
-    const next = getTheme() === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('qt-theme', next);
-    applyTheme(next);
-  }
-  applyTheme(getTheme());
-
+  /* ============================================================
+     TOAST
+     ============================================================ */
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -1188,7 +785,7 @@
   }
 
   /* ============================================================
-     SEARCH
+     DAILY QUOTE
      ============================================================ */
   async function loadDailyQuote() {
     try {
@@ -1198,7 +795,149 @@
         document.getElementById('dailyQuote').textContent = '"' + data.text + '"';
         document.getElementById('dailySource').textContent = '— QS. ' + data.surah + ': ' + data.ayah;
       }
-    } catch(e) { console.log('API belum aktif, menggunakan quote default.'); }
+    } catch(e) { /* gunakan quote default */ }
+  }
+
+  /* ============================================================
+     SEARCH — MULTI-PASS KEYWORD EXPANSION
+     ============================================================ */
+  const SEARCH_ALIASES = {
+    'shalat':       ['shalat','salat','sembahyang','solat'],
+    'salat':        ['salat','shalat','sembahyang','solat'],
+    'solat':        ['solat','shalat','salat'],
+    'tawakkal':     ['tawakkal','tawakal','berserah diri','pasrah'],
+    'tawakal':      ['tawakal','tawakkal','berserah diri'],
+    'rezeki':       ['rezeki','rizki','karunia','nikmat','pemberian'],
+    'rizki':        ['rizki','rezeki','karunia','nikmat'],
+    'sabar':        ['sabar','kesabaran','tabah','tahan','bersabar'],
+    'taubat':       ['taubat','tobat','istighfar','bertaubat','kembali kepada'],
+    'tobat':        ['tobat','taubat','istighfar'],
+    'istighfar':    ['istighfar','taubat','tobat','ampun'],
+    'ikhlas':       ['ikhlas','keikhlasan','murni','tulus'],
+    'syukur':       ['syukur','bersyukur','nikmat','terima kasih'],
+    'doa':          ["doa","do'a","berdoa","permohonan","memohon"],
+    "do'a":         ["do'a","doa","berdoa","permohonan"],
+    'surga':        ['surga','jannah','firdaus','syurga'],
+    'jannah':       ['jannah','surga','firdaus','syurga'],
+    'neraka':       ['neraka','jahannam','siksa','azab'],
+    'jahannam':     ['jahannam','neraka','siksa'],
+    'akhirat':      ['akhirat','hari akhir','kiamat','kebangkitan','yaumul'],
+    'kiamat':       ['kiamat','akhirat','hari akhir','yaumul qiyamah'],
+    'riba':         ['riba','bunga','muamalah batil','haram'],
+    'zakat':        ['zakat','sedekah','infak','sodakoh'],
+    'sedekah':      ['sedekah','zakat','infak','derma'],
+    'puasa':        ['puasa','shaum','siyam','ramadan'],
+    'takdir':       ['takdir','qadar','ketetapan','qada','qadha'],
+    'qadar':        ['qadar','takdir','ketetapan','qada'],
+    'tauhid':       ['tauhid','tawhid','keesaan','esaan','menyekutukan'],
+    'akhlak':       ['akhlak','budi pekerti','moral','etika','karakter'],
+    'keluarga':     ['keluarga','orang tua','ibu','ayah','anak','istri','suami'],
+    'orang tua':    ['orang tua','ibu','ayah','walidain','birrul walidain'],
+    'ibu':          ['ibu','ummu','walidain','orang tua'],
+    'ayah':         ['ayah','bapak','walidain','orang tua'],
+    'jihad':        ['jihad','berjihad','perjuangan','jalan allah'],
+    'ilmu':         ['ilmu','pengetahuan','belajar','mengajar'],
+    'adil':         ['adil','keadilan','insaf'],
+    'amanah':       ['amanah','kepercayaan','jujur'],
+    'jujur':        ['jujur','amanah','shiddiq','benar'],
+    'sabar ujian':  ['ujian','cobaan','musibah','kesulitan','kesusahan'],
+    'ujian':        ['ujian','cobaan','musibah','kesulitan','fitnah'],
+    'musibah':      ['musibah','ujian','cobaan','bencana','kesulitan'],
+    'cinta':        ['cinta','kasih sayang','rahmah','mahabbah','kecintaan'],
+    'kasih sayang': ['kasih sayang','cinta','rahmah','rahmat','mahabbah'],
+    'rahmat':       ['rahmat','rahmah','kasih sayang','ampunan'],
+    'takut':        ['takut','khauf','rasa takut','khasy-yah'],
+    'khauf':        ['khauf','takut','rasa takut','takwa'],
+    'harap':        ['harap','raja','harapan','pengharapan','berharap'],
+    'taqwa':        ['taqwa','takwa','bertakwa','patuh','waspada'],
+    'takwa':        ['takwa','taqwa','bertakwa','patuh'],
+    'nabi musa':    ['nabi musa','musa','musa as',"fir'aun",'firaun','bani israil'],
+    'musa':         ['musa','nabi musa',"fir'aun",'firaun'],
+    'nabi yusuf':   ['nabi yusuf','yusuf','kisah yusuf'],
+    'yusuf':        ['yusuf','nabi yusuf','kisah yusuf'],
+    'nabi ibrahim': ['nabi ibrahim','ibrahim','khalilullah','ka\'bah'],
+    'ibrahim':      ['ibrahim','nabi ibrahim','ka\'bah','khalilullah'],
+    'nabi isa':     ['nabi isa','isa','isa al masih','maryam'],
+    'isa':          ['isa','nabi isa','maryam','isa al masih'],
+    'nabi nuh':     ['nabi nuh','nuh','banjir besar','bahtera'],
+    'nuh':          ['nuh','nabi nuh','banjir besar'],
+    'nabi sulaiman':['nabi sulaiman','sulaiman','ratu bilqis'],
+    'sulaiman':     ['sulaiman','nabi sulaiman','ratu bilqis'],
+    'maryam':       ['maryam','ibu isa','wanita pilihan'],
+    'ashabul kahfi':['ashabul kahfi','penghuni gua','kahfi'],
+    'firaun':       ["fir'aun",'firaun','musa','laknat'],
+    'setan':        ['setan','syaitan','iblis','bisikan','godaan'],
+    'iblis':        ['iblis','setan','syaitan','laknat'],
+    'malaikat':     ['malaikat','jibril','israfil','mikail'],
+    'hari kiamat':  ['hari kiamat','yaumul qiyamah','kebangkitan','akhirat'],
+  };
+
+  function normalizeQuery(q) {
+    return q.toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function expandQuery(q) {
+    const n = normalizeQuery(q);
+    const set = new Set([n]);
+    // cek full phrase match
+    Object.entries(SEARCH_ALIASES).forEach(([key, vals]) => {
+      if (n === key || n.includes(key) || key.includes(n)) {
+        vals.forEach(v => set.add(v));
+      }
+    });
+    // cek per token
+    n.split(' ').filter(Boolean).forEach(token => {
+      set.add(token);
+      Object.entries(SEARCH_ALIASES).forEach(([key, vals]) => {
+        if (token === key || vals.includes(token)) {
+          vals.forEach(v => set.add(v));
+          set.add(key);
+        }
+      });
+    });
+    return Array.from(set).slice(0, 10);
+  }
+
+  async function fetchSearchTerm(term) {
+    const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(term));
+    if (!res.ok) throw new Error('Search failed: ' + res.status);
+    return res.json();
+  }
+
+  async function doSearch() {
+    const raw = document.getElementById('searchInput').value.trim();
+    if (!raw) return;
+    openModal();
+    document.getElementById('modalTitle').textContent = 'Mencari: ' + raw + '...';
+    document.getElementById('modalBody').innerHTML =
+      '<div class="modal-loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:13px;">Memperluas kata kunci dan mencari ayat...</p></div>';
+
+    const queries = expandQuery(raw);
+    const merged = new Map();
+    let quote = '';
+
+    try {
+      for (const term of queries) {
+        try {
+          const data = await fetchSearchTerm(term);
+          if (!quote && data.quote) quote = data.quote;
+          (data.results || []).forEach(r => {
+            const key = r.surah + ':' + r.ayah;
+            if (!merged.has(key)) merged.set(key, r);
+          });
+          if (merged.size >= 20) break;
+        } catch(_) { /* skip failed term */ }
+      }
+
+      renderModal({
+        query: raw,
+        total_results: merged.size,
+        quote: quote,
+        results: Array.from(merged.values())
+      });
+    } catch(e) {
+      renderOffline(raw);
+    }
   }
 
   function quickSearch(term) {
@@ -1206,20 +945,9 @@
     doSearch();
   }
 
-  async function doSearch() {
-    const q = document.getElementById('searchInput').value.trim();
-    if (!q) return;
-    openModal();
-    document.getElementById('modalTitle').textContent = 'Mencari: ' + q + '...';
-    document.getElementById('modalBody').innerHTML =
-      '<div class="modal-loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:13px;">Sedang mencari ayat...</p></div>';
-    try {
-      const res = await fetch(API_BASE + '/search?q=' + encodeURIComponent(q));
-      if (res.ok) { renderModal(await res.json()); }
-      else { renderOffline(q); }
-    } catch(e) { renderOffline(q); }
-  }
-
+  /* ============================================================
+     MODAL
+     ============================================================ */
   function renderOffline(query) {
     document.getElementById('modalTitle').textContent = 'Hasil: ' + query;
     document.getElementById('modalBody').innerHTML =
@@ -1228,7 +956,7 @@
 
   function renderModal(data) {
     document.getElementById('modalTitle').textContent =
-      'Hasil: ' + data.query + ' (' + (data.total_results || 0) + ' ayat)';
+      'Hasil: ' + data.query + ' (' + (data.total_results || 0) + ' ayat ditemukan)';
     let html = '';
     if (data.quote) {
       html += '<div class="modal-quote"><p class="modal-quote-text">"' + escapeHtml(data.quote) + '"</p></div>';
@@ -1253,7 +981,7 @@
         html += '</div>';
       });
     } else {
-      html += '<div class="modal-empty">Tidak ditemukan ayat untuk kata kunci ini. Coba kata kunci lain.</div>';
+      html += '<div class="modal-empty">Tidak ditemukan ayat untuk kata kunci ini. Coba variasi kata lain.</div>';
     }
     document.getElementById('modalBody').innerHTML = html;
   }
@@ -1263,7 +991,6 @@
     body.classList.toggle('open');
     btn.classList.toggle('open');
   }
-
   function openModal() {
     document.getElementById('searchModal').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1275,7 +1002,6 @@
   function closeModalOverlay(e) {
     if (e.target === document.getElementById('searchModal')) closeModal();
   }
-
   function escapeHtml(str) {
     if (!str) return '';
     var div = document.createElement('div');
@@ -1283,15 +1009,12 @@
     return div.innerHTML;
   }
 
-  document.addEventListener('DOMContentLoaded', function() { loadDailyQuote(); });
-
   /* ============================================================
-     ONE DAY ONE VERSE — Logic
+     ONE DAY ONE VERSE
      ============================================================ */
   (function () {
-    const ODOV_API   = '/api/v1/odov';
-    const SEED_KEY   = 'odov_user_seed';
-
+    const ODOV_API = '/api/v1/odov';
+    const SEED_KEY = 'odov_user_seed';
     const backdrop     = document.getElementById('odov-backdrop');
     const popup        = document.getElementById('odov-popup');
     const loader       = document.getElementById('odov-loader');
@@ -1304,35 +1027,29 @@
     const tafsirToggle = document.getElementById('odov-tafsir-toggle');
     const tafsirBody   = document.getElementById('odov-tafsir-body');
     const chevron      = tafsirToggle.querySelector('.odov-chevron');
-
-    let currentData = null;
-    let offset      = 0;
+    let currentData = null, offset = 0;
 
     function getUserSeed() {
       let seed = localStorage.getItem(SEED_KEY);
       if (!seed) { seed = Math.floor(Math.random() * 99999); localStorage.setItem(SEED_KEY, seed); }
       return parseInt(seed);
     }
-
     function getTodayKey() {
       const d = new Date();
       return 'odov_' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate();
     }
-
     function getCached(key) {
       try { const r = sessionStorage.getItem(key); return r ? JSON.parse(r) : null; } catch { return null; }
     }
     function setCache(key, data) {
       try { sessionStorage.setItem(key, JSON.stringify(data)); } catch {}
     }
-
     async function fetchVerse(off) {
       const seed = getUserSeed();
-      const res  = await fetch(ODOV_API + '?seed=' + seed + '&offset=' + off);
+      const res = await fetch(ODOV_API + '?seed=' + seed + '&offset=' + off);
       if (!res.ok) throw new Error('Network error');
       return res.json();
     }
-
     function applyPalette(p) {
       if (!p) return;
       popup.style.setProperty('--odov-from', p.from);
@@ -1341,7 +1058,6 @@
       popup.style.setProperty('--odov-text', p.text);
       popup.style.color = p.text;
     }
-
     function renderVerse(data) {
       currentData = data;
       const v = data.verse;
@@ -1352,7 +1068,6 @@
       document.getElementById('odov-latin').textContent       = v.text_latin  || '';
       document.getElementById('odov-terjemahan').textContent  = v.terjemahan_id || v.translation_en || '';
       document.getElementById('odov-surah-info').textContent  = 'QS. ' + (v.surah_name || 'Surah ' + v.surah) + ' : ' + v.ayah;
-
       const tList = document.getElementById('odov-tafsir-list');
       tList.innerHTML = '';
       (data.tafsir_list || []).forEach(function(t) {
@@ -1372,37 +1087,30 @@
           btn.textContent = el.classList.contains('expanded') ? 'Sembunyikan ▴' : 'Baca selengkapnya ▾';
         });
       });
-
-      const meta    = data.meta || {};
+      const meta = data.meta || {};
       const canRegen = meta.can_regenerate !== false;
       document.getElementById('odov-meta').textContent = canRegen
         ? 'Refresh ' + offset + '/20 kali hari ini · ' + (data.date || '')
         : 'Batas refresh hari ini tercapai · ' + (data.date || '');
-      regenBtn.disabled     = !canRegen;
+      regenBtn.disabled = !canRegen;
       regenBtn.style.opacity = canRegen ? '1' : '0.4';
     }
-
     function showLoader()  { loader.classList.remove('hidden'); content.classList.add('hidden'); errorEl.classList.add('hidden'); }
     function showContent() { loader.classList.add('hidden'); content.classList.remove('hidden'); errorEl.classList.add('hidden'); }
     function showError()   { loader.classList.add('hidden'); content.classList.add('hidden'); errorEl.classList.remove('hidden'); }
-
     function openPopup() {
-      backdrop.classList.remove('hidden');
-      popup.classList.remove('hidden');
+      backdrop.classList.remove('hidden'); popup.classList.remove('hidden');
       backdrop.removeAttribute('aria-hidden');
       document.body.style.overflow = 'hidden';
       loadVerse(null);
     }
-
     function closePopup() {
-      backdrop.classList.add('hidden');
-      popup.classList.add('hidden');
-      backdrop.setAttribute('aria-hidden', 'true');
+      backdrop.classList.add('hidden'); popup.classList.add('hidden');
+      backdrop.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
     }
-
     async function loadVerse(forceOffset) {
-      const useOffset = forceOffset !== null && forceOffset !== undefined ? forceOffset : offset;
+      const useOffset = (forceOffset !== null && forceOffset !== undefined) ? forceOffset : offset;
       const todayKey  = getTodayKey();
       if (useOffset === 0) {
         const cached = getCached(todayKey);
@@ -1412,56 +1120,84 @@
       try {
         const data = await fetchVerse(useOffset);
         if (useOffset === 0) setCache(todayKey, data);
-        renderVerse(data);
-        showContent();
-      } catch(e) {
-        console.error('[ODOV]', e);
-        showError();
-      }
+        renderVerse(data); showContent();
+      } catch(e) { console.error('[ODOV]', e); showError(); }
     }
-
     closeBtn.addEventListener('click', closePopup);
     backdrop.addEventListener('click', closePopup);
     retryBtn.addEventListener('click', function() { loadVerse(offset); });
-
     regenBtn.addEventListener('click', function() {
       if (offset >= 20) return;
       offset++;
       loadVerse(offset);
     });
-
     shareBtn.addEventListener('click', async function() {
       if (!currentData) return;
-      const v    = currentData.verse;
+      const v = currentData.verse;
       const text = '"' + (v.terjemahan_id || v.translation_en) + '"\n— QS. ' + (v.surah_name || v.surah) + ': ' + v.ayah + '\n\n#QuranHarian #TafseerApp';
       if (navigator.share) {
-        await navigator.share({ title: 'Ayat Hari Ini', text: text });
+        await navigator.share({ title: 'Ayat Hari Ini', text });
       } else {
         await navigator.clipboard.writeText(text);
-        shareBtn.textContent = '✅ Disalin!';
-        setTimeout(function() { shareBtn.textContent = '📤 Bagikan'; }, 2000);
+        shareBtn.textContent = 'Disalin!';
+        setTimeout(function() { shareBtn.textContent = ' Bagikan'; }, 2000);
       }
     });
-
     tafsirToggle.addEventListener('click', function() {
       tafsirBody.classList.toggle('hidden');
       chevron.classList.toggle('open');
     });
-
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         if (!popup.classList.contains('hidden')) closePopup();
         else closeModal();
       }
     });
-
     window.ODOV = { open: openPopup, close: closePopup };
-
     document.querySelectorAll('[data-odov-trigger]').forEach(function(el) {
       el.addEventListener('click', openPopup);
     });
   })();
-</script>
 
+  /* ============================================================
+     PARTICLE / STAR GENERATOR — lebih banyak & lebih terang
+     ============================================================ */
+  (function(){
+    const c = document.getElementById('pts');
+    if (!c) return;
+    const f = document.createDocumentFragment();
+    for (let i = 0; i < 60; i++) {
+      const p = document.createElement('div');
+      p.className = 'pt';
+      const sz = Math.random() * 2.4 + 0.8;
+      const drift = ((Math.random() - .5) * 100).toFixed(1);
+      const r = Math.random();
+      let col, opacity;
+      if (r > 0.72) {
+        col = '201,168,76';      // gold — bintang emas
+        opacity = (Math.random() * .45 + .20).toFixed(2);
+      } else if (r > 0.42) {
+        col = '82,183,136';      // hijau
+        opacity = (Math.random() * .35 + .12).toFixed(2);
+      } else {
+        col = '255,255,255';     // putih — bintang sejati
+        opacity = (Math.random() * .55 + .18).toFixed(2);
+      }
+      p.style.cssText =
+        `width:${sz}px;height:${sz}px;` +
+        `left:${(Math.random()*100).toFixed(1)}%;` +
+        `--d:${drift}px;` +
+        `animation-duration:${(Math.random()*20+8).toFixed(1)}s;` +
+        `animation-delay:-${(Math.random()*20).toFixed(1)}s;` +
+        `background:rgba(${col},${opacity});` +
+        `box-shadow:0 0 ${(sz*3).toFixed(1)}px rgba(${col},${(opacity*0.6).toFixed(2)})`;
+      f.appendChild(p);
+    }
+    c.appendChild(f);
+  })();
+
+  /* init */
+  document.addEventListener('DOMContentLoaded', function() { loadDailyQuote(); });
+</script>
 </body>
 </html>
