@@ -48,9 +48,8 @@ Project ini dibangun untuk siapa saja yang ingin belajar tafsir dengan cara yang
 - **Sumber Terverifikasi** -- Sistem validator otomatis yang menolak tafsir dari sumber yang tidak sesuai.
 - **Mode Gelap** -- Tampilan gelap yang nyaman untuk membaca di malam hari.
 - **Kutipan Harian** -- Kutipan acak dari Al-Qur'an setiap kali membuka halaman.
-- **Analitik Tematik** -- Visualisasi distribusi tema besar dalam Al-Qur'an.
 
-### Fitur yang Sedang Dibangun
+### Fitur yang Sedang Dibangun [Soon InsyaAllah]
 
 - **Asisten Tafsir AI** -- Tanya jawab konteks ayat berbasis RAG, jawabannya merujuk ke tafsir ulama yang terverifikasi.
 - **Grafik Hubungan Ayat** -- Visualisasi interaktif hubungan antar ayat secara tematik.
